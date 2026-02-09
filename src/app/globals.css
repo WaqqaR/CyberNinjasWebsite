@@ -1,0 +1,162 @@
+@import "tailwindcss";
+
+/* ===== THEME COLORS ===== */
+/* Light mode (default) - Zen, warm beige */
+:root {
+  --bg-primary: #e2d2c5;
+  --bg-secondary: #f6ece4;
+  --bg-tertiary: #e1d0c4;
+  --bg-card: #f5ebe3;
+  --bg-dark-section: #1c1917;
+
+  --text-primary: #1c1917;
+  --text-secondary: #4a3f35;
+  --text-muted: #6b5c4e;
+  --text-subtle: #8c7a6a;
+  --text-on-dark: #e1d0c4;
+
+  --border-color: #c4b5a9;
+  --border-hover: #8c7a6a;
+  --accent: #1c1917;
+
+  --btn-primary-bg: #1c1917;
+  --btn-primary-text: #f5ebe3;
+  --btn-primary-hover: #2d2620;
+}
+
+/* Dark mode - Neo Tokyo */
+.dark {
+  --bg-primary: rgb(19, 37, 37);
+  --bg-secondary: rgb(21, 39, 40);
+  --bg-tertiary: #112424;
+  --bg-card: rgb(24, 42, 42);
+  --bg-dark-section: rgb(15, 30, 30);
+
+  --text-primary: #fafaf9;
+  --text-secondary: #e7e5e4;
+  --text-muted: #a8a29e;
+  --text-subtle: #78716c;
+  --text-on-dark: #a8a29e;
+
+  --border-color: rgb(38, 58, 51);
+  --border-hover: #ef4444;
+  --accent: #ef4444;
+
+  --btn-primary-bg: #ef4444;
+  --btn-primary-text: #ffffff;
+  --btn-primary-hover: #dc2626;
+}
+
+/* ===== BASE STYLES ===== */
+html {
+  background-color: var(--bg-primary);
+}
+
+html.dark {
+  background: linear-gradient(to bottom, rgb(19, 37, 37) 0%, rgb(21, 39, 40) 33%, rgb(38, 58, 51) 66%, rgb(38, 58, 51) 100%);
+  background-attachment: fixed;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  transition: background 1s ease, color 1s ease;
+}
+
+/* Dark mode gradient background */
+.dark body {
+  background: linear-gradient(to bottom, rgb(19, 37, 37) 0%, rgb(21, 39, 40) 33%, rgb(38, 58, 51) 66%, rgb(38, 58, 51) 100%);
+  background-attachment: fixed;
+}
+
+/* ===== UTILITY CLASSES ===== */
+/* Backgrounds */
+.theme-bg-primary { background-color: var(--bg-primary); }
+.theme-bg-secondary { background-color: var(--bg-secondary); }
+.theme-bg-tertiary { background-color: var(--bg-tertiary); }
+.theme-bg-card { background-color: var(--bg-card); }
+.theme-bg-dark { background-color: var(--bg-dark-section); }
+
+/* Text */
+.theme-text-primary { color: var(--text-primary); }
+.theme-text-secondary { color: var(--text-secondary); }
+.theme-text-muted { color: var(--text-muted); }
+.theme-text-subtle { color: var(--text-subtle); }
+.theme-text-on-dark { color: var(--text-on-dark); }
+.theme-text-accent { color: var(--accent); }
+
+/* Borders */
+.theme-border { border-color: var(--border-color); }
+.theme-border-hover:hover { border-color: var(--border-hover); }
+
+/* Buttons */
+.theme-btn-primary {
+  background-color: var(--btn-primary-bg);
+  color: var(--btn-primary-text);
+}
+.theme-btn-primary:hover {
+  background-color: var(--btn-primary-hover);
+}
+
+/* Accent for dark mode */
+.dark .theme-accent-text { color: #ef4444; }
+.theme-accent-text { color: var(--text-secondary); }
+
+/* ===== TRANSITIONS ===== */
+*, *::before, *::after {
+  transition: background-color 1s ease, border-color 1s ease, color 1s ease;
+}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+/* ===== SELECTION ===== */
+::selection {
+  background: var(--border-color);
+  color: var(--text-primary);
+}
+.dark ::selection {
+  background: #ef4444;
+  color: #fafaf9;
+}
+
+/* ===== CUSTOM CURSORS ===== */
+.cursor-x {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Cpath d='M3 3l10 10M13 3L3 13' stroke='%231c1917' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") 8 8, pointer;
+}
+.dark .cursor-x {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Cpath d='M3 3l10 10M13 3L3 13' stroke='%23e2d2c5' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") 8 8, pointer;
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+.stagger-children > * {
+  opacity: 0;
+  animation: fadeIn 0.5s ease-out forwards;
+}
+.stagger-children > *:nth-child(1) { animation-delay: 0.1s; }
+.stagger-children > *:nth-child(2) { animation-delay: 0.2s; }
+.stagger-children > *:nth-child(3) { animation-delay: 0.3s; }
+.stagger-children > *:nth-child(4) { animation-delay: 0.4s; }
+.stagger-children > *:nth-child(5) { animation-delay: 0.5s; }
