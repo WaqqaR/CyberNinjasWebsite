@@ -106,8 +106,8 @@ export default function Home() {
             <div className="text-center lg:text-left stagger-children">
               <p className="text-sm font-medium tracking-[0.3em] theme-text-subtle dark:text-red-500/80 uppercase mb-4">
                 <span className="relative group/tip inline-block">
-                  <span className="underline decoration-dotted underline-offset-4 cursor-x">Boutique</span>
-                  <span className="absolute bottom-full left-0 mb-1 text-xs normal-case tracking-normal opacity-0 group-hover/tip:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap">
+                  <span className="md:underline md:decoration-dotted md:underline-offset-4 md:cursor-x">Boutique</span>
+                  <span className="hidden md:block absolute bottom-full left-0 mb-1 text-xs normal-case tracking-normal opacity-0 group-hover/tip:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap">
                     <span className="font-semibold theme-text-primary">rōnin 浪人</span>
                     <span className="block theme-text-muted mt-0.5">We serve the mission, not the machine.</span>
                   </span>
@@ -239,7 +239,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="text-3xl font-light theme-text-primary mb-6">
-              The Way of the <span className="relative group/ninja inline-block font-semibold theme-text-primary"><span className="underline decoration-dotted underline-offset-4 cursor-x">Ninja</span><span className="absolute bottom-full left-0 mb-1 text-xs font-normal opacity-0 group-hover/ninja:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap"><span className="font-semibold theme-text-primary">shinobi 忍び</span><span className="block theme-text-muted mt-0.5">He who runs after two hares will catch neither.</span></span></span>
+              The Way of the <span className="relative group/ninja inline-block font-semibold theme-text-primary"><span className="md:underline md:decoration-dotted md:underline-offset-4 md:cursor-x">Ninja</span><span className="hidden md:block absolute bottom-full left-0 mb-1 text-xs font-normal opacity-0 group-hover/ninja:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap"><span className="font-semibold theme-text-primary">shinobi 忍び</span><span className="block theme-text-muted mt-0.5">He who runs after two hares will catch neither.</span></span></span>
             </h2>
             <p className="text-lg theme-text-muted leading-relaxed">
               Like the masters of old, we believe in precision over volume. We take on only a
