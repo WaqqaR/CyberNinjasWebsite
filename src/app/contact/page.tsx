@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { PageHero } from "@/components/PageHero";
+import { Divider } from "@/components/Divider";
 
 export default function ContactPage() {
   const [formState, setFormState] = useState({
@@ -19,22 +21,11 @@ export default function ContactPage() {
   return (
     <div className="theme-bg-primary transition-colors duration-[1000ms]">
       {/* Hero */}
-      <section className="py-24 theme-bg-secondary transition-colors duration-[1000ms]">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="max-w-3xl">
-            <p className="text-sm font-medium tracking-[0.3em] theme-text-subtle dark:text-red-500/80 uppercase mb-4">
-              Contact
-            </p>
-            <h1 className="text-4xl md:text-5xl font-light theme-text-primary mb-6">
-              Let&apos;s <span className="font-semibold dark:text-red-500">Connect</span>
-            </h1>
-            <p className="text-lg theme-text-muted leading-relaxed">
-              Every great partnership starts with a conversation. Tell us about your
-              challenges, and let&apos;s explore how we can help you transform.
-            </p>
-          </div>
-        </div>
-      </section>
+      <PageHero
+        label="Contact"
+        title={<>Let&apos;s <span className="font-semibold dark:text-red-500">Connect</span></>}
+        description="Every great partnership starts with a conversation. Tell us about your challenges, and let's explore how we can help you transform."
+      />
 
       {/* Contact Form */}
       <section className="py-24 theme-bg-primary">
@@ -45,7 +36,7 @@ export default function ContactPage() {
               {submitted ? (
                 <div className="p-8 theme-bg-card border theme-border rounded-lg text-center">
                   <div className="w-16 h-16 mx-auto mb-6 flex items-center justify-center theme-bg-tertiary rounded-full">
-                    <svg className="w-8 h-8 dark:text-red-500" style={{ color: 'var(--accent)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-8 h-8 text-[var(--accent)] dark:text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                   </div>
@@ -71,8 +62,7 @@ export default function ContactPage() {
                       required
                       value={formState.name}
                       onChange={(e) => setFormState({ ...formState, name: e.target.value })}
-                      className="w-full px-4 py-3 theme-bg-card border theme-border rounded theme-text-primary focus:outline-none transition-colors"
-                      style={{ backgroundColor: 'var(--bg-card)' }}
+                      className="w-full px-4 py-3 bg-[var(--bg-card)] border theme-border rounded theme-text-primary focus:outline-none transition-colors"
                       placeholder="Your name"
                     />
                   </div>
@@ -90,8 +80,7 @@ export default function ContactPage() {
                       required
                       value={formState.email}
                       onChange={(e) => setFormState({ ...formState, email: e.target.value })}
-                      className="w-full px-4 py-3 theme-bg-card border theme-border rounded theme-text-primary focus:outline-none transition-colors"
-                      style={{ backgroundColor: 'var(--bg-card)' }}
+                      className="w-full px-4 py-3 bg-[var(--bg-card)] border theme-border rounded theme-text-primary focus:outline-none transition-colors"
                       placeholder="you@company.com"
                     />
                   </div>
@@ -108,8 +97,7 @@ export default function ContactPage() {
                       id="company"
                       value={formState.company}
                       onChange={(e) => setFormState({ ...formState, company: e.target.value })}
-                      className="w-full px-4 py-3 theme-bg-card border theme-border rounded theme-text-primary focus:outline-none transition-colors"
-                      style={{ backgroundColor: 'var(--bg-card)' }}
+                      className="w-full px-4 py-3 bg-[var(--bg-card)] border theme-border rounded theme-text-primary focus:outline-none transition-colors"
                       placeholder="Your company"
                     />
                   </div>
@@ -127,8 +115,7 @@ export default function ContactPage() {
                       rows={5}
                       value={formState.message}
                       onChange={(e) => setFormState({ ...formState, message: e.target.value })}
-                      className="w-full px-4 py-3 theme-bg-card border theme-border rounded theme-text-primary focus:outline-none transition-colors resize-none"
-                      style={{ backgroundColor: 'var(--bg-card)' }}
+                      className="w-full px-4 py-3 bg-[var(--bg-card)] border theme-border rounded theme-text-primary focus:outline-none transition-colors resize-none"
                       placeholder="Tell us about your project or challenges..."
                     />
                   </div>
@@ -193,12 +180,7 @@ export default function ContactPage() {
                   </div>
                 </div>
 
-                {/* Decorative divider */}
-                <div className="flex items-center my-12">
-                  <div className="h-px flex-grow" style={{ backgroundColor: 'var(--border-color)' }} />
-                  <div className="mx-4 w-2 h-2 rotate-45 dark:bg-red-500" style={{ backgroundColor: 'var(--accent)' }} />
-                  <div className="h-px flex-grow" style={{ backgroundColor: 'var(--border-color)' }} />
-                </div>
+                <Divider />
 
                 <div className="text-center">
                   <p className="text-sm theme-text-subtle mb-2">

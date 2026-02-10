@@ -14,11 +14,11 @@ export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 theme-bg-primary backdrop-blur-md border-b theme-border transition-colors duration-[1000ms]" style={{ backgroundColor: 'var(--bg-primary)', opacity: 0.95 }}>
+    <header className="fixed top-0 left-0 right-0 z-50 theme-bg-primary backdrop-blur-md border-b theme-border transition-colors duration-[1000ms] bg-[var(--bg-primary)] opacity-95">
       <nav className="mx-auto max-w-7xl px-6 lg:px-8" aria-label="Global">
         <div className="flex items-center justify-between h-16">
-          <Link href="/" className="relative flex items-center group" style={{ overflow: 'clip', height: '2rem' }}>
-            <span className="flex items-center gap-3 transition-[transform,opacity] duration-500 ease-in-out group-hover:-translate-y-full group-hover:opacity-0">
+          <Link href="/" className="relative flex items-center group overflow-clip h-8">
+            <span className="flex items-center gap-3 transition-[translate,opacity] duration-500 ease-in-out group-hover:-translate-y-full group-hover:opacity-0">
               <span className="text-xl font-light tracking-[0.2em] theme-text-primary transition-colors duration-[1000ms]">
                 CYBER
               </span>
@@ -26,7 +26,7 @@ export function Header() {
                 NINJAS
               </span>
             </span>
-            <span className="absolute inset-0 flex items-center gap-3 translate-y-full opacity-0 transition-[transform,opacity] duration-500 ease-in-out group-hover:translate-y-0 group-hover:opacity-100">
+            <span className="absolute inset-0 flex items-center gap-3 translate-y-full opacity-0 transition-[translate,opacity] duration-500 ease-in-out group-hover:translate-y-0 group-hover:opacity-100">
               <span className="text-xl font-light tracking-[0.2em] theme-text-primary transition-colors duration-[1000ms]">
                 サイバー
               </span>
@@ -42,13 +42,12 @@ export function Header() {
               <Link
                 key={item.name}
                 href={item.href}
-                className="relative text-sm font-medium tracking-wide theme-text-muted hover:theme-text-primary group overflow-hidden"
-                style={{ height: '1.25rem', display: 'inline-flex', alignItems: 'center' }}
+                className="relative text-sm font-medium tracking-wide theme-text-muted hover:theme-text-primary group overflow-hidden h-5 inline-flex items-center"
               >
-                <span className="inline-block whitespace-nowrap transition-[transform,opacity] duration-300 ease-in-out group-hover:-translate-y-full group-hover:opacity-0">
+                <span className="inline-block whitespace-nowrap transition-[translate,opacity] duration-300 ease-in-out group-hover:-translate-y-full group-hover:opacity-0">
                   {item.name}
                 </span>
-                <span className="absolute inset-0 inline-flex items-center whitespace-nowrap translate-y-full opacity-0 transition-[transform,opacity] duration-300 ease-in-out group-hover:translate-y-0 group-hover:opacity-100">
+                <span className="absolute inset-0 inline-flex items-center whitespace-nowrap translate-y-full opacity-0 transition-[translate,opacity] duration-300 ease-in-out group-hover:translate-y-0 group-hover:opacity-100">
                   {item.jp}
                 </span>
               </Link>
@@ -87,14 +86,13 @@ export function Header() {
               <Link
                 key={item.name}
                 href={item.href}
-                className="relative block py-3 text-base font-medium theme-text-muted hover:theme-text-primary group overflow-hidden"
-                style={{ height: '2.75rem' }}
+                className="relative block py-3 text-base font-medium theme-text-muted hover:theme-text-primary group overflow-hidden h-11"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                <span className="inline-block whitespace-nowrap transition-[transform,opacity] duration-300 ease-in-out group-hover:-translate-y-full group-hover:opacity-0">
+                <span className="inline-block whitespace-nowrap transition-[translate,opacity] duration-300 ease-in-out group-hover:-translate-y-full group-hover:opacity-0">
                   {item.name}
                 </span>
-                <span className="absolute left-0 top-3 inline-flex items-center whitespace-nowrap translate-y-full opacity-0 transition-[transform,opacity] duration-300 ease-in-out group-hover:translate-y-0 group-hover:opacity-100">
+                <span className="absolute left-0 top-3 inline-flex items-center whitespace-nowrap translate-y-full opacity-0 transition-[translate,opacity] duration-300 ease-in-out group-hover:translate-y-0 group-hover:opacity-100">
                   {item.jp}
                 </span>
               </Link>

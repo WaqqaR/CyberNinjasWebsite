@@ -17,18 +17,12 @@ export function ThemeToggle() {
 
   const handleToggle = () => {
     if (theme === "light") {
-      // Dispatch event to start video immediately (light to dark)
       window.dispatchEvent(new CustomEvent("themeTransitionStart", { detail: "dark" }));
-
-      // Delay dark mode by 4 seconds to let video play
       setTimeout(() => {
         setTheme("dark");
       }, 4000);
     } else {
-      // Dispatch event to start video immediately (dark to light)
       window.dispatchEvent(new CustomEvent("themeTransitionStart", { detail: "light" }));
-
-      // Delay light mode by 4 seconds to let video play
       setTimeout(() => {
         setTheme("light");
       }, 4000);
@@ -38,8 +32,7 @@ export function ThemeToggle() {
   return (
     <button
       onClick={handleToggle}
-      className="relative w-14 h-7 rounded-full transition-colors duration-[1000ms] focus:outline-none focus:ring-2"
-      style={{ backgroundColor: 'var(--border-color)' }}
+      className="relative w-14 h-7 rounded-full transition-colors duration-[1000ms] focus:outline-none focus:ring-2 bg-[var(--border-color)]"
       aria-label="Toggle theme"
     >
       <span

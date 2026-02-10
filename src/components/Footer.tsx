@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { services } from "@/data/services";
 
 export function Footer() {
   return (
@@ -26,26 +27,13 @@ export function Footer() {
               Services
             </h3>
             <ul className="space-y-2">
-              <li>
-                <Link href="/services/copilot-studio" className="text-sm theme-text-muted hover:theme-text-primary transition-colors">
-                  Copilot Studio
-                </Link>
-              </li>
-              <li>
-                <Link href="/services/power-platform" className="text-sm theme-text-muted hover:theme-text-primary transition-colors">
-                  Power Platform
-                </Link>
-              </li>
-              <li>
-                <Link href="/services/dynamics-ce" className="text-sm theme-text-muted hover:theme-text-primary transition-colors">
-                  Dynamics CE
-                </Link>
-              </li>
-              <li>
-                <Link href="/services/ai-automation" className="text-sm theme-text-muted hover:theme-text-primary transition-colors">
-                  AI Agent Automation
-                </Link>
-              </li>
+              {services.map((service) => (
+                <li key={service.slug}>
+                  <Link href={`/services/${service.slug}`} className="text-sm theme-text-muted hover:theme-text-primary transition-colors">
+                    {service.title}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 

@@ -1,23 +1,15 @@
+import { PageHero } from "@/components/PageHero";
+import { CTASection } from "@/components/CTASection";
+
 export default function AboutPage() {
   return (
     <div className="theme-bg-primary transition-colors duration-[1000ms]">
       {/* Hero */}
-      <section className="py-24 theme-bg-secondary transition-colors duration-[1000ms]">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="max-w-3xl">
-            <p className="text-sm font-medium tracking-[0.3em] theme-text-subtle dark:text-red-500/80 uppercase mb-4">
-              About Us
-            </p>
-            <h1 className="text-4xl md:text-5xl font-light theme-text-primary mb-6">
-              The <span className="font-semibold dark:text-red-500">Cyber Ninjas</span> Way
-            </h1>
-            <p className="text-lg theme-text-muted leading-relaxed">
-              We are a boutique technology consultancy that believes in doing fewer things
-              exceptionally well. In an industry of volume-driven firms, we chose a different path.
-            </p>
-          </div>
-        </div>
-      </section>
+      <PageHero
+        label="About Us"
+        title={<>The <span className="font-semibold dark:text-red-500">Cyber Ninjas</span> Way</>}
+        description="We are a boutique technology consultancy that believes in doing fewer things exceptionally well. In an industry of volume-driven firms, we chose a different path."
+      />
 
       {/* Philosophy */}
       <section className="py-24 theme-bg-primary">
@@ -72,44 +64,23 @@ export default function AboutPage() {
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
-            <div className="text-center p-8">
-              <div className="w-12 h-12 mx-auto mb-6 flex items-center justify-center">
-                <div className="w-3 h-3 rotate-45 dark:bg-red-500" style={{ backgroundColor: 'var(--accent)' }} />
+            {[
+              { title: "Precision", description: "Every solution is crafted with meticulous attention to detail. We don\u2019t do \u201Cgood enough.\u201D" },
+              { title: "Partnership", description: "We don\u2019t work for our clients\u2014we work with them. True transformation requires collaboration." },
+              { title: "Results", description: "We measure success by outcomes, not hours billed. Your transformation is our reputation." },
+            ].map((value) => (
+              <div key={value.title} className="text-center p-8">
+                <div className="w-12 h-12 mx-auto mb-6 flex items-center justify-center">
+                  <div className="w-3 h-3 rotate-45 bg-[var(--accent)] dark:bg-red-500" />
+                </div>
+                <h3 className="text-lg font-medium theme-text-primary mb-3">
+                  {value.title}
+                </h3>
+                <p className="theme-text-muted">
+                  {value.description}
+                </p>
               </div>
-              <h3 className="text-lg font-medium theme-text-primary mb-3">
-                Precision
-              </h3>
-              <p className="theme-text-muted">
-                Every solution is crafted with meticulous attention to detail.
-                We don&apos;t do &quot;good enough.&quot;
-              </p>
-            </div>
-
-            <div className="text-center p-8">
-              <div className="w-12 h-12 mx-auto mb-6 flex items-center justify-center">
-                <div className="w-3 h-3 rotate-45 dark:bg-red-500" style={{ backgroundColor: 'var(--accent)' }} />
-              </div>
-              <h3 className="text-lg font-medium theme-text-primary mb-3">
-                Partnership
-              </h3>
-              <p className="theme-text-muted">
-                We don&apos;t work for our clients—we work with them. True transformation
-                requires collaboration.
-              </p>
-            </div>
-
-            <div className="text-center p-8">
-              <div className="w-12 h-12 mx-auto mb-6 flex items-center justify-center">
-                <div className="w-3 h-3 rotate-45 dark:bg-red-500" style={{ backgroundColor: 'var(--accent)' }} />
-              </div>
-              <h3 className="text-lg font-medium theme-text-primary mb-3">
-                Results
-              </h3>
-              <p className="theme-text-muted">
-                We measure success by outcomes, not hours billed. Your transformation
-                is our reputation.
-              </p>
-            </div>
+            ))}
           </div>
         </div>
       </section>
@@ -150,23 +121,11 @@ export default function AboutPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-24 theme-bg-dark transition-colors duration-[1000ms]">
-        <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-light theme-text-on-dark mb-6">
-            Ready to Work Together?
-          </h2>
-          <p className="text-lg theme-text-on-dark opacity-70 mb-8 max-w-2xl mx-auto">
-            We&apos;re always looking for the next meaningful partnership.
-            If our philosophy resonates with you, let&apos;s talk.
-          </p>
-          <a
-            href="/contact"
-            className="inline-flex items-center justify-center px-8 py-3 text-sm font-medium tracking-wide theme-bg-secondary theme-text-primary dark:bg-red-600 dark:text-white rounded hover:opacity-90 transition-colors duration-300"
-          >
-            Start a Conversation
-          </a>
-        </div>
-      </section>
+      <CTASection
+        heading="Ready to Work Together?"
+        description="We're always looking for the next meaningful partnership. If our philosophy resonates with you, let's talk."
+        buttonText="Start a Conversation"
+      />
     </div>
   );
 }
