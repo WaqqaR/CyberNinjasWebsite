@@ -34,6 +34,7 @@ export default function Home() {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [videoPlaying, setVideoPlaying] = useState(false);
   const [transitionDirection, setTransitionDirection] = useState<"dark" | "light" | null>(null);
+  const [heroBgSweep, setHeroBgSweep] = useState(false);
   const videoToDarkRef = useRef<HTMLVideoElement>(null);
   const videoToLightRef = useRef<HTMLVideoElement>(null);
 
@@ -46,9 +47,15 @@ export default function Home() {
 
   // Listen for theme transition start event (fired immediately on toggle click)
   useEffect(() => {
+    let sweepTimer: ReturnType<typeof setTimeout>;
     const handleTransitionStart = (e: CustomEvent) => {
       setTransitionDirection(e.detail);
       setIsTransitioning(true);
+
+      // Start hero background sweep after 1 second
+      sweepTimer = setTimeout(() => {
+        setHeroBgSweep(e.detail === "dark");
+      }, 1000);
 
       if (e.detail === "dark" && videoToDarkRef.current) {
         videoToDarkRef.current.currentTime = 0;
@@ -62,6 +69,7 @@ export default function Home() {
     window.addEventListener("themeTransitionStart", handleTransitionStart as EventListener);
     return () => {
       window.removeEventListener("themeTransitionStart", handleTransitionStart as EventListener);
+      clearTimeout(sweepTimer);
     };
   }, []);
 
@@ -79,8 +87,17 @@ export default function Home() {
     <div className="theme-bg-primary transition-colors duration-[1000ms] relative">
       {/* Hero Section */}
       <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden z-10">
-        {/* Background */}
-        <div className="absolute inset-0 theme-bg-tertiary" />
+        {/* Background - light stays, dark sweeps left-to-right */}
+        <div className="absolute inset-0" style={{ backgroundColor: 'var(--bg-tertiary)' }}>
+          <div
+            className="absolute inset-0"
+            style={{
+              background: '#112424',
+              clipPath: resolvedTheme === 'dark' ? 'inset(0 0 0 0)' : 'inset(0 100% 0 0)',
+              transition: 'clip-path 1s ease 1s',
+            }}
+          />
+        </div>
 
         {/* Subtle pattern overlay - light mode */}
         <div
