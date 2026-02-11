@@ -150,6 +150,24 @@
     animation: fadeIn 0.6s ease-out forwards;
   }
 
+  /* Yin-yang icon */
+  @keyframes yinYangSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .yin-yang-icon {
+    animation: yinYangSpin 10s linear infinite;
+  }
+
+  .yin-yang-icon:hover {
+    animation-duration: 2s;
+  }
+
+  .yin-yang-icon * {
+    transition: fill 1s ease;
+  }
+
   .stagger-children > * {
     opacity: 0;
     animation: fadeIn 0.5s ease-out forwards;

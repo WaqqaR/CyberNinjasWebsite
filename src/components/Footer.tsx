@@ -1,11 +1,12 @@
 import Link from "next/link";
 import { services } from "@/data/services";
+import { products } from "@/data/products";
 
 export function Footer() {
   return (
     <footer className="theme-bg-tertiary border-t theme-border transition-colors duration-[1000ms]">
       <div className="mx-auto max-w-7xl px-6 py-12 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand */}
           <div>
             <div className="flex items-center gap-2 mb-4">
@@ -31,6 +32,22 @@ export function Footer() {
                 <li key={service.slug}>
                   <Link href={`/services/${service.slug}`} className="text-sm theme-text-muted hover:theme-text-primary transition-colors">
                     {service.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Products */}
+          <div>
+            <h3 className="text-sm font-semibold theme-text-primary tracking-wide mb-4">
+              Products
+            </h3>
+            <ul className="space-y-2">
+              {products.map((product) => (
+                <li key={product.slug}>
+                  <Link href={`/products/${product.slug}`} className="text-sm theme-text-muted hover:theme-text-primary transition-colors">
+                    {product.title}
                   </Link>
                 </li>
               ))}
