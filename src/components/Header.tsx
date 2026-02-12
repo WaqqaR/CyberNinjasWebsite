@@ -15,23 +15,23 @@ export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md border-b theme-border transition-colors duration-[1000ms] bg-[var(--bg-primary)]/70">
-      <nav className="mx-auto max-w-7xl px-6 lg:px-8" aria-label="Global">
+    <header className="fixed top-0 left-0 right-0 z-50 overflow-hidden backdrop-blur-md border-b theme-border transition-colors duration-[1000ms] bg-[var(--bg-primary)]/70">
+      <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8" aria-label="Global">
         <div className="flex items-center justify-between h-16">
-          <Link href="/" className="relative flex items-center group overflow-clip h-8">
-            <span className="flex items-center gap-3 transition-[translate,opacity] duration-500 ease-in-out group-hover:-translate-y-full group-hover:opacity-0">
-              <span className="text-xl font-light tracking-[0.2em] theme-text-primary transition-colors duration-[1000ms]">
+          <Link href="/" className="relative flex items-center group overflow-clip h-8 shrink-0">
+            <span className="flex items-center gap-2 sm:gap-3 transition-[translate,opacity] duration-500 ease-in-out group-hover:-translate-y-full group-hover:opacity-0">
+              <span className="text-base sm:text-xl font-light tracking-[0.1em] sm:tracking-[0.2em] theme-text-primary transition-colors duration-[1000ms]">
                 CYBER
               </span>
-              <span className="text-xl font-semibold tracking-wider theme-text-primary dark:text-red-500 transition-colors duration-[1000ms]">
+              <span className="text-base sm:text-xl font-semibold tracking-wide sm:tracking-wider theme-text-primary dark:text-red-500 transition-colors duration-[1000ms]">
                 NINJAS
               </span>
             </span>
-            <span className="absolute inset-0 flex items-center gap-3 translate-y-full opacity-0 transition-[translate,opacity] duration-500 ease-in-out group-hover:translate-y-0 group-hover:opacity-100">
-              <span className="text-xl font-light tracking-[0.2em] theme-text-primary transition-colors duration-[1000ms]">
+            <span className="absolute inset-0 flex items-center gap-2 sm:gap-3 translate-y-full opacity-0 transition-[translate,opacity] duration-500 ease-in-out group-hover:translate-y-0 group-hover:opacity-100">
+              <span className="text-base sm:text-xl font-light tracking-[0.1em] sm:tracking-[0.2em] theme-text-primary transition-colors duration-[1000ms]">
                 サイバー
               </span>
-              <span className="text-xl font-semibold tracking-wider theme-text-primary dark:text-red-500 transition-colors duration-[1000ms]">
+              <span className="text-base sm:text-xl font-semibold tracking-wide sm:tracking-wider theme-text-primary dark:text-red-500 transition-colors duration-[1000ms]">
                 忍者
               </span>
             </span>
@@ -59,7 +59,7 @@ export function Header() {
           </div>
 
           {/* Mobile menu button */}
-          <div className="flex items-center gap-4 md:hidden">
+          <div className="flex items-center gap-4 md:hidden shrink-0">
             <ThemeToggle />
             <button
               type="button"
