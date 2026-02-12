@@ -50,6 +50,7 @@
 
   html {
     background-color: var(--bg-primary);
+    overflow-x: hidden;
   }
 
   html.dark {
