@@ -15,7 +15,7 @@ export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 theme-bg-primary backdrop-blur-md border-b theme-border transition-colors duration-[1000ms] bg-[var(--bg-primary)] opacity-95">
+    <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md border-b theme-border transition-colors duration-[1000ms] bg-[var(--bg-primary)]/70">
       <nav className="mx-auto max-w-7xl px-6 lg:px-8" aria-label="Global">
         <div className="flex items-center justify-between h-16">
           <Link href="/" className="relative flex items-center group overflow-clip h-8">

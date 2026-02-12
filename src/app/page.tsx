@@ -15,15 +15,29 @@ export default function Home() {
   const [transitionDirection, setTransitionDirection] = useState<"dark" | "light" | null>(null);
   const bgVideoDLRef = useRef<HTMLVideoElement>(null);
   const bgVideoLDRef = useRef<HTMLVideoElement>(null);
-  const [bgVideoDLPlaying, setBgVideoDLPlaying] = useState(false);
-  const [bgVideoLDPlaying, setBgVideoLDPlaying] = useState(false);
-  const [heroBg, setHeroBg] = useState<"dark" | "light" | null>(null);
+  const [bgVideoDLVisible, setBgVideoDLVisible] = useState(false);
+  const [bgVideoLDVisible, setBgVideoLDVisible] = useState(false);
 
   useEffect(() => {
     setMounted(true);
-    setHeroBg(resolvedTheme === "dark" ? "dark" : "light");
-    if (bgVideoDLRef.current) bgVideoDLRef.current.load();
-    if (bgVideoLDRef.current) bgVideoLDRef.current.load();
+    // On load, show the appropriate video on its last frame
+    if (resolvedTheme === "dark") {
+      if (bgVideoLDRef.current) {
+        bgVideoLDRef.current.load();
+        bgVideoLDRef.current.addEventListener("loadedmetadata", () => {
+          bgVideoLDRef.current!.currentTime = bgVideoLDRef.current!.duration;
+        }, { once: true });
+      }
+      setBgVideoLDVisible(true);
+    } else {
+      if (bgVideoDLRef.current) {
+        bgVideoDLRef.current.load();
+        bgVideoDLRef.current.addEventListener("loadedmetadata", () => {
+          bgVideoDLRef.current!.currentTime = bgVideoDLRef.current!.duration;
+        }, { once: true });
+      }
+      setBgVideoDLVisible(true);
+    }
   }, []);
 
   useEffect(() => {
@@ -31,15 +45,16 @@ export default function Home() {
       setTransitionDirection(e.detail);
       setIsTransitioning(true);
 
-      setHeroBg(null);
       if (e.detail === "dark" && bgVideoLDRef.current) {
+        setBgVideoDLVisible(false);
         bgVideoLDRef.current.currentTime = 0;
         bgVideoLDRef.current.play();
-        setBgVideoLDPlaying(true);
+        setBgVideoLDVisible(true);
       } else if (e.detail === "light" && bgVideoDLRef.current) {
+        setBgVideoLDVisible(false);
         bgVideoDLRef.current.currentTime = 0;
         bgVideoDLRef.current.play();
-        setBgVideoDLPlaying(true);
+        setBgVideoDLVisible(true);
       }
     };
 
@@ -50,48 +65,18 @@ export default function Home() {
   }, []);
 
   const handleBgVideoEnd = () => {
-    // After light-to-dark video: show background.jpg
-    // After dark-to-light video: show background2.png
-    if (bgVideoLDPlaying) setHeroBg("dark");
-    if (bgVideoDLPlaying) setHeroBg("light");
     setIsTransitioning(false);
     setTransitionDirection(null);
-    setBgVideoDLPlaying(false);
-    setBgVideoLDPlaying(false);
   };
 
   return (
     <div className="theme-bg-primary transition-colors duration-[1000ms] relative">
       {/* Hero Section */}
-      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden z-10">
+      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden z-10 -mt-16 pt-16">
         <div className="absolute inset-0 theme-bg-tertiary" />
 
-        {/* Static background after light-to-dark transition */}
-        <div
-          className={`absolute inset-0 z-[1] transition-opacity duration-500 ${heroBg === 'dark' ? 'opacity-100' : 'opacity-0'}`}
-          style={{
-            backgroundImage: `url('/background.jpg')`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            filter: 'blur(4px)',
-            transform: 'scale(1.05)',
-          }}
-        />
-
-        {/* Static background after dark-to-light transition */}
-        <div
-          className={`absolute inset-0 z-[1] transition-opacity duration-500 ${heroBg === 'light' ? 'opacity-100' : 'opacity-0'}`}
-          style={{
-            backgroundImage: `url('/background2.png')`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            filter: 'blur(4px)',
-            transform: 'scale(1.05)',
-          }}
-        />
-
         {/* Background video - dark to light */}
-        <div className={`absolute inset-0 z-[1] transition-opacity duration-500 ${bgVideoDLPlaying ? 'opacity-100' : 'opacity-0'}`}>
+        <div className={`absolute inset-0 z-[1] ${bgVideoDLVisible ? 'visible' : 'invisible'}`}>
           <video
             ref={bgVideoDLRef}
             className="absolute inset-0 w-full h-full object-cover"
@@ -106,7 +91,7 @@ export default function Home() {
         </div>
 
         {/* Background video - light to dark */}
-        <div className={`absolute inset-0 z-[1] transition-opacity duration-500 ${bgVideoLDPlaying ? 'opacity-100' : 'opacity-0'}`}>
+        <div className={`absolute inset-0 z-[1] ${bgVideoLDVisible ? 'visible' : 'invisible'}`}>
           <video
             ref={bgVideoLDRef}
             className="absolute inset-0 w-full h-full object-cover"
@@ -120,11 +105,11 @@ export default function Home() {
           </video>
         </div>
 
-        {/* Dark overlay on background videos/images - dark mode only */}
-        <div className={`absolute inset-0 z-[2] bg-black/50 transition-opacity duration-500 ${bgVideoLDPlaying || heroBg === 'dark' ? 'opacity-100' : 'opacity-0'}`} />
+        {/* Dark overlay - dark mode only */}
+        <div className={`absolute inset-0 z-[2] bg-black/50 transition-opacity duration-500 ${bgVideoLDVisible ? 'opacity-100' : 'opacity-0'}`} />
 
         {/* Bottom fade */}
-        <div className={`absolute bottom-0 left-0 right-0 h-32 z-[2] bg-gradient-to-t from-[var(--bg-secondary)] to-transparent transition-opacity duration-500 ${bgVideoDLPlaying || bgVideoLDPlaying || heroBg ? 'opacity-100' : 'opacity-0'}`} />
+        <div className="absolute bottom-0 left-0 right-0 h-32 z-[2] bg-gradient-to-t from-[var(--bg-secondary)] to-transparent" />
 
         {/* Subtle pattern overlay - dark mode */}
         <div
