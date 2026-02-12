@@ -1,7 +1,5 @@
 "use client";
 
-import Image from "next/image";
-import Link from "next/link";
 import { useTheme } from "next-themes";
 import { useEffect, useState, useRef } from "react";
 import { BilingualHoverText } from "@/components/BilingualHoverText";
@@ -14,15 +12,18 @@ export default function Home() {
   const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const [videoPlaying, setVideoPlaying] = useState(false);
   const [transitionDirection, setTransitionDirection] = useState<"dark" | "light" | null>(null);
-  const videoToDarkRef = useRef<HTMLVideoElement>(null);
-  const videoToLightRef = useRef<HTMLVideoElement>(null);
+  const bgVideoDLRef = useRef<HTMLVideoElement>(null);
+  const bgVideoLDRef = useRef<HTMLVideoElement>(null);
+  const [bgVideoDLPlaying, setBgVideoDLPlaying] = useState(false);
+  const [bgVideoLDPlaying, setBgVideoLDPlaying] = useState(false);
+  const [heroBg, setHeroBg] = useState<"dark" | "light" | null>(null);
 
   useEffect(() => {
     setMounted(true);
-    if (videoToDarkRef.current) videoToDarkRef.current.load();
-    if (videoToLightRef.current) videoToLightRef.current.load();
+    setHeroBg(resolvedTheme === "dark" ? "dark" : "light");
+    if (bgVideoDLRef.current) bgVideoDLRef.current.load();
+    if (bgVideoLDRef.current) bgVideoLDRef.current.load();
   }, []);
 
   useEffect(() => {
@@ -30,12 +31,15 @@ export default function Home() {
       setTransitionDirection(e.detail);
       setIsTransitioning(true);
 
-      if (e.detail === "dark" && videoToDarkRef.current) {
-        videoToDarkRef.current.currentTime = 0;
-        videoToDarkRef.current.play();
-      } else if (e.detail === "light" && videoToLightRef.current) {
-        videoToLightRef.current.currentTime = 0;
-        videoToLightRef.current.play();
+      setHeroBg(null);
+      if (e.detail === "dark" && bgVideoLDRef.current) {
+        bgVideoLDRef.current.currentTime = 0;
+        bgVideoLDRef.current.play();
+        setBgVideoLDPlaying(true);
+      } else if (e.detail === "light" && bgVideoDLRef.current) {
+        bgVideoDLRef.current.currentTime = 0;
+        bgVideoDLRef.current.play();
+        setBgVideoDLPlaying(true);
       }
     };
 
@@ -45,14 +49,15 @@ export default function Home() {
     };
   }, []);
 
-  const handleVideoPlay = () => {
-    setVideoPlaying(true);
-  };
-
-  const handleVideoEnd = () => {
+  const handleBgVideoEnd = () => {
+    // After light-to-dark video: show background.jpg
+    // After dark-to-light video: show background2.png
+    if (bgVideoLDPlaying) setHeroBg("dark");
+    if (bgVideoDLPlaying) setHeroBg("light");
     setIsTransitioning(false);
     setTransitionDirection(null);
-    setVideoPlaying(false);
+    setBgVideoDLPlaying(false);
+    setBgVideoLDPlaying(false);
   };
 
   return (
@@ -61,18 +66,69 @@ export default function Home() {
       <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden z-10">
         <div className="absolute inset-0 theme-bg-tertiary" />
 
-        {/* Subtle pattern overlay - light mode */}
+        {/* Static background after light-to-dark transition */}
         <div
-          className="absolute inset-0 opacity-30 dark:opacity-0 transition-opacity duration-500"
+          className={`absolute inset-0 z-[1] transition-opacity duration-500 ${heroBg === 'dark' ? 'opacity-100' : 'opacity-0'}`}
           style={{
-            backgroundImage: `radial-gradient(circle at 1px 1px, var(--border-color) 1px, transparent 0)`,
-            backgroundSize: '40px 40px'
+            backgroundImage: `url('/background.jpg')`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            filter: 'blur(4px)',
+            transform: 'scale(1.05)',
           }}
         />
 
+        {/* Static background after dark-to-light transition */}
+        <div
+          className={`absolute inset-0 z-[1] transition-opacity duration-500 ${heroBg === 'light' ? 'opacity-100' : 'opacity-0'}`}
+          style={{
+            backgroundImage: `url('/background2.png')`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            filter: 'blur(4px)',
+            transform: 'scale(1.05)',
+          }}
+        />
+
+        {/* Background video - dark to light */}
+        <div className={`absolute inset-0 z-[1] transition-opacity duration-500 ${bgVideoDLPlaying ? 'opacity-100' : 'opacity-0'}`}>
+          <video
+            ref={bgVideoDLRef}
+            className="absolute inset-0 w-full h-full object-cover"
+            style={{ filter: 'blur(4px)', transform: 'scale(1.05)' }}
+            muted
+            playsInline
+            preload="auto"
+            onEnded={handleBgVideoEnd}
+          >
+            <source src="/backgrounddl.mp4" type="video/mp4" />
+          </video>
+        </div>
+
+        {/* Background video - light to dark */}
+        <div className={`absolute inset-0 z-[1] transition-opacity duration-500 ${bgVideoLDPlaying ? 'opacity-100' : 'opacity-0'}`}>
+          <video
+            ref={bgVideoLDRef}
+            className="absolute inset-0 w-full h-full object-cover"
+            style={{ filter: 'blur(4px)', transform: 'scale(1.05)' }}
+            muted
+            playsInline
+            preload="auto"
+            onEnded={handleBgVideoEnd}
+          >
+            <source src="/backgroundld.mp4" type="video/mp4" />
+          </video>
+        </div>
+
+        {/* Dark overlay on background videos/images - dark mode only */}
+        <div className={`absolute inset-0 z-[2] bg-black/50 transition-opacity duration-500 ${bgVideoLDPlaying || heroBg === 'dark' ? 'opacity-100' : 'opacity-0'}`} />
+
+        {/* Bottom fade */}
+        <div className={`absolute bottom-0 left-0 right-0 h-32 z-[2] bg-gradient-to-t from-[var(--bg-secondary)] to-transparent transition-opacity duration-500 ${bgVideoDLPlaying || bgVideoLDPlaying || heroBg ? 'opacity-100' : 'opacity-0'}`} />
+
         {/* Subtle pattern overlay - dark mode */}
         <div
-          className="absolute inset-0 opacity-0 dark:opacity-20 transition-opacity duration-500"
+          className="absolute inset-0 opacity-0 dark:opacity-20 transition-opacity duration-500 z-[3]"
           style={{
             backgroundImage: `linear-gradient(rgba(239, 68, 68, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(239, 68, 68, 0.1) 1px, transparent 1px)`,
             backgroundSize: '60px 60px'
@@ -121,81 +177,17 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Hero image/video */}
-            <div className="relative max-w-lg mx-auto lg:mx-0">
-              <div className="relative aspect-square" style={{ boxShadow: 'inset 0 0 40px 20px var(--bg-primary)' }}>
-                {mounted && (
-                  <>
-                    {/* Transition video - light to dark */}
-                    <div className={`absolute inset-0 z-10 transition-opacity duration-100 ${
-                      isTransitioning && transitionDirection === "dark" && videoPlaying ? "opacity-100" : "opacity-0 pointer-events-none"
-                    }`}>
-                      <video
-                        ref={videoToDarkRef}
-                        className="w-full h-full object-contain transition-none"
-                        muted
-                        playsInline
-                        preload="auto"
-                        onPlay={handleVideoPlay}
-                        onEnded={handleVideoEnd}
-                      >
-                        <source src="/darklighttransition.webm" type="video/webm" />
-                        <source src="/darklighttransition.mp4" type="video/mp4" />
-                      </video>
-                    </div>
-
-                    {/* Transition video - dark to light */}
-                    <div className={`absolute inset-0 z-10 transition-opacity duration-100 ${
-                      isTransitioning && transitionDirection === "light" && videoPlaying ? "opacity-100" : "opacity-0 pointer-events-none"
-                    }`}>
-                      <video
-                        ref={videoToLightRef}
-                        className="w-full h-full object-contain transition-none"
-                        muted
-                        playsInline
-                        preload="auto"
-                        onPlay={handleVideoPlay}
-                        onEnded={handleVideoEnd}
-                      >
-                        <source src="/darklighttransition2.webm" type="video/webm" />
-                        <source src="/darklighttransition2.mp4" type="video/mp4" />
-                      </video>
-                    </div>
-
-                    {/* Static images */}
-                    <div className={`relative w-full h-full transition-opacity duration-500 ${
-                      isTransitioning ? "opacity-0" : "opacity-100"
-                    }`}>
-                      <Image
-                        src={resolvedTheme === "dark"
-                          ? "/cyberninjas-bannerart-light.png"
-                          : "/cyberninjas-bannerart-dark.png"
-                        }
-                        alt="Cyber Ninjas"
-                        fill
-                        className="object-contain"
-                        priority
-                      />
-                    </div>
-                  </>
-                )}
-                {!mounted && (
-                  <div className="w-full h-full theme-bg-secondary animate-pulse rounded-lg" />
-                )}
-              </div>
-
-              {/* Japanese proverb */}
-              <div className="mt-6 text-center">
-                <p className="text-2xl md:text-3xl font-light tracking-wider theme-text-primary dark:text-stone-300 font-serif">
-                  石の上にも三年
-                </p>
-                <p className="mt-2 text-sm font-medium tracking-widest uppercase theme-text-secondary dark:text-red-500/80">
-                  Three years on a stone
-                </p>
-                <p className="mt-1 text-xs theme-text-muted italic max-w-xs mx-auto">
-                  Even the most difficult tasks can be conquered with patience and endurance.
-                </p>
-              </div>
+            {/* Japanese proverb */}
+            <div className="text-center lg:text-left">
+              <p className="text-2xl md:text-3xl font-light tracking-wider theme-text-primary dark:text-stone-300 font-serif">
+                石の上にも三年
+              </p>
+              <p className="mt-2 text-sm font-medium tracking-widest uppercase theme-text-secondary dark:text-red-500/80">
+                Three years on a stone
+              </p>
+              <p className="mt-1 text-xs theme-text-muted italic max-w-xs mx-auto lg:mx-0">
+                Even the most difficult tasks can be conquered with patience and endurance.
+              </p>
             </div>
           </div>
         </div>

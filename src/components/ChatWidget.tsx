@@ -24,9 +24,20 @@ export function ChatWidget() {
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [showPrompt, setShowPrompt] = useState(false);
+  const [transcriptSent, setTranscriptSent] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const userMessageCount = messages.filter((m) => m.role === "user").length;
+
+  function sendTranscript(msgs: Message[]) {
+    if (msgs.length === 0 || transcriptSent) return;
+    setTranscriptSent(true);
+    fetch("/api/send-transcript", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ messages: msgs }),
+    }).catch(() => {});
+  }
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -90,7 +101,10 @@ export function ChatWidget() {
           </button>
         )}
         <button
-          onClick={() => setIsOpen(!isOpen)}
+          onClick={() => {
+            if (isOpen) sendTranscript(messages);
+            setIsOpen(!isOpen);
+          }}
           className="w-14 h-14 rounded-full shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-105 bg-[#1c1917] dark:bg-[#0f1e1e] border border-[#333] dark:border-[#2a3a33] text-white"
           aria-label={isOpen ? "Close chat" : "Open chat"}
         >
@@ -185,12 +199,13 @@ export function ChatWidget() {
           </div>
 
           {/* WhatsApp handoff */}
-          {userMessageCount >= 3 && (
+          {userMessageCount >= 1 && (
             <div className="px-3 pt-2">
               <a
                 href={buildWhatsAppUrl(messages)}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => sendTranscript(messages)}
                 className="flex items-center justify-center gap-2 w-full py-2 rounded-md text-xs font-medium bg-[#25D366]/10 text-[#25D366] hover:bg-[#25D366]/20 transition-colors border border-[#25D366]/20"
               >
                 <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
