@@ -5,7 +5,6 @@ import { useEffect, useState, useRef } from "react";
 import { BilingualHoverText } from "@/components/BilingualHoverText";
 import { ServiceCard } from "@/components/ServiceCard";
 import { CTASection } from "@/components/CTASection";
-import { Divider } from "@/components/Divider";
 import { services } from "@/data/services";
 
 export default function Home() {
@@ -148,7 +147,7 @@ export default function Home() {
                 <BilingualHoverText
                   english="Begin Your Journey"
                   japanese="旅を始めよう"
-                  href="/contact"
+                  onClick={() => window.dispatchEvent(new CustomEvent("open-chat-widget"))}
                   className="px-8 py-3 text-sm font-medium tracking-wide theme-btn-primary rounded transition-colors duration-300"
                   height="lg"
                 />
@@ -175,24 +174,6 @@ export default function Home() {
               </p>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* Philosophy Section */}
-      <section className="py-24 relative z-10 theme-bg-secondary transition-colors duration-[1000ms]">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl font-light theme-text-primary mb-6">
-              The Way of the <span className="relative group/ninja inline-block font-semibold theme-text-primary"><span className="underline decoration-dotted underline-offset-4 cursor-x">Ninja</span><span className="absolute bottom-full left-0 mb-1 text-xs font-normal opacity-0 group-hover/ninja:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap"><span className="font-semibold theme-text-primary">shinobi 忍び</span><span className="block theme-text-muted mt-0.5">He who runs after two hares will catch neither.</span></span></span>
-            </h2>
-            <p className="text-lg theme-text-muted leading-relaxed">
-              Like the masters of old, we believe in precision over volume. We take on only a
-              handful of clients at any time, ensuring each engagement receives our complete
-              focus and dedication. Your transformation deserves nothing less.
-            </p>
-          </div>
-
-          <Divider fixed />
         </div>
       </section>
 

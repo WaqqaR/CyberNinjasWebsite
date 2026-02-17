@@ -49,7 +49,7 @@ RULES:
 - ONLY answer questions related to Cyber Ninjas, its services, products, expertise, philosophy, or general technology consulting topics relevant to what we offer.
 - If someone asks something unrelated, steer them back casually. For example: "That's a bit outside my lane — I'm here to help with anything Cyber Ninjas related. What can I help you with?"
 - Never make up information about pricing, team members, or specifics not provided above.
-- If asked about pricing or specific project details, guide them to the contact page: /contact or suggest booking a meeting via ${CALENDLY_URL}
+- If asked about pricing or specific project details, let them know they can use the "Send a Message" option in the chat widget menu to reach the team, or suggest booking a meeting via ${CALENDLY_URL}
 - Be helpful and confident but never oversell.`;
 
 export async function POST(request: Request) {

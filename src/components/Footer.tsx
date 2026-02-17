@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { Logo } from "./Logo";
 import { services } from "@/data/services";
 import { products } from "@/data/products";
 
@@ -9,13 +12,8 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand */}
           <div>
-            <div className="flex items-center gap-2 mb-4">
-              <span className="text-lg font-light tracking-[0.2em] theme-text-primary">
-                CYBER
-              </span>
-              <span className="text-lg font-semibold tracking-wider theme-text-primary dark:text-red-500">
-                NINJAS
-              </span>
+            <div className="mb-4">
+              <Logo className="h-7 w-auto theme-text-primary dark:text-red-500 transition-colors duration-[1000ms]" />
             </div>
             <p className="text-sm theme-text-muted leading-relaxed">
               Boutique technology consultancy specializing in digital transformation and AI enablement.
@@ -61,9 +59,12 @@ export function Footer() {
             </h3>
             <ul className="space-y-2 text-sm theme-text-muted">
               <li>
-                <Link href="/contact" className="hover:theme-text-primary transition-colors">
+                <button
+                  onClick={() => window.dispatchEvent(new CustomEvent("open-chat-widget"))}
+                  className="hover:theme-text-primary transition-colors"
+                >
                   Get in Touch
-                </Link>
+                </button>
               </li>
               <li>
                 <Link href="/about" className="hover:theme-text-primary transition-colors">
