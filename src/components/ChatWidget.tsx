@@ -33,6 +33,15 @@ export function ChatWidget() {
   const [contactSent, setContactSent] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const scanLineRef = useRef<HTMLDivElement>(null);
+
+  const triggerScan = () => {
+    const el = scanLineRef.current;
+    if (!el) return;
+    el.style.animation = "none";
+    void el.offsetHeight;
+    el.style.animation = "navbar-scan 10s ease-in-out infinite";
+  };
   const userMessageCount = messages.filter((m) => m.role === "user").length;
 
   function sendTranscript(msgs: Message[]) {
@@ -61,6 +70,28 @@ export function ChatWidget() {
     }, 10000);
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    if (isOpen) triggerScan();
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (isOpen) triggerScan();
+  }, [view]);
+
+  useEffect(() => {
+    const el = scanLineRef.current;
+    if (!el) return;
+    if (isLoading) {
+      el.style.animation = "none";
+      void el.offsetHeight;
+      el.style.animation = "navbar-scan-loading 0.6s ease-in-out infinite";
+    } else {
+      el.style.animation = "none";
+      void el.offsetHeight;
+      el.style.animation = "navbar-scan 10s ease-in-out infinite";
+    }
+  }, [isLoading]);
 
   // Listen for open-chat-widget custom event
   useEffect(() => {
@@ -164,9 +195,9 @@ export function ChatWidget() {
 
       {/* Chat panel */}
       {isOpen && (
-        <div className="fixed bottom-24 right-6 z-50 w-[360px] max-h-[500px] flex flex-col rounded-lg shadow-2xl border theme-border overflow-hidden theme-bg-primary transition-colors duration-[1000ms]">
+        <div className="fixed bottom-24 right-6 z-50 w-[360px] max-h-[500px] flex flex-col rounded-lg shadow-2xl border theme-border overflow-hidden bg-[var(--bg-primary)] transition-colors duration-[1000ms]">
           {/* Header */}
-          <div className="px-4 py-3 border-b theme-border bg-[#1c1917] dark:bg-[#0f1e1e] text-white">
+          <div className="relative px-4 py-3 border-b theme-border bg-[#1c1917] dark:bg-[#0f1e1e] text-white overflow-hidden">
             <div className="flex items-center gap-3">
               {view !== "menu" && (
                 <button
@@ -206,6 +237,15 @@ export function ChatWidget() {
                 </svg>
                 Book
               </a>
+            </div>
+
+            {/* Scan line */}
+            <div className="absolute bottom-0 left-0 right-0 h-px overflow-hidden pointer-events-none" aria-hidden="true">
+              <div
+                ref={scanLineRef}
+                className="navbar-scan-line absolute top-0 h-full w-2/5"
+                style={{ background: 'linear-gradient(to right, transparent, rgba(158,48,169,0.6) 30%, rgba(64,144,181,0.8) 60%, transparent)' }}
+              />
             </div>
           </div>
 

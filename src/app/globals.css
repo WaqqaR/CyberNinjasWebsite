@@ -242,6 +242,14 @@
   .stagger-children > *:nth-child(5) { animation-delay: 0.5s; }
 
   /* Navbar scan line */
+  @keyframes navbar-scan-loading {
+    0%     { transform: translateX(0%); }
+    45%    { transform: translateX(250%); }
+    45.1%  { transform: translateX(-100%); }
+    90%    { transform: translateX(0%); }
+    100%   { transform: translateX(0%); }
+  }
+
   @keyframes navbar-scan {
     0%     { transform: translateX(0%); }
     13%    { transform: translateX(250%); }
@@ -267,6 +275,14 @@
   }
   .animate-theme-toggle-pulse {
     box-shadow: 0 0 12px rgba(251, 191, 36, 0.6);
+  }
+
+  /* Service card gradient border on hover */
+  .service-card-gradient {
+    --neon-purple: #9e30a9;
+    --neon-teal: #4090b5;
+    background: conic-gradient(from var(--neon-angle), var(--neon-purple), var(--neon-teal), var(--neon-purple));
+    animation: neon-rotate 3s linear infinite;
   }
 
   /* ===== NEON CYBERPUNK BUTTON ===== */
