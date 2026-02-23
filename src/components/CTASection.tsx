@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { NeonButton } from "./NeonButton";
 
 interface CTASectionProps {
   heading: string;
@@ -27,19 +27,15 @@ export function CTASection({
           {description}
         </p>
         {isContact ? (
-          <button
+          <NeonButton
             onClick={() => window.dispatchEvent(new CustomEvent("open-chat-widget"))}
-            className="inline-flex items-center justify-center px-8 py-3 text-sm font-medium tracking-wide theme-bg-secondary theme-text-primary dark:bg-red-600 dark:text-white rounded hover:opacity-90 transition-colors duration-300"
           >
             {buttonText}
-          </button>
+          </NeonButton>
         ) : (
-          <Link
-            href={href}
-            className="inline-flex items-center justify-center px-8 py-3 text-sm font-medium tracking-wide theme-bg-secondary theme-text-primary dark:bg-red-600 dark:text-white rounded hover:opacity-90 transition-colors duration-300"
-          >
+          <NeonButton href={href}>
             {buttonText}
-          </Link>
+          </NeonButton>
         )}
       </div>
     </section>

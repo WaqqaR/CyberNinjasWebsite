@@ -179,13 +179,18 @@
     content: '';
     position: absolute;
     width: 100%;
-    height: 2px;
-    background: linear-gradient(to right, #6F00FF, #FE59C2);
+    height: 1px;
+    background: transparent;
     bottom: -5px;
     left: 0;
     transform: scaleX(0);
     transform-origin: right;
     transition: transform 0.4s ease-out;
+  }
+
+  .dark .logo-hover-lines::after,
+  .dark .logo-hover-lines::before {
+    background: linear-gradient(to right, transparent, rgba(158,48,169,0.6) 30%, rgba(64,144,181,0.8) 60%, transparent);
   }
 
   .logo-hover-lines::before {
@@ -209,13 +214,17 @@
     content: '';
     position: absolute;
     width: 100%;
-    height: 2px;
-    background: linear-gradient(to right, #6F00FF, #FE59C2);
+    height: 1px;
+    background: transparent;
     bottom: 0;
     left: 0;
     transform: scaleX(0);
     transform-origin: right;
     transition: transform 0.4s ease-out;
+  }
+
+  .dark .nav-hover-line::after {
+    background: linear-gradient(to right, transparent, rgba(158,48,169,0.6) 30%, rgba(64,144,181,0.8) 60%, transparent);
   }
 
   .nav-hover-line:hover::after {
@@ -231,4 +240,138 @@
   .stagger-children > *:nth-child(3) { animation-delay: 0.3s; }
   .stagger-children > *:nth-child(4) { animation-delay: 0.4s; }
   .stagger-children > *:nth-child(5) { animation-delay: 0.5s; }
+
+  /* Navbar scan line */
+  @keyframes navbar-scan {
+    0%     { transform: translateX(0%); }
+    13%    { transform: translateX(250%); }
+    13.1%  { transform: translateX(-100%); }
+    26%    { transform: translateX(0%); }
+    100%   { transform: translateX(0%); }
+  }
+
+  .navbar-scan-line {
+    transform: translateX(0%);
+  }
+
+  /* Theme toggle transitioning pulse */
+  @keyframes theme-toggle-pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.15); opacity: 0.7; }
+  }
+  .animate-theme-toggle-pulse {
+    animation: theme-toggle-pulse 1s ease-in-out infinite;
+  }
+  .dark .animate-theme-toggle-pulse {
+    box-shadow: 0 0 12px rgba(239, 68, 68, 0.6);
+  }
+  .animate-theme-toggle-pulse {
+    box-shadow: 0 0 12px rgba(251, 191, 36, 0.6);
+  }
+
+  /* ===== NEON CYBERPUNK BUTTON ===== */
+  @keyframes neon-rotate {
+    0% { --neon-angle: 0deg; }
+    100% { --neon-angle: 360deg; }
+  }
+
+  @property --neon-angle {
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+  }
+
+  .neon-btn {
+    --neon-purple: #9e30a9;
+    --neon-teal: #4090b5;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1px;
+    clip-path: polygon(
+      0% 0%,
+      85% 0%,
+      100% 30%,
+      100% 100%,
+      15% 100%,
+      0% 70%
+    );
+    background: conic-gradient(from var(--neon-angle), var(--neon-purple), var(--neon-teal), var(--neon-purple));
+    animation: neon-rotate 3s linear infinite;
+    cursor: pointer;
+    text-decoration: none;
+    border: none;
+    outline: none;
+  }
+
+  .neon-btn::before,
+  .neon-btn::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    clip-path: polygon(
+      0% 0%,
+      85% 0%,
+      100% 30%,
+      100% 100%,
+      15% 100%,
+      0% 70%
+    );
+    background: conic-gradient(from var(--neon-angle), var(--neon-purple), var(--neon-teal), var(--neon-purple));
+    animation: neon-rotate 3s linear infinite;
+  }
+
+  .neon-btn::before {
+    filter: blur(8px);
+    opacity: 0.5;
+  }
+
+  .neon-btn::after {
+    filter: blur(24px);
+    opacity: 0.3;
+  }
+
+  .neon-btn-bg {
+    position: absolute;
+    inset: 1px;
+    clip-path: polygon(
+      0% 0%,
+      85% 0%,
+      100% 30%,
+      100% 100%,
+      15% 100%,
+      0% 70%
+    );
+    background: #0a0a0a;
+    z-index: 1;
+  }
+
+  .neon-btn-txt {
+    position: relative;
+    z-index: 2;
+    padding: 12px 32px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    color: #fff;
+    text-shadow:
+      0 0 8px var(--neon-purple),
+      0 0 20px var(--neon-teal);
+  }
+
+  .neon-btn:hover .neon-btn-txt {
+    text-shadow:
+      0 0 12px var(--neon-purple),
+      0 0 30px var(--neon-teal),
+      0 0 50px var(--neon-purple);
+  }
+
+  .neon-btn:hover::before {
+    opacity: 0.7;
+  }
+
+  .neon-btn:hover::after {
+    opacity: 0.5;
+  }
 }

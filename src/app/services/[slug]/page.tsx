@@ -66,6 +66,37 @@ export default async function ServicePage({ params }: PageProps) {
         </div>
       </section>
 
+      {/* Use Cases */}
+      {service.useCases && service.useCases.length > 0 && (
+        <section className="py-24 theme-bg-secondary transition-colors duration-[1000ms]">
+          <div className="max-w-7xl mx-auto px-6 lg:px-8">
+            <h2 className="text-2xl font-light theme-text-primary mb-3">
+              Real-World <span className="font-semibold dark:text-red-500">Examples</span>
+            </h2>
+            <p className="theme-text-muted mb-12">What this looks like in practice for our clients.</p>
+
+            <div className="grid md:grid-cols-3 gap-6">
+              {service.useCases.map((useCase) => (
+                <div key={useCase.title} className="relative flex flex-col p-6 theme-bg-card border theme-border rounded-lg overflow-hidden">
+                  <div className="absolute top-0 left-0 right-0 h-0.5" style={{ background: useCase.barGradient }} />
+                  <span className={`inline-block self-start px-2.5 py-0.5 rounded-full text-xs font-medium mb-4 ${useCase.typeClass}`}>
+                    {useCase.type}
+                  </span>
+                  <h3 className="text-lg font-medium theme-text-primary mb-3">{useCase.title}</h3>
+                  <p className="theme-text-muted text-sm leading-relaxed mb-6 flex-1">{useCase.description}</p>
+                  <div className="flex items-start gap-2 pt-4 border-t theme-border">
+                    <svg className="w-4 h-4 flex-shrink-0 mt-0.5 text-[var(--accent)] dark:text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                    </svg>
+                    <span className="text-sm font-medium text-[var(--accent)] dark:text-red-400">{useCase.result}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Benefits */}
       <section className="py-24 theme-bg-secondary transition-colors duration-[1000ms]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">

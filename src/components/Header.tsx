@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { ThemeToggle } from "./ThemeToggle";
 import { Logo } from "./Logo";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 const navigation = [
   { name: "Services", jp: "サービス", href: "/services" },
@@ -14,12 +15,31 @@ const navigation = [
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const scanLineRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
+  const isFirstRender = useRef(true);
+
+  const triggerScan = () => {
+    const el = scanLineRef.current;
+    if (!el) return;
+    el.style.animation = "none";
+    void el.offsetHeight; // force reflow to restart
+    el.style.animation = "navbar-scan 10s ease-in-out infinite";
+  };
+
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+    triggerScan();
+  }, [pathname]);
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 overflow-x-clip backdrop-blur-md border-b theme-border transition-colors duration-[1000ms] bg-[var(--bg-primary)]/70">
       <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8" aria-label="Global">
         <div className="flex items-center justify-between h-16">
-          <Link href="/" className="shrink-0 logo-hover-lines">
+          <Link href="/" className="shrink-0 logo-hover-lines" onMouseEnter={triggerScan}>
             <Logo className="h-7 sm:h-8 w-auto theme-text-primary dark:text-red-500 transition-colors duration-[1000ms]" />
           </Link>
 
@@ -121,6 +141,15 @@ export function Header() {
           </div>
         )}
       </nav>
+
+      {/* Scan line - dark mode only */}
+      <div className="absolute bottom-0 left-0 right-0 h-px overflow-hidden hidden dark:block pointer-events-none" aria-hidden="true">
+        <div
+          ref={scanLineRef}
+          className="navbar-scan-line absolute top-0 h-full w-2/5"
+          style={{ background: 'linear-gradient(to right, transparent, rgba(158,48,169,0.6) 30%, rgba(64,144,181,0.8) 60%, transparent)' }}
+        />
+      </div>
     </header>
   );
 }

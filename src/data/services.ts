@@ -5,6 +5,15 @@ export interface ServiceSummary {
   features: string[];
 }
 
+export interface UseCaseItem {
+  title: string;
+  type: string;
+  typeClass: string;
+  barGradient: string;
+  description: string;
+  result: string;
+}
+
 export interface ServiceDetail {
   title: string;
   subtitle: string;
@@ -12,6 +21,7 @@ export interface ServiceDetail {
   longDescription: string;
   features: { title: string; description: string }[];
   benefits: string[];
+  useCases?: UseCaseItem[];
 }
 
 export const services: ServiceSummary[] = [
@@ -90,6 +100,32 @@ export const serviceDetails: Record<string, ServiceDetail> = {
       "Reduced workload on support teams",
       "Consistent, accurate responses every time",
       "Seamless Microsoft 365 integration",
+    ],
+    useCases: [
+      {
+        title: "IT Helpdesk Bot",
+        type: "Internal",
+        typeClass: "bg-teal-500/10 text-teal-700 dark:text-teal-400 border border-teal-500/20 dark:border-teal-500/30",
+        barGradient: "linear-gradient(to right, #14b8a6, #06b6d4)",
+        description: "Handles password resets, software access requests, and common IT issues via Teams. Integrates with your ticketing system and escalates to a human agent when it can't resolve the issue.",
+        result: "Up to 40% reduction in L1 ticket volume",
+      },
+      {
+        title: "Lead Qualification Assistant",
+        type: "Customer-Facing",
+        typeClass: "bg-purple-500/10 text-purple-700 dark:text-purple-400 border border-purple-500/20 dark:border-purple-500/30",
+        barGradient: "linear-gradient(to right, #6F00FF, #FE59C2)",
+        description: "Embedded on your website, it captures visitor intent, qualifies budget and timeline, and books a discovery call — feeding every lead directly into Dynamics CRM with full context.",
+        result: "24/7 lead capture with zero manual effort",
+      },
+      {
+        title: "HR Policy Assistant",
+        type: "Compliance",
+        typeClass: "bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-500/20 dark:border-amber-500/30",
+        barGradient: "linear-gradient(to right, #f59e0b, #f97316)",
+        description: "Staff ask about leave entitlements, expense policies, or data handling procedures and receive consistent, document-grounded answers — reducing noise in the HR team's inbox.",
+        result: "Instant, consistent answers from your own documentation",
+      },
     ],
   },
   "power-platform": {

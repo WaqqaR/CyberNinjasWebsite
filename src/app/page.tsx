@@ -5,6 +5,7 @@ import { useEffect, useState, useRef } from "react";
 import { BilingualHoverText } from "@/components/BilingualHoverText";
 import { ServiceCard } from "@/components/ServiceCard";
 import { CTASection } from "@/components/CTASection";
+import { NeonButton } from "@/components/NeonButton";
 import { services } from "@/data/services";
 
 export default function Home() {
@@ -12,30 +13,22 @@ export default function Home() {
   const [mounted, setMounted] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [transitionDirection, setTransitionDirection] = useState<"dark" | "light" | null>(null);
-  const bgVideoDLRef = useRef<HTMLVideoElement>(null);
-  const bgVideoLDRef = useRef<HTMLVideoElement>(null);
-  const [bgVideoDLVisible, setBgVideoDLVisible] = useState(false);
-  const [bgVideoLDVisible, setBgVideoLDVisible] = useState(false);
+  const bgVideoRef = useRef<HTMLVideoElement>(null);
+  const reverseRafRef = useRef<number | null>(null);
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   useEffect(() => {
     setMounted(true);
-    // On load, show the appropriate video on its last frame
-    if (resolvedTheme === "dark") {
-      if (bgVideoLDRef.current) {
-        bgVideoLDRef.current.load();
-        bgVideoLDRef.current.addEventListener("loadedmetadata", () => {
-          bgVideoLDRef.current!.currentTime = bgVideoLDRef.current!.duration;
-        }, { once: true });
-      }
-      setBgVideoLDVisible(true);
-    } else {
-      if (bgVideoDLRef.current) {
-        bgVideoDLRef.current.load();
-        bgVideoDLRef.current.addEventListener("loadedmetadata", () => {
-          bgVideoDLRef.current!.currentTime = bgVideoDLRef.current!.duration;
-        }, { once: true });
-      }
-      setBgVideoDLVisible(true);
+    const dark = resolvedTheme === "dark";
+    setIsDarkMode(dark);
+    // On load, show the video at the appropriate frame
+    const video = bgVideoRef.current;
+    if (video) {
+      video.load();
+      video.addEventListener("loadedmetadata", () => {
+        // dark-to-light video: frame 0 = dark, last frame = light
+        video.currentTime = dark ? 0 : video.duration;
+      }, { once: true });
     }
   }, []);
 
@@ -43,23 +36,47 @@ export default function Home() {
     const handleTransitionStart = (e: CustomEvent) => {
       setTransitionDirection(e.detail);
       setIsTransitioning(true);
+      const video = bgVideoRef.current;
+      if (!video) return;
 
-      if (e.detail === "dark" && bgVideoLDRef.current) {
-        setBgVideoDLVisible(false);
-        bgVideoLDRef.current.currentTime = 0;
-        bgVideoLDRef.current.play();
-        setBgVideoLDVisible(true);
-      } else if (e.detail === "light" && bgVideoDLRef.current) {
-        setBgVideoLDVisible(false);
-        bgVideoDLRef.current.currentTime = 0;
-        bgVideoDLRef.current.play();
-        setBgVideoDLVisible(true);
+      // Cancel any ongoing reverse playback
+      if (reverseRafRef.current) {
+        cancelAnimationFrame(reverseRafRef.current);
+        reverseRafRef.current = null;
+      }
+
+      if (e.detail === "light") {
+        // Light-to-dark → play video forward (dark end to light end)
+        // Actually: dark-to-light video forward = dark→light, so for "going light" play forward
+        video.currentTime = 0;
+        video.playbackRate = 1.5;
+        video.play();
+        setIsDarkMode(false);
+      } else {
+        // Going dark → reverse-play the dark-to-light video (light→dark) at 2x
+        video.pause();
+        setIsDarkMode(true);
+        let lastTime = performance.now();
+        const step = (now: number) => {
+          const delta = (now - lastTime) / 1000;
+          lastTime = now;
+          video.currentTime = Math.max(0, video.currentTime - delta * 1.5);
+          if (video.currentTime > 0) {
+            reverseRafRef.current = requestAnimationFrame(step);
+          } else {
+            setIsTransitioning(false);
+            setTransitionDirection(null);
+            reverseRafRef.current = null;
+          }
+        };
+        reverseRafRef.current = requestAnimationFrame(step);
       }
     };
 
     window.addEventListener("themeTransitionStart", handleTransitionStart as EventListener);
     return () => {
       window.removeEventListener("themeTransitionStart", handleTransitionStart as EventListener);
+      if (reverseRafRef.current) cancelAnimationFrame(reverseRafRef.current);
     };
   }, []);
 
@@ -74,12 +91,12 @@ export default function Home() {
       <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden z-10 -mt-16 pt-16">
         <div className="absolute inset-0 theme-bg-tertiary" />
 
-        {/* Background video - dark to light */}
-        <div className={`absolute inset-0 z-[1] ${bgVideoDLVisible ? 'visible' : 'invisible'}`}>
+        {/* Background video - single video, reversed for dark transition */}
+        <div className="absolute inset-0 z-[1]">
           <video
-            ref={bgVideoDLRef}
+            ref={bgVideoRef}
             className="absolute inset-0 w-full h-full object-cover"
-            style={{ filter: 'blur(4px)', transform: 'scale(1.05)' }}
+            style={{ filter: 'blur(4px)' }}
             muted
             playsInline
             preload="auto"
@@ -89,23 +106,8 @@ export default function Home() {
           </video>
         </div>
 
-        {/* Background video - light to dark */}
-        <div className={`absolute inset-0 z-[1] ${bgVideoLDVisible ? 'visible' : 'invisible'}`}>
-          <video
-            ref={bgVideoLDRef}
-            className="absolute inset-0 w-full h-full object-cover"
-            style={{ filter: 'blur(4px)', transform: 'scale(1.05)' }}
-            muted
-            playsInline
-            preload="auto"
-            onEnded={handleBgVideoEnd}
-          >
-            <source src="/backgroundld.mp4" type="video/mp4" />
-          </video>
-        </div>
-
         {/* Dark overlay - dark mode only */}
-        <div className={`absolute inset-0 z-[2] bg-black/50 transition-opacity duration-500 ${bgVideoLDVisible ? 'opacity-100' : 'opacity-0'}`} />
+        <div className={`absolute inset-0 z-[2] bg-black/50 transition-opacity duration-500 ${isDarkMode ? 'opacity-100' : 'opacity-0'}`} />
 
         {/* Bottom fade */}
         <div className="absolute bottom-0 left-0 right-0 h-32 z-[2] bg-gradient-to-t from-[var(--bg-secondary)] to-transparent" />
@@ -144,13 +146,11 @@ export default function Home() {
                 AI enablement and digital transformation, crafted with precision.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                <BilingualHoverText
-                  english="Begin Your Journey"
-                  japanese="旅を始めよう"
+                <NeonButton
                   onClick={() => window.dispatchEvent(new CustomEvent("open-chat-widget"))}
-                  className="px-8 py-3 text-sm font-medium tracking-wide theme-btn-primary rounded transition-colors duration-300"
-                  height="lg"
-                />
+                >
+                  Begin Your Journey
+                </NeonButton>
                 <BilingualHoverText
                   english="Our Services"
                   japanese="サービス"
