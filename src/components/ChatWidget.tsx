@@ -175,7 +175,7 @@ export function ChatWidget() {
             if (!isOpen) setView("menu");
             setIsOpen(!isOpen);
           }}
-          className="w-14 h-14 rounded-full shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-105 bg-[#1c1917] dark:bg-[#0f1e1e] border border-[#333] dark:border-[#2a3a33] text-white"
+          className="w-14 h-14 rounded-full chat-widget-btn flex items-center justify-center transition-transform duration-300 hover:scale-105 bg-[#1c1917] dark:bg-[#0f1e1e] border border-[#333] dark:border-[#2a3a33] text-white"
           aria-label={isOpen ? "Close chat" : "Open chat"}
         >
           {isOpen ? (

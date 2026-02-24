@@ -59,14 +59,14 @@ export const services: ServiceSummary[] = [
     ],
   },
   {
-    title: "AI Agent Automation",
-    slug: "ai-automation",
-    description: "Intelligent automation using Copilot and n8n to transform your operations.",
+    title: "Bespoke Applications",
+    slug: "bespoke-applications",
+    description: "Custom-built applications designed around your exact business requirements — no compromise.",
     features: [
-      "AI-powered workflows",
-      "n8n automation",
-      "Process optimization",
-      "Custom AI agents",
+      "Full-stack development",
+      "API & system integrations",
+      "Scalable architecture",
+      "Ongoing support",
     ],
   },
 ];
@@ -188,34 +188,34 @@ export const serviceDetails: Record<string, ServiceDetail> = {
       "Data-driven decision making",
     ],
   },
-  "ai-automation": {
-    title: "AI Agent Automation",
-    subtitle: "Intelligent Workflows, Effortless Execution",
-    description: "Harness the power of AI agents with Copilot and n8n automation.",
-    longDescription: "The future of work is autonomous. We design and implement AI agent systems that can reason, plan, and execute complex tasks on your behalf. Using Microsoft Copilot and n8n, we create intelligent automation that goes beyond simple rule-based workflows.",
+  "bespoke-applications": {
+    title: "Bespoke Applications",
+    subtitle: "Built for You. Built to Last.",
+    description: "Custom-built applications designed around your exact business requirements.",
+    longDescription: "Off-the-shelf software rarely fits the way your business actually works. We design and build applications from the ground up — tailored to your processes, integrated with your existing systems, and built to scale as you grow.",
     features: [
       {
-        title: "AI Agent Design",
-        description: "Purpose-built AI agents that understand context and make intelligent decisions.",
+        title: "Full-Stack Development",
+        description: "End-to-end application development across web and mobile, built with modern, maintainable technology.",
       },
       {
-        title: "n8n Workflow Automation",
-        description: "Powerful, flexible automation that connects hundreds of apps and services.",
+        title: "API & System Integrations",
+        description: "Connect your new application to the tools and platforms you already rely on — seamlessly.",
       },
       {
-        title: "Process Intelligence",
-        description: "Analyze and optimize your processes with AI-driven insights and recommendations.",
+        title: "Scalable Architecture",
+        description: "Designed to grow with your business, from day one to enterprise scale.",
       },
       {
-        title: "Human-in-the-Loop",
-        description: "Maintain oversight with intelligent escalation and approval workflows.",
+        title: "Ongoing Support",
+        description: "We don't disappear after go-live. Continuous support, iterations, and improvements as your needs evolve.",
       },
     ],
     benefits: [
-      "Reduced manual work",
-      "Faster process execution",
-      "Improved accuracy",
-      "Scalable operations",
+      "Software that fits your exact workflow",
+      "No unnecessary features or licensing overhead",
+      "Integrates with your existing tech stack",
+      "Owned by you, not a vendor",
     ],
   },
 };
