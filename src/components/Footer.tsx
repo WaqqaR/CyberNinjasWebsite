@@ -79,6 +79,9 @@ export function Footer() {
           <p className="text-center text-xs theme-text-subtle">
             &copy; {new Date().getFullYear()} Cyber Ninjas. All rights reserved.
           </p>
+          <p className="text-center text-xs theme-text-subtle mt-1 opacity-60">
+            Cyber Ninjas Corp Ltd &middot; Company No. 15889960
+          </p>
         </div>
       </div>
     </footer>

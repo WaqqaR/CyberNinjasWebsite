@@ -85,6 +85,25 @@ export default function Home() {
     setTransitionDirection(null);
   };
 
+  const serviceIcons = [
+    // Copilot Studio — chat bot
+    <svg key="copilot" className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+    </svg>,
+    // Power Platform — layers / stack
+    <svg key="power" className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+    </svg>,
+    // Dynamics CE — users / people
+    <svg key="dynamics" className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+    </svg>,
+    // Bespoke Applications — code brackets
+    <svg key="bespoke" className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+    </svg>,
+  ];
+
   return (
     <div className="theme-bg-primary transition-colors duration-[1000ms] relative">
       {/* Hero Section */}
@@ -179,23 +198,114 @@ export default function Home() {
 
       {/* Services Section */}
       <section className="py-24 relative z-10 theme-bg-primary transition-colors duration-[1000ms]">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <p className="text-sm font-medium tracking-[0.3em] theme-text-subtle dark:text-red-500/80 uppercase mb-4">
-              Expertise
-            </p>
-            <h2 className="text-3xl font-light theme-text-primary">
-              Our Services
-            </h2>
+        {/* Dark mode: atmospheric teal panel that fades in/out at edges */}
+        <div
+          className="absolute inset-0 hidden dark:block pointer-events-none"
+          style={{
+            background: "linear-gradient(to bottom, transparent 0%, rgba(15,70,65,0.13) 12%, rgba(15,70,65,0.13) 88%, transparent 100%)",
+          }}
+        />
+        {/* Dark mode: thin border lines top & bottom */}
+        <div className="absolute top-0 inset-x-0 h-px hidden dark:block bg-gradient-to-r from-transparent via-teal-700/30 to-transparent pointer-events-none" />
+        <div className="absolute bottom-0 inset-x-0 h-px hidden dark:block bg-gradient-to-r from-transparent via-teal-700/30 to-transparent pointer-events-none" />
+        {/* Subtle dot-grid background */}
+        <div
+          className="absolute inset-0 opacity-[0.03] dark:opacity-[0.06] pointer-events-none"
+          style={{
+            backgroundImage: "radial-gradient(circle, currentColor 1px, transparent 1px)",
+            backgroundSize: "32px 32px",
+          }}
+        />
+        {/* Floating service logos */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none select-none" aria-hidden="true">
+          {/* CopilotStudio — top-left, large */}
+          <img src="/CopilotStudio.webp" alt=""
+            className="absolute opacity-[0.22] dark:opacity-[0.18]"
+            style={{ width: 200, top: '6%', left: '2%', filter: 'blur(3px)', animation: 'float-1 13s ease-in-out infinite' }}
+          />
+          {/* PowerPlatform — top-right */}
+          <img src="/PowerPlatform.webp" alt=""
+            className="absolute opacity-[0.25] dark:opacity-[0.20]"
+            style={{ width: 150, top: '4%', right: '6%', filter: 'blur(3px)', animation: 'float-2 11s ease-in-out infinite 2s' }}
+          />
+          {/* Dynamics365 — center-left */}
+          <img src="/Dynamics365.svg" alt=""
+            className="absolute opacity-[0.22] dark:opacity-[0.18]"
+            style={{ width: 130, top: '44%', left: '5%', filter: 'blur(3px)', animation: 'float-3 15s ease-in-out infinite 1s' }}
+          />
+          {/* Power BI — bottom-right */}
+          <img src="/powerbi.webp" alt=""
+            className="absolute opacity-[0.18] dark:opacity-[0.14]"
+            style={{ width: 110, bottom: '8%', right: '4%', filter: 'blur(4px)', animation: 'float-1 12s ease-in-out infinite 4s' }}
+          />
+          {/* PowerPlatform — bottom-left */}
+          <img src="/PowerPlatform.webp" alt=""
+            className="absolute opacity-[0.20] dark:opacity-[0.16]"
+            style={{ width: 95, bottom: '12%', left: '10%', filter: 'blur(4px)', animation: 'float-2 14s ease-in-out infinite 6s' }}
+          />
+          {/* Dynamics365 — upper-center-right */}
+          <img src="/Dynamics365.svg" alt=""
+            className="absolute opacity-[0.18] dark:opacity-[0.15]"
+            style={{ width: 170, top: '18%', left: '52%', filter: 'blur(4px)', animation: 'float-3 16s ease-in-out infinite 3s' }}
+          />
+          {/* Power Automate — mid-right */}
+          <img src="/PALogo.png" alt=""
+            className="absolute opacity-[0.22] dark:opacity-[0.18]"
+            style={{ width: 120, top: '38%', right: '3%', filter: 'blur(3px)', animation: 'float-1 14s ease-in-out infinite 1.5s' }}
+          />
+          {/* Power BI — bottom-center */}
+          <img src="/powerbi.webp" alt=""
+            className="absolute opacity-[0.20] dark:opacity-[0.16]"
+            style={{ width: 140, bottom: '5%', left: '42%', filter: 'blur(3px)', animation: 'float-2 12s ease-in-out infinite 5s' }}
+          />
+          {/* Power Pages — top-center */}
+          <img src="/PowerPages.webp" alt=""
+            className="absolute opacity-[0.20] dark:opacity-[0.16]"
+            style={{ width: 130, top: '2%', left: '28%', filter: 'blur(3px)', animation: 'float-3 13s ease-in-out infinite 2.5s' }}
+          />
+          {/* Azure — center-right */}
+          <img src="/azure logo.svg" alt=""
+            className="absolute opacity-[0.18] dark:opacity-[0.15]"
+            style={{ width: 115, top: '60%', right: '14%', filter: 'blur(4px)', animation: 'float-1 15s ease-in-out infinite 7s' }}
+          />
+        </div>
+        <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="flex items-end justify-between mb-16">
+            <div>
+              <p className="text-sm font-medium tracking-[0.3em] theme-text-subtle dark:text-red-500/80 uppercase mb-4">
+                Expertise
+              </p>
+              <h2 className="text-3xl font-light theme-text-primary">
+                Our Services
+              </h2>
+            </div>
+            <a
+              href="/services"
+              className="hidden sm:flex items-center gap-2 text-sm theme-text-subtle hover:theme-text-primary transition-colors pb-1"
+            >
+              View all
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </a>
           </div>
 
           <div className="grid md:grid-cols-2 gap-6">
-            {services.map((service) => (
+            {services.map((service, i) => (
               <ServiceCard
                 key={service.slug}
                 title={service.title}
                 description={service.description}
                 href={`/services/${service.slug}`}
+                index={i + 1}
+                features={service.features}
+                icon={serviceIcons[i]}
+                hoverImage={
+                  service.slug === "copilot-studio" ? "/CopilotStudio.webp" :
+                  service.slug === "power-platform" ? "/PowerPlatform.webp" :
+                  service.slug === "dynamics-ce" ? "/Dynamics365.svg" :
+                  undefined
+                }
               />
             ))}
           </div>
