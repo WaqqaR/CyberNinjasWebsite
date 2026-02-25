@@ -8,7 +8,7 @@
     --bg-secondary: #f6ece4;
     --bg-tertiary: #e1d0c4;
     --bg-card: #f5ebe3;
-    --bg-dark-section: #1c1917;
+    --bg-dark-section: #3b2e26;
 
     --text-primary: #1c1917;
     --text-secondary: #4a3f35;
@@ -312,6 +312,11 @@
     animation: chat-btn-pulse 3s ease-in-out infinite;
   }
 
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
   /* Floating logo background animations */
   @keyframes float-1 {
     0%, 100% { transform: translateY(0px) rotate(0deg); }
@@ -411,8 +416,9 @@
       15% 100%,
       0% 70%
     );
-    background: #0a0a0a;
+    background: var(--bg-primary);
     z-index: 1;
+    transition: background-color 1s ease;
   }
 
   .neon-btn-txt {
@@ -422,6 +428,11 @@
     font-size: 0.875rem;
     font-weight: 500;
     letter-spacing: 0.05em;
+    color: var(--text-primary);
+    transition: color 1s ease;
+  }
+
+  .dark .neon-btn-txt {
     color: #fff;
     text-shadow:
       0 0 8px var(--neon-purple),
@@ -429,6 +440,11 @@
   }
 
   .neon-btn:hover .neon-btn-txt {
+    opacity: 0.85;
+  }
+
+  .dark .neon-btn:hover .neon-btn-txt {
+    opacity: 1;
     text-shadow:
       0 0 12px var(--neon-purple),
       0 0 30px var(--neon-teal),

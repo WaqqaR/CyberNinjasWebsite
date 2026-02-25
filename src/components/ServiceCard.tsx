@@ -50,7 +50,7 @@ export function ServiceCard({ title, description, href, index, features, icon, h
         <div className="relative z-10 flex flex-col h-full">
           {/* Icon + Number row */}
           <div className="flex items-start justify-between mb-6">
-            <div className="w-10 h-10 rounded-lg theme-bg-secondary flex items-center justify-center theme-text-secondary dark:text-red-400 group-hover:scale-110 transition-transform duration-300">
+            <div className="w-10 h-10 rounded-lg theme-bg-secondary flex items-center justify-center theme-text-secondary dark:text-red-500 group-hover:scale-110 transition-transform duration-300">
               {icon}
             </div>
             <span className="text-4xl font-thin tabular-nums select-none theme-text-subtle opacity-25 leading-none">

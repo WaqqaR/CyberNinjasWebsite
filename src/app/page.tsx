@@ -14,82 +14,88 @@ export default function Home() {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [transitionDirection, setTransitionDirection] = useState<"dark" | "light" | null>(null);
   const bgVideoRef = useRef<HTMLVideoElement>(null);
-  const reverseRafRef = useRef<number | null>(null);
+  const logoScrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = logoScrollRef.current;
+    if (!el) return;
+    const onWheel = (e: WheelEvent) => {
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return; // already horizontal
+      e.preventDefault();
+      el.scrollLeft += e.deltaY;
+    };
+    el.addEventListener("wheel", onWheel, { passive: false });
+    return () => el.removeEventListener("wheel", onWheel);
+  }, []);
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [showDarkOverlay, setShowDarkOverlay] = useState(false); // bg-black/50 dark tint
+  const [showOverlay, setShowOverlay] = useState(false); // solid #e1d1c3 on top of video
+  const [showBannerArt, setShowBannerArt] = useState(false);
+  const bannerTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     setMounted(true);
     const dark = resolvedTheme === "dark";
     setIsDarkMode(dark);
-    // On load, show the video at the appropriate frame
+    if (!dark) setShowOverlay(true);
+    if (dark) setShowDarkOverlay(true);
     const video = bgVideoRef.current;
     if (video) {
       video.load();
       video.addEventListener("loadedmetadata", () => {
-        // dark-to-light video: frame 0 = dark, last frame = light
-        video.currentTime = dark ? 0 : video.duration;
+        video.currentTime = 0; // always park at frame 0 (dark scene)
       }, { once: true });
     }
   }, []);
 
   useEffect(() => {
     const handleTransitionStart = (e: CustomEvent) => {
-      setTransitionDirection(e.detail);
       setIsTransitioning(true);
       const video = bgVideoRef.current;
-      if (!video) return;
-
-      // Cancel any ongoing reverse playback
-      if (reverseRafRef.current) {
-        cancelAnimationFrame(reverseRafRef.current);
-        reverseRafRef.current = null;
-      }
 
       if (e.detail === "light") {
-        // Light-to-dark → play video forward (dark end to light end)
-        // Actually: dark-to-light video forward = dark→light, so for "going light" play forward
-        video.currentTime = 0;
-        video.playbackRate = 1.5;
-        video.play();
+        // dark→light: hide dark tint, play video forward
+        setShowDarkOverlay(false);
+        if (video) {
+          video.currentTime = 0;
+          video.playbackRate = 1.5;
+          video.play();
+        }
         setIsDarkMode(false);
       } else {
-        // Going dark → reverse-play the dark-to-light video (light→dark) at 2x
-        video.pause();
+        // light→dark: seek video to frame 0 while overlay still covers it,
+        // then fade out overlay to reveal the original first frame
+        if (video) video.currentTime = 0;
+        setShowBannerArt(false);
+        setShowOverlay(false);
         setIsDarkMode(true);
-        let lastTime = performance.now();
-        const step = (now: number) => {
-          const delta = (now - lastTime) / 1000;
-          lastTime = now;
-          video.currentTime = Math.max(0, video.currentTime - delta * 1.5);
-          if (video.currentTime > 0) {
-            reverseRafRef.current = requestAnimationFrame(step);
-          } else {
-            setIsTransitioning(false);
-            setTransitionDirection(null);
-            reverseRafRef.current = null;
-          }
-        };
-        reverseRafRef.current = requestAnimationFrame(step);
+        setIsTransitioning(false);
+        setTimeout(() => setShowDarkOverlay(true), 700);
       }
     };
 
     window.addEventListener("themeTransitionStart", handleTransitionStart as EventListener);
-    return () => {
-      window.removeEventListener("themeTransitionStart", handleTransitionStart as EventListener);
-      if (reverseRafRef.current) cancelAnimationFrame(reverseRafRef.current);
-    };
+    return () => window.removeEventListener("themeTransitionStart", handleTransitionStart as EventListener);
   }, []);
 
+  // dark→light video finished — fade in the solid overlay
   const handleBgVideoEnd = () => {
     setIsTransitioning(false);
-    setTransitionDirection(null);
+    setShowOverlay(true);
   };
 
+  // Show banner art after the overlay has faded in (700ms)
+  useEffect(() => {
+    if (bannerTimerRef.current) clearTimeout(bannerTimerRef.current);
+    if (showOverlay && mounted) {
+      bannerTimerRef.current = setTimeout(() => setShowBannerArt(true), 750);
+    } else {
+      setShowBannerArt(false);
+    }
+    return () => { if (bannerTimerRef.current) clearTimeout(bannerTimerRef.current); };
+  }, [showOverlay, mounted]);
+
   const serviceIcons = [
-    // Copilot Studio — chat bot
-    <svg key="copilot" className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-    </svg>,
     // Power Platform — layers / stack
     <svg key="power" className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
       <path strokeLinecap="round" strokeLinejoin="round" d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
@@ -97,6 +103,10 @@ export default function Home() {
     // Dynamics CE — users / people
     <svg key="dynamics" className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
       <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+    </svg>,
+    // Copilot Studio — chat bot
+    <svg key="copilot" className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
     </svg>,
     // Bespoke Applications — code brackets
     <svg key="bespoke" className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
@@ -108,9 +118,7 @@ export default function Home() {
     <div className="theme-bg-primary transition-colors duration-[1000ms] relative">
       {/* Hero Section */}
       <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden z-10 -mt-16 pt-16">
-        <div className="absolute inset-0 theme-bg-tertiary" />
-
-        {/* Background video - single video, reversed for dark transition */}
+        {/* Video always present, parked at frame 0 (dark scene) */}
         <div className="absolute inset-0 z-[1]">
           <video
             ref={bgVideoRef}
@@ -121,19 +129,29 @@ export default function Home() {
             preload="auto"
             onEnded={handleBgVideoEnd}
           >
-            <source src="/backgrounddl.mp4" type="video/mp4" />
+            <source src="/background.mp4" type="video/mp4" />
           </video>
         </div>
 
-        {/* Dark overlay - dark mode only */}
-        <div className={`absolute inset-0 z-[2] bg-black/50 transition-opacity duration-500 ${isDarkMode ? 'opacity-100' : 'opacity-0'}`} />
+        {/* Solid light-mode overlay — fades out going dark, fades in returning to light */}
+        <div
+          className="absolute inset-0 z-[2] pointer-events-none"
+          style={{
+            backgroundColor: '#e1d1c3',
+            opacity: showOverlay ? 1 : 0,
+            transition: 'opacity 700ms ease',
+          }}
+        />
+
+        {/* Dark tint — fades in after solid overlay is gone, not during the fade */}
+        <div className={`absolute inset-0 z-[3] bg-black/50 transition-opacity duration-500 ${showDarkOverlay ? 'opacity-100' : 'opacity-0'}`} />
 
         {/* Bottom fade */}
-        <div className="absolute bottom-0 left-0 right-0 h-32 z-[2] bg-gradient-to-t from-[var(--bg-secondary)] to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 h-32 z-[3] bg-gradient-to-t from-[var(--bg-secondary)] to-transparent" />
 
         {/* Subtle pattern overlay - dark mode */}
         <div
-          className="absolute inset-0 opacity-0 dark:opacity-20 transition-opacity duration-500 z-[3]"
+          className="absolute inset-0 opacity-0 dark:opacity-20 transition-opacity duration-500 z-[4]"
           style={{
             backgroundImage: `linear-gradient(rgba(239, 68, 68, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(239, 68, 68, 0.1) 1px, transparent 1px)`,
             backgroundSize: '60px 60px'
@@ -180,17 +198,27 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Japanese proverb */}
-            <div className="text-center lg:text-left">
-              <p className="text-2xl md:text-3xl font-light tracking-wider theme-text-primary dark:text-stone-300 font-serif">
-                石の上にも三年
-              </p>
-              <p className="mt-2 text-sm font-medium tracking-widest uppercase theme-text-secondary dark:text-red-500/80">
-                Three years on a stone
-              </p>
-              <p className="mt-1 text-xs theme-text-muted italic max-w-xs mx-auto lg:mx-0">
-                Even the most difficult tasks can be conquered with patience and endurance.
-              </p>
+            {/* Japanese proverb + light mode banner art */}
+            <div className="text-center lg:text-left flex flex-col gap-0">
+              {showBannerArt && (
+                <img
+                  src="/cyberninjas-bannerart-dark.png"
+                  alt="Cyber Ninjas"
+                  className="h-[32rem] w-auto object-contain"
+                  style={{ animation: 'fadeIn 1s ease-in-out' }}
+                />
+              )}
+              <div className="pl-10">
+                <p className="text-2xl md:text-3xl font-light tracking-wider theme-text-primary dark:text-stone-300 font-serif">
+                  石の上にも三年
+                </p>
+                <p className="mt-2 text-sm font-medium tracking-widest uppercase theme-text-secondary dark:text-red-500/80">
+                  Three years on a stone
+                </p>
+                <p className="mt-1 text-xs theme-text-muted italic max-w-xs mx-auto lg:mx-0">
+                  Even the most difficult tasks can be conquered with patience and endurance.
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -308,6 +336,49 @@ export default function Home() {
                 }
               />
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Organisations Section */}
+      <section className="py-20 relative z-10 theme-bg-secondary transition-colors duration-[1000ms]">
+        {/* Top/bottom border lines */}
+        <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[var(--border-color)] to-transparent pointer-events-none" />
+        <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[var(--border-color)] to-transparent pointer-events-none" />
+        {/* Dark mode accent line */}
+        <div className="absolute top-0 inset-x-0 h-px hidden dark:block pointer-events-none"
+          style={{ background: "linear-gradient(to right, transparent, rgba(158,48,169,0.5) 30%, rgba(64,144,181,0.7) 60%, transparent)" }}
+        />
+
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="mb-10">
+            <p className="text-sm font-medium tracking-[0.3em] theme-text-subtle dark:text-red-500/80 uppercase mb-4">
+              Experience
+            </p>
+            <h2 className="text-3xl font-light theme-text-primary">
+              Organisations we have worked with
+            </h2>
+          </div>
+
+          {/* Scrollable logo row */}
+          <div className="relative w-full overflow-hidden">
+            {/* Right fade */}
+            <div className="absolute right-0 top-0 bottom-0 w-16 z-10 pointer-events-none"
+              style={{ background: "linear-gradient(to left, var(--bg-secondary), transparent)" }}
+            />
+            <div
+              ref={logoScrollRef}
+              className="flex items-center gap-12 overflow-x-auto py-4 pr-16"
+              style={{ scrollbarWidth: "none", msOverflowStyle: "none", WebkitOverflowScrolling: "touch" } as React.CSSProperties}
+            >
+              <img src="/CopilotStudio.webp" alt="Copilot Studio" className="h-14 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity duration-300 shrink-0" />
+              <img src="/PowerPlatform.webp" alt="Power Platform" className="h-14 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity duration-300 shrink-0" />
+              <img src="/Dynamics365.svg" alt="Dynamics 365" className="h-14 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity duration-300 shrink-0" />
+              <img src="/PALogo.png" alt="Power Automate" className="h-14 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity duration-300 shrink-0" />
+              <img src="/powerbi.webp" alt="Power BI" className="h-14 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity duration-300 shrink-0" />
+              <img src="/PowerPages.webp" alt="Power Pages" className="h-14 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity duration-300 shrink-0" />
+              <img src="/azure logo.svg" alt="Azure" className="h-14 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity duration-300 shrink-0" />
+            </div>
           </div>
         </div>
       </section>
