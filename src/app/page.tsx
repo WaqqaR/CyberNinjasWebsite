@@ -133,9 +133,9 @@ export default function Home() {
           </video>
         </div>
 
-        {/* Solid light-mode overlay — fades out going dark, fades in returning to light */}
+        {/* Solid light-mode overlay — fades out going dark, fades in returning to light (desktop only) */}
         <div
-          className="absolute inset-0 z-[2] pointer-events-none"
+          className="absolute inset-0 z-[2] pointer-events-none hidden lg:block"
           style={{
             backgroundColor: '#e1d1c3',
             opacity: showOverlay ? 1 : 0,
@@ -204,7 +204,7 @@ export default function Home() {
                 <img
                   src="/cyberninjas-bannerart-dark.png"
                   alt="Cyber Ninjas"
-                  className="h-[32rem] w-auto object-contain"
+                  className="hidden lg:block h-[32rem] w-auto object-contain"
                   style={{ animation: 'fadeIn 1s ease-in-out' }}
                 />
               )}
