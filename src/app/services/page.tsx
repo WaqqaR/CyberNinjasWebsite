@@ -31,14 +31,14 @@ const hoverImages: Record<string, string | undefined> = {
 
 export default function ServicesPage() {
   return (
-    <div className="theme-bg-primary transition-colors duration-[1000ms]">
+    <div className="theme-bg-primary">
       <PageHero
         label="Services"
         title={<>Precision <span className="font-semibold dark:text-red-500">Solutions</span></>}
         description="We specialise in Microsoft technologies and AI automation. Each engagement is crafted with care, ensuring solutions that genuinely transform how your business operates."
       />
 
-      <section className="py-24 theme-bg-primary transition-colors duration-[1000ms]">
+      <section className="py-24 theme-bg-primary">
         <div className="absolute inset-x-0 h-px bg-gradient-to-r from-transparent via-[var(--border-color)] to-transparent pointer-events-none" />
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-6">

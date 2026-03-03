@@ -157,10 +157,10 @@ const tools = [
 
 export default function DojoProgrammePage() {
   return (
-    <div className="theme-bg-primary transition-colors duration-[1000ms]">
+    <div className="theme-bg-primary">
 
       {/* ─── Hero ─────────────────────────────────────────────────────────── */}
-      <section className="py-28 theme-bg-secondary transition-colors duration-[1000ms] relative">
+      <section className="py-28 theme-bg-secondary relative">
         <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[var(--border-color)] to-transparent pointer-events-none" />
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <Link
@@ -191,7 +191,7 @@ export default function DojoProgrammePage() {
       </section>
 
       {/* ─── Sprint Timeline ──────────────────────────────────────────────── */}
-      <section className="py-24 theme-bg-dark relative transition-colors duration-[1000ms]">
+      <section className="py-24 theme-bg-dark relative">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="max-w-2xl mb-12">
             <p className="text-sm font-medium tracking-[0.3em] text-stone-500 dark:text-red-500/70 uppercase mb-4">
@@ -258,7 +258,7 @@ export default function DojoProgrammePage() {
       </section>
 
       {/* ─── What You Will Experience ─────────────────────────────────────── */}
-      <section className="py-24 theme-bg-primary transition-colors duration-[1000ms] relative">
+      <section className="py-24 theme-bg-primary relative">
         <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[var(--border-color)] to-transparent pointer-events-none" />
         <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[var(--border-color)] to-transparent pointer-events-none" />
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -297,7 +297,7 @@ export default function DojoProgrammePage() {
       </section>
 
       {/* ─── Outcomes ─────────────────────────────────────────────────────── */}
-      <section className="py-24 theme-bg-secondary transition-colors duration-[1000ms] relative">
+      <section className="py-24 theme-bg-secondary relative">
         <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[var(--border-color)] to-transparent pointer-events-none" />
         <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[var(--border-color)] to-transparent pointer-events-none" />
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -336,7 +336,7 @@ export default function DojoProgrammePage() {
       </section>
 
       {/* ─── Tools & Technologies ─────────────────────────────────────────── */}
-      <section className="py-16 theme-bg-primary relative transition-colors duration-[1000ms]">
+      <section className="py-16 theme-bg-primary relative">
         <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[var(--border-color)] to-transparent pointer-events-none" />
         <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[var(--border-color)] to-transparent pointer-events-none" />
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -376,7 +376,7 @@ export default function DojoProgrammePage() {
       </section>
 
       {/* ─── Format + Pricing ─────────────────────────────────────────────── */}
-      <section className="py-24 theme-bg-secondary transition-colors duration-[1000ms] relative">
+      <section className="py-24 theme-bg-secondary relative">
         <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[var(--border-color)] to-transparent pointer-events-none" />
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-16">
@@ -461,7 +461,7 @@ export default function DojoProgrammePage() {
       </section>
 
       {/* ─── FAQ ──────────────────────────────────────────────────────────── */}
-      <section className="py-24 theme-bg-primary transition-colors duration-[1000ms] relative">
+      <section className="py-24 theme-bg-primary relative">
         <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[var(--border-color)] to-transparent pointer-events-none" />
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid lg:grid-cols-[1fr_2fr] gap-16">

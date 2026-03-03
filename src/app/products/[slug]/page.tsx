@@ -23,7 +23,7 @@ export default async function ProductPage({ params }: PageProps) {
   }
 
   return (
-    <div className="theme-bg-primary transition-colors duration-[1000ms]">
+    <div className="theme-bg-primary">
       {/* Hero */}
       <PageHero
         label={product.subtitle}
@@ -53,7 +53,7 @@ export default async function ProductPage({ params }: PageProps) {
 
       {/* Coming Soon Banner */}
       {product.comingSoon && (
-        <section className="py-12 theme-bg-secondary border-b theme-border transition-colors duration-[1000ms]">
+        <section className="py-12 theme-bg-secondary border-b theme-border">
           <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center">
             <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wide bg-[var(--accent)]/10 text-[var(--accent)] dark:bg-red-500/10 dark:text-red-400 border border-[var(--accent)]/20 dark:border-red-500/20 mb-4">
               Coming Soon

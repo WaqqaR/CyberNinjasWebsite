@@ -9,7 +9,8 @@ interface PageHeroProps {
 
 export function PageHero({ label, title, description, children }: PageHeroProps) {
   return (
-    <section className="py-24 theme-bg-secondary transition-colors duration-[1000ms]">
+    <section className="py-24 theme-bg-secondary relative">
+      <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[var(--border-color)] to-transparent pointer-events-none" />
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         {children}
         <div className="max-w-3xl">

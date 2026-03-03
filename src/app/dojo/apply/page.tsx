@@ -164,7 +164,7 @@ function SelectInput({
       value={value}
       onChange={(e) => onChange(e.target.value)}
       required={required}
-      className="w-full bg-transparent border theme-border rounded px-4 py-3 text-sm theme-text-primary focus:outline-none focus:border-[var(--border-hover)] transition-colors duration-200 cursor-pointer"
+      className="w-full bg-[var(--bg-primary)] border theme-border rounded px-4 py-3 text-sm theme-text-primary focus:outline-none focus:border-[var(--border-hover)] transition-colors duration-200 cursor-pointer"
     >
       <option value="" className="theme-bg-primary">Select one</option>
       {options.map((o) => (
@@ -181,6 +181,7 @@ export default function DojoApplyPage() {
   const [data, setData] = useState<FormData>(INITIAL_DATA);
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState<string[]>([]);
+  const [submitting, setSubmitting] = useState(false);
 
   function update<K extends keyof FormData>(key: K, value: FormData[K]) {
     setData((prev) => ({ ...prev, [key]: value }));
@@ -224,17 +225,35 @@ export default function DojoApplyPage() {
     if (step < STEPS.length - 1) {
       setStep((s) => s + 1);
     } else {
-      handleSubmit();
+      void handleSubmit();
     }
   }
 
-  function handleSubmit() {
-    setSubmitted(true);
+  async function handleSubmit() {
+    setSubmitting(true);
+    setErrors([]);
+    try {
+      const res = await fetch("/api/dojo/apply", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      if (!res.ok) {
+        const json = await res.json().catch(() => ({}));
+        setErrors([json.error ?? "Something went wrong. Please try again."]);
+        return;
+      }
+      setSubmitted(true);
+    } catch {
+      setErrors(["Something went wrong. Please try again."]);
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   if (submitted) {
     return (
-      <div className="theme-bg-primary min-h-[80vh] flex items-center transition-colors duration-[1000ms]">
+      <div className="theme-bg-primary min-h-[80vh] flex items-center">
         <div className="max-w-2xl mx-auto px-6 lg:px-8 py-24 text-center">
           <div className="w-12 h-12 rounded-full border theme-border flex items-center justify-center mx-auto mb-8">
             <svg className="w-5 h-5 theme-text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
@@ -272,9 +291,9 @@ export default function DojoApplyPage() {
   }
 
   return (
-    <div className="theme-bg-primary transition-colors duration-[1000ms]">
+    <div className="theme-bg-primary">
       {/* Header */}
-      <section className="py-16 theme-bg-secondary relative transition-colors duration-[1000ms]">
+      <section className="py-16 theme-bg-secondary relative">
         <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[var(--border-color)] to-transparent pointer-events-none" />
         <div className="max-w-3xl mx-auto px-6 lg:px-8">
           <Link
@@ -300,7 +319,7 @@ export default function DojoApplyPage() {
       </section>
 
       {/* Progress */}
-      <div className="theme-bg-secondary border-b theme-border transition-colors duration-[1000ms]">
+      <div className="theme-bg-secondary border-b theme-border">
         <div className="max-w-3xl mx-auto px-6 lg:px-8 py-4">
           <div className="flex items-center gap-0">
             {STEPS.map((s, i) => (
@@ -341,7 +360,7 @@ export default function DojoApplyPage() {
       </div>
 
       {/* Form Body */}
-      <section className="py-16 theme-bg-primary transition-colors duration-[1000ms]">
+      <section className="py-16 theme-bg-primary">
         <div className="max-w-3xl mx-auto px-6 lg:px-8">
 
           {/* Step 0: About You */}
@@ -623,8 +642,8 @@ export default function DojoApplyPage() {
             ) : (
               <span />
             )}
-            <NeonButton onClick={handleNext}>
-              {step < STEPS.length - 1 ? "Continue" : "Submit Application"}
+            <NeonButton onClick={handleNext} disabled={submitting}>
+              {step < STEPS.length - 1 ? "Continue" : submitting ? "Submitting…" : "Submit Application"}
             </NeonButton>
           </div>
 

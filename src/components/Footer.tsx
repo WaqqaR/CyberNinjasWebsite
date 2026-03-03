@@ -7,13 +7,13 @@ import { products } from "@/data/products";
 
 export function Footer() {
   return (
-    <footer className="theme-bg-tertiary border-t theme-border transition-colors duration-[1000ms]">
+    <footer className="theme-bg-tertiary border-t theme-border">
       <div className="mx-auto max-w-7xl px-6 py-12 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand */}
           <div>
             <div className="mb-4">
-              <Logo className="h-7 w-auto theme-text-primary dark:text-red-500 transition-colors duration-[1000ms]" />
+              <Logo className="h-7 w-auto theme-text-primary dark:text-red-500" />
             </div>
             <p className="text-sm theme-text-muted leading-relaxed">
               Boutique technology consultancy specializing in digital transformation and AI enablement.

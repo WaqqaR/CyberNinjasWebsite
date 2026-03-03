@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { NeonButton } from "@/components/NeonButton";
 import { CTASection } from "@/components/CTASection";
+import { DojoWaitlist } from "@/components/DojoWaitlist";
 
 
 export const metadata: Metadata = {
@@ -144,10 +145,10 @@ function Partial() {
 
 export default function DojoPage() {
   return (
-    <div className="theme-bg-primary transition-colors duration-[1000ms]">
+    <div className="theme-bg-primary">
 
       {/* ─── 1. Hero ──────────────────────────────────────────────────────── */}
-      <section className="py-28 theme-bg-secondary transition-colors duration-[1000ms] relative">
+      <section className="py-28 theme-bg-secondary relative">
         <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[var(--border-color)] to-transparent pointer-events-none" />
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="max-w-4xl">
@@ -197,7 +198,7 @@ export default function DojoPage() {
       </section>
 
       {/* ─── Cohort Strip ─────────────────────────────────────────────────── */}
-      <div className="theme-bg-primary border-b theme-border transition-colors duration-[1000ms]">
+      <div className="theme-bg-primary border-b theme-border">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-4">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
             <div className="flex flex-wrap items-center gap-x-6 gap-y-1">
@@ -223,8 +224,23 @@ export default function DojoPage() {
         </div>
       </div>
 
+      {/* ─── Waitlist Strip ───────────────────────────────────────────────── */}
+      <div className="theme-bg-secondary border-b theme-border">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-5">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+            <div className="shrink-0">
+              <p className="text-sm font-medium theme-text-primary">Can&apos;t make this cohort?</p>
+              <p className="text-xs theme-text-muted">Join the waitlist — we notify you before the next cohort opens publicly.</p>
+            </div>
+            <div className="sm:ml-auto">
+              <DojoWaitlist />
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* ─── 2. The Problem ───────────────────────────────────────────────── */}
-      <section className="py-24 theme-bg-dark transition-colors duration-[1000ms] relative">
+      <section className="py-24 theme-bg-dark relative">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-start">
             <div>
@@ -274,7 +290,7 @@ export default function DojoPage() {
       </section>
 
       {/* ─── 3. Comparison Table ──────────────────────────────────────────── */}
-      <section className="py-24 theme-bg-primary relative transition-colors duration-[1000ms]">
+      <section className="py-24 theme-bg-primary relative">
         <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[var(--border-color)] to-transparent pointer-events-none" />
         <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[var(--border-color)] to-transparent pointer-events-none" />
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -364,7 +380,7 @@ export default function DojoPage() {
       </section>
 
       {/* ─── 4. What Makes the Dojo Different ────────────────────────────── */}
-      <section className="py-24 theme-bg-secondary transition-colors duration-[1000ms] relative">
+      <section className="py-24 theme-bg-secondary relative">
         <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[var(--border-color)] to-transparent pointer-events-none" />
         <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[var(--border-color)] to-transparent pointer-events-none" />
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -383,18 +399,113 @@ export default function DojoPage() {
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {differentiators.map((item) => (
-              <div
-                key={item.title}
-                className="theme-bg-card border theme-border rounded-lg p-6 hover:border-[var(--border-hover)] transition-colors duration-300 group"
-              >
-                <div className="w-9 h-9 rounded border theme-border flex items-center justify-center theme-text-muted group-hover:theme-text-primary mb-4 transition-colors duration-300">
-                  {item.icon}
+              <div key={item.title} className="group relative rounded-lg p-px">
+                {/* Gradient border — fades in on hover */}
+                <span
+                  className="service-card-gradient absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                  aria-hidden="true"
+                />
+                {/* Normal border — fades out on hover */}
+                <span
+                  className="absolute inset-0 rounded-lg border theme-border group-hover:opacity-0 transition-opacity duration-300 pointer-events-none"
+                  aria-hidden="true"
+                />
+                <div className="relative theme-bg-card rounded-[7px] p-6 h-full">
+                  <div className="w-9 h-9 rounded border theme-border flex items-center justify-center theme-text-muted group-hover:theme-text-primary mb-4 transition-colors duration-300">
+                    {item.icon}
+                  </div>
+                  <h3 className="text-base font-medium theme-text-primary mb-2">{item.title}</h3>
+                  <p className="text-sm theme-text-muted leading-relaxed">{item.description}</p>
                 </div>
-                <h3 className="text-base font-medium theme-text-primary mb-2">{item.title}</h3>
-                <p className="text-sm theme-text-muted leading-relaxed">{item.description}</p>
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ─── Pricing ─────────────────────────────────────────────────────── */}
+      <section className="py-24 theme-bg-primary relative">
+        <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[var(--border-color)] to-transparent pointer-events-none" />
+        <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[var(--border-color)] to-transparent pointer-events-none" />
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="max-w-2xl mb-12">
+            <p className="text-sm font-medium tracking-[0.3em] theme-text-subtle dark:text-red-500/80 uppercase mb-4">
+              Investment
+            </p>
+            <h2 className="text-3xl md:text-4xl font-light theme-text-primary mb-4">
+              Programme Pricing
+            </h2>
+            <p className="theme-text-muted leading-relaxed">
+              One straightforward fee covers everything. No upsells, no hidden costs.
+            </p>
+          </div>
+          <div className="grid md:grid-cols-2 gap-6 max-w-4xl">
+
+            {/* Individual */}
+            <div className="theme-bg-card border theme-border rounded-lg p-8 flex flex-col">
+              <p className="text-xs font-medium tracking-[0.2em] theme-text-subtle uppercase mb-6">
+                Individual Place
+              </p>
+              <div className="mb-2">
+                <span className="text-4xl font-light theme-text-primary">£2,500</span>
+                <span className="text-sm theme-text-muted ml-2">+ VAT</span>
+              </div>
+              <p className="text-xs theme-text-subtle mb-8">£3,000 inc. VAT</p>
+              <ul className="space-y-3 mb-10 flex-1">
+                {[
+                  "Full 8–12 week programme",
+                  "Consultancy simulation environment",
+                  "Azure DevOps access and coaching",
+                  "PL-200 certification preparation",
+                  "Peer review and feedback",
+                  "Programme completion certificate",
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-3 text-sm theme-text-muted">
+                    <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-[var(--accent)] dark:bg-red-500 shrink-0" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <NeonButton href="/dojo/apply">Apply Now</NeonButton>
+            </div>
+
+            {/* Corporate */}
+            <div className="theme-bg-card border theme-border rounded-lg p-8 flex flex-col">
+              <p className="text-xs font-medium tracking-[0.2em] theme-text-subtle uppercase mb-6">
+                Corporate / Team
+              </p>
+              <div className="mb-2">
+                <span className="text-4xl font-light theme-text-primary">Custom</span>
+              </div>
+              <p className="text-xs theme-text-subtle mb-8">Pricing based on team size and requirements</p>
+              <ul className="space-y-3 mb-10 flex-1">
+                {[
+                  "Everything in the individual programme",
+                  "Dedicated cohort for your team",
+                  "Tailored scenarios for your sector",
+                  "Progress reporting for managers",
+                  "Invoiced to your organisation",
+                  "Volume pricing available for 4+ places",
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-3 text-sm theme-text-muted">
+                    <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-[var(--accent)] dark:bg-red-500 shrink-0" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <Link
+                href="/dojo/apply"
+                className="px-8 py-3 text-sm font-medium tracking-wide border theme-border theme-text-secondary rounded hover:theme-bg-secondary transition-colors duration-300 text-center"
+              >
+                Enquire for Teams
+              </Link>
+            </div>
+
+          </div>
+          <p className="text-xs theme-text-subtle mt-8 max-w-lg">
+            Payment is requested on acceptance of your application, not at the point of applying.
+            Individual places can be paid by card. Corporate places are invoiced directly to your organisation.
+          </p>
         </div>
       </section>
 

@@ -7,9 +7,10 @@ interface NeonButtonProps {
   onClick?: () => void;
   href?: string;
   className?: string;
+  disabled?: boolean;
 }
 
-export function NeonButton({ children, onClick, href, className = "" }: NeonButtonProps) {
+export function NeonButton({ children, onClick, href, className = "", disabled = false }: NeonButtonProps) {
   const inner = (
     <>
       <span className="neon-btn-bg" />
@@ -26,7 +27,7 @@ export function NeonButton({ children, onClick, href, className = "" }: NeonButt
   }
 
   return (
-    <button onClick={onClick} className={`neon-btn ${className}`}>
+    <button onClick={onClick} disabled={disabled} className={`neon-btn ${disabled ? "opacity-50 cursor-not-allowed" : ""} ${className}`}>
       {inner}
     </button>
   );

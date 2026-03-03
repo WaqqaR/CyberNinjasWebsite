@@ -36,11 +36,11 @@ export function Header() {
   }, [pathname]);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 overflow-x-clip backdrop-blur-md border-b theme-border transition-colors duration-[1000ms] bg-[var(--bg-primary)]/70">
+    <header className="fixed top-0 left-0 right-0 z-50 overflow-x-clip backdrop-blur-md border-b theme-border bg-[var(--bg-primary)]/70">
       <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8" aria-label="Global">
         <div className="flex items-center justify-between h-16">
           <Link href="/" className="shrink-0 logo-hover-lines" onMouseEnter={triggerScan}>
-            <Logo className="h-7 sm:h-8 w-auto theme-text-primary dark:text-red-500 transition-colors duration-[1000ms]" />
+            <Logo className="h-7 sm:h-8 w-auto theme-text-primary dark:text-red-500" />
           </Link>
 
           {/* Desktop navigation */}

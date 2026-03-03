@@ -458,4 +458,20 @@
   .neon-btn:hover::after {
     opacity: 0.5;
   }
+
+  .logo-marquee-track {
+    display: flex;
+    width: max-content;
+    animation: logo-marquee 22s linear infinite;
+  }
+
+  .logo-marquee-track:hover {
+    animation-play-state: paused;
+  }
+
+  @keyframes logo-marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
 }

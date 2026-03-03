@@ -18,7 +18,7 @@ export function CTASection({
   const isContact = href === "/contact";
 
   return (
-    <section className="py-24 relative z-10 theme-bg-dark transition-colors duration-[1000ms]">
+    <section className="py-24 relative z-10 theme-bg-dark">
       <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
         <h2 className="text-3xl font-light theme-text-on-dark mb-6">
           {heading}

@@ -28,10 +28,10 @@ export default async function ServicePage({ params }: PageProps) {
   if (!service) notFound();
 
   return (
-    <div className="theme-bg-primary transition-colors duration-[1000ms]">
+    <div className="theme-bg-primary">
 
       {/* ─── Hero ─────────────────────────────────────────────────────────── */}
-      <section className="py-28 theme-bg-secondary transition-colors duration-[1000ms] relative">
+      <section className="py-28 theme-bg-secondary relative">
         <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[var(--border-color)] to-transparent pointer-events-none" />
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <Link
@@ -113,7 +113,7 @@ export default async function ServicePage({ params }: PageProps) {
       </section>
 
       {/* ─── How We Work ──────────────────────────────────────────────────── */}
-      <section className="py-24 theme-bg-dark transition-colors duration-[1000ms] relative overflow-hidden">
+      <section className="py-24 theme-bg-dark relative overflow-hidden">
         {/* Dot grid atmosphere */}
         <div
           className="absolute inset-0 pointer-events-none opacity-[0.035]"
@@ -170,7 +170,7 @@ export default async function ServicePage({ params }: PageProps) {
       </section>
 
       {/* ─── What We Deliver ──────────────────────────────────────────────── */}
-      <section className="py-24 theme-bg-primary transition-colors duration-[1000ms] relative">
+      <section className="py-24 theme-bg-primary relative">
         <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[var(--border-color)] to-transparent pointer-events-none" />
         <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[var(--border-color)] to-transparent pointer-events-none" />
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -207,7 +207,7 @@ export default async function ServicePage({ params }: PageProps) {
       </section>
 
       {/* ─── Benefits + Audience ──────────────────────────────────────────── */}
-      <section className="py-24 theme-bg-primary transition-colors duration-[1000ms] relative">
+      <section className="py-24 theme-bg-primary relative">
         <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[var(--border-color)] to-transparent pointer-events-none" />
         <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[var(--border-color)] to-transparent pointer-events-none" />
         <div className="max-w-7xl mx-auto px-6 lg:px-8">

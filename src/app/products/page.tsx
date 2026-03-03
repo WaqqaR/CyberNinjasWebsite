@@ -5,7 +5,7 @@ import { products } from "@/data/products";
 
 export default function ProductsPage() {
   return (
-    <div className="theme-bg-primary transition-colors duration-[1000ms]">
+    <div className="theme-bg-primary">
       {/* Hero */}
       <PageHero
         label="Products"

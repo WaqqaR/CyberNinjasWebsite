@@ -11,80 +11,57 @@ import { services } from "@/data/services";
 export default function Home() {
   const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
-  const [isTransitioning, setIsTransitioning] = useState(false);
-  const [transitionDirection, setTransitionDirection] = useState<"dark" | "light" | null>(null);
   const bgVideoRef = useRef<HTMLVideoElement>(null);
-  const logoScrollRef = useRef<HTMLDivElement>(null);
+  const prevThemeRef = useRef<string | null>(null);
 
-  useEffect(() => {
-    const el = logoScrollRef.current;
-    if (!el) return;
-    const onWheel = (e: WheelEvent) => {
-      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return; // already horizontal
-      e.preventDefault();
-      el.scrollLeft += e.deltaY;
-    };
-    el.addEventListener("wheel", onWheel, { passive: false });
-    return () => el.removeEventListener("wheel", onWheel);
-  }, []);
-  const [isDarkMode, setIsDarkMode] = useState(false);
-  const [showDarkOverlay, setShowDarkOverlay] = useState(false); // bg-black/50 dark tint
-  const [showOverlay, setShowOverlay] = useState(false); // solid #e1d1c3 on top of video
+  const [showDarkOverlay, setShowDarkOverlay] = useState(false);
+  const [showOverlay, setShowOverlay] = useState(false);
   const [showBannerArt, setShowBannerArt] = useState(false);
   const bannerTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+
+  // Set initial overlay state on mount
   useEffect(() => {
     setMounted(true);
     const dark = resolvedTheme === "dark";
-    setIsDarkMode(dark);
-    if (!dark) setShowOverlay(true);
-    if (dark) setShowDarkOverlay(true);
-    const video = bgVideoRef.current;
-    if (video) {
-      video.load();
-      video.addEventListener("loadedmetadata", () => {
-        video.currentTime = 0; // always park at frame 0 (dark scene)
-      }, { once: true });
+    if (dark) {
+      setShowDarkOverlay(true);
+    } else {
+      setShowOverlay(true);
     }
+    prevThemeRef.current = resolvedTheme ?? null;
   }, []);
 
+  // React to theme changes
   useEffect(() => {
-    const handleTransitionStart = (e: CustomEvent) => {
-      setIsTransitioning(true);
+    if (!mounted || !resolvedTheme) return;
+    const prev = prevThemeRef.current;
+    if (prev === resolvedTheme) return;
+    prevThemeRef.current = resolvedTheme;
+
+    if (resolvedTheme === "light") {
+      // dark → light: play video, show solid overlay when it ends
+      setShowDarkOverlay(false);
       const video = bgVideoRef.current;
-
-      if (e.detail === "light") {
-        // dark→light: hide dark tint, play video forward
-        setShowDarkOverlay(false);
-        if (video) {
-          video.currentTime = 0;
-          video.playbackRate = 1.5;
-          video.play();
-        }
-        setIsDarkMode(false);
-      } else {
-        // light→dark: seek video to frame 0 while overlay still covers it,
-        // then fade out overlay to reveal the original first frame
-        if (video) video.currentTime = 0;
-        setShowBannerArt(false);
-        setShowOverlay(false);
-        setIsDarkMode(true);
-        setIsTransitioning(false);
-        setTimeout(() => setShowDarkOverlay(true), 700);
+      if (video) {
+        video.currentTime = 0;
+        video.playbackRate = 1.5;
+        video.play();
       }
-    };
+    } else {
+      // light → dark: instant
+      const video = bgVideoRef.current;
+      if (video) { video.pause(); video.currentTime = 0; }
+      setShowBannerArt(false);
+      setShowOverlay(false);
+      setShowDarkOverlay(true);
+    }
+  }, [resolvedTheme, mounted]);
 
-    window.addEventListener("themeTransitionStart", handleTransitionStart as EventListener);
-    return () => window.removeEventListener("themeTransitionStart", handleTransitionStart as EventListener);
-  }, []);
+  // Video ended — fade in solid overlay
+  const handleBgVideoEnd = () => setShowOverlay(true);
 
-  // dark→light video finished — fade in the solid overlay
-  const handleBgVideoEnd = () => {
-    setIsTransitioning(false);
-    setShowOverlay(true);
-  };
-
-  // Show banner art after the overlay has faded in (700ms)
+  // Banner art: show after overlay fades in
   useEffect(() => {
     if (bannerTimerRef.current) clearTimeout(bannerTimerRef.current);
     if (showOverlay && mounted) {
@@ -94,6 +71,8 @@ export default function Home() {
     }
     return () => { if (bannerTimerRef.current) clearTimeout(bannerTimerRef.current); };
   }, [showOverlay, mounted]);
+
+  const isDark = mounted && resolvedTheme === "dark";
 
   const serviceIcons = [
     // Power Platform — layers / stack
@@ -115,10 +94,10 @@ export default function Home() {
   ];
 
   return (
-    <div className="theme-bg-primary transition-colors duration-[1000ms] relative">
+    <div className="theme-bg-primary relative">
       {/* Hero Section */}
       <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden z-10 -mt-16 pt-16">
-        {/* Video always present, parked at frame 0 (dark scene) */}
+        {/* Video background */}
         <div className="absolute inset-0 z-[1]">
           <video
             ref={bgVideoRef}
@@ -133,25 +112,21 @@ export default function Home() {
           </video>
         </div>
 
-        {/* Solid light-mode overlay — fades out going dark, fades in returning to light (desktop only) */}
+        {/* Solid light-mode overlay — CSS-controlled before mount, JS-controlled after */}
         <div
-          className="absolute inset-0 z-[2] pointer-events-none hidden lg:block"
-          style={{
-            backgroundColor: '#e1d1c3',
-            opacity: showOverlay ? 1 : 0,
-            transition: 'opacity 700ms ease',
-          }}
+          className={`absolute inset-0 z-[2] pointer-events-none hidden lg:block ${!mounted ? 'opacity-100 dark:opacity-0' : ''}`}
+          style={mounted ? { backgroundColor: '#e1d1c3', opacity: showOverlay ? 1 : 0, transition: 'opacity 700ms ease' } : { backgroundColor: '#e1d1c3' }}
         />
 
-        {/* Dark tint — fades in after solid overlay is gone, not during the fade */}
-        <div className={`absolute inset-0 z-[3] bg-black/50 transition-opacity duration-500 ${showDarkOverlay ? 'opacity-100' : 'opacity-0'}`} />
+        {/* Dark tint — CSS-controlled before mount, JS-controlled after */}
+        <div className={`absolute inset-0 z-[3] bg-black/50 transition-opacity duration-500 ${mounted ? (showDarkOverlay ? 'opacity-100' : 'opacity-0') : 'opacity-0 dark:opacity-100'}`} />
 
         {/* Bottom fade */}
         <div className="absolute bottom-0 left-0 right-0 h-32 z-[3] bg-gradient-to-t from-[var(--bg-secondary)] to-transparent" />
 
         {/* Subtle pattern overlay - dark mode */}
         <div
-          className="absolute inset-0 opacity-0 dark:opacity-20 transition-opacity duration-500 z-[4]"
+          className="absolute inset-0 opacity-0 dark:opacity-20 z-[4]"
           style={{
             backgroundImage: `linear-gradient(rgba(239, 68, 68, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(239, 68, 68, 0.1) 1px, transparent 1px)`,
             backgroundSize: '60px 60px'
@@ -205,7 +180,6 @@ export default function Home() {
                   src="/cyberninjas-bannerart-dark.png"
                   alt="Cyber Ninjas"
                   className="hidden lg:block h-[32rem] w-auto object-contain"
-                  style={{ animation: 'fadeIn 1s ease-in-out' }}
                 />
               )}
               <div className="pl-10">
@@ -225,7 +199,7 @@ export default function Home() {
       </section>
 
       {/* Services Section */}
-      <section className="py-24 relative z-10 theme-bg-primary transition-colors duration-[1000ms]">
+      <section className="py-24 relative z-10 theme-bg-primary">
         {/* Dark mode: atmospheric teal panel that fades in/out at edges */}
         <div
           className="absolute inset-0 hidden dark:block pointer-events-none"
@@ -341,44 +315,39 @@ export default function Home() {
       </section>
 
       {/* Organisations Section */}
-      <section className="py-20 relative z-10 theme-bg-secondary transition-colors duration-[1000ms]">
-        {/* Top/bottom border lines */}
-        <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[var(--border-color)] to-transparent pointer-events-none" />
-        <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[var(--border-color)] to-transparent pointer-events-none" />
-        {/* Dark mode accent line */}
-        <div className="absolute top-0 inset-x-0 h-px hidden dark:block pointer-events-none"
-          style={{ background: "linear-gradient(to right, transparent, rgba(158,48,169,0.5) 30%, rgba(64,144,181,0.7) 60%, transparent)" }}
-        />
+      <section className="py-20 relative z-10 overflow-hidden" style={{ backgroundColor: 'rgb(225, 209, 195)' }}>
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 mb-10">
+          <p className="text-sm font-medium tracking-[0.3em] uppercase mb-4" style={{ color: 'rgb(120, 100, 85)' }}>
+            Experience
+          </p>
+          <h2 className="text-3xl font-light" style={{ color: 'rgb(28, 25, 23)' }}>
+            Organisations we have worked with
+          </h2>
+        </div>
 
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="mb-10">
-            <p className="text-sm font-medium tracking-[0.3em] theme-text-subtle dark:text-red-500/80 uppercase mb-4">
-              Experience
-            </p>
-            <h2 className="text-3xl font-light theme-text-primary">
-              Organisations we have worked with
-            </h2>
-          </div>
-
-          {/* Scrollable logo row */}
-          <div className="relative w-full overflow-hidden">
-            {/* Right fade */}
-            <div className="absolute right-0 top-0 bottom-0 w-16 z-10 pointer-events-none"
-              style={{ background: "linear-gradient(to left, var(--bg-secondary), transparent)" }}
-            />
-            <div
-              ref={logoScrollRef}
-              className="flex items-center gap-12 overflow-x-auto py-4 pr-16"
-              style={{ scrollbarWidth: "none", msOverflowStyle: "none", WebkitOverflowScrolling: "touch" } as React.CSSProperties}
-            >
-              <img src="/CopilotStudio.webp" alt="Copilot Studio" className="h-14 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity duration-300 shrink-0" />
-              <img src="/PowerPlatform.webp" alt="Power Platform" className="h-14 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity duration-300 shrink-0" />
-              <img src="/Dynamics365.svg" alt="Dynamics 365" className="h-14 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity duration-300 shrink-0" />
-              <img src="/PALogo.png" alt="Power Automate" className="h-14 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity duration-300 shrink-0" />
-              <img src="/powerbi.webp" alt="Power BI" className="h-14 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity duration-300 shrink-0" />
-              <img src="/PowerPages.webp" alt="Power Pages" className="h-14 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity duration-300 shrink-0" />
-              <img src="/azure logo.svg" alt="Azure" className="h-14 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity duration-300 shrink-0" />
-            </div>
+        {/* Marquee */}
+        <div
+          className="relative"
+          style={{
+            maskImage: 'linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)',
+            WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)',
+          }}
+        >
+          <div className="logo-marquee-track">
+            {/* Render twice for seamless loop */}
+            {[0, 1].map((copy) => (
+              <div key={copy} className="flex items-center gap-16 px-8" aria-hidden={copy === 1}>
+                <img src="/capitalogo.jpg"                  alt="Capital"              className="h-12 w-auto object-contain" />
+                <img src="/university-of-oxford-logo-1.png" alt="University of Oxford" className="h-12 w-auto object-contain" />
+                <img src="/tcdlogo.png"                     alt="TCD"                  className="h-12 w-auto object-contain" />
+                <img src="/Infinigate_Logo.webp"            alt="Infinigate"           className="h-12 w-auto object-contain" />
+                <img src="/ans-group.png"                   alt="ANS Group"            className="h-12 w-auto object-contain" />
+                <img src="/ergo-logo.jpg"                   alt="Ergo"                 className="h-12 w-auto object-contain" />
+                <img src="/Kcl-logo.svg.png"                alt="King's College London" className="h-12 w-auto object-contain" />
+                <img src="/ceox logo.webp"                  alt="CEOX"                 className="h-12 w-auto object-contain" />
+                <img src="/uob-logo.png"                    alt="University of Birmingham" className="h-12 w-auto object-contain" />
+              </div>
+            ))}
           </div>
         </div>
       </section>
