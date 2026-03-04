@@ -1,7 +1,20 @@
+import type { Metadata } from "next";
 import { PageHero } from "@/components/PageHero";
 import { CTASection } from "@/components/CTASection";
 import { ServiceCard } from "@/components/ServiceCard";
 import { services } from "@/data/services";
+
+export const metadata: Metadata = {
+  title: "Services | Cyber Ninjas",
+  description: "Microsoft Power Platform, Dynamics 365, Copilot Studio, and bespoke application development. Expert consultancy services delivered with precision.",
+  openGraph: {
+    title: "Services | Cyber Ninjas",
+    description: "Microsoft Power Platform, Dynamics 365, Copilot Studio, and bespoke application development. Expert consultancy services delivered with precision.",
+    url: "https://cyberninjascorp.com/services",
+    siteName: "Cyber Ninjas",
+    type: "website",
+  },
+};
 
 const serviceIcons = [
   // Power Platform — layers / stack

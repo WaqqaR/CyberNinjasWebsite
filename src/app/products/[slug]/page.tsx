@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PageHero } from "@/components/PageHero";
@@ -6,6 +7,23 @@ import { productDetails } from "@/data/products";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const product = productDetails[slug];
+  if (!product) return {};
+  return {
+    title: `${product.title} | Cyber Ninjas`,
+    description: product.longDescription,
+    openGraph: {
+      title: `${product.title} | Cyber Ninjas`,
+      description: product.longDescription,
+      url: `https://cyberninjascorp.com/products/${slug}`,
+      siteName: "Cyber Ninjas",
+      type: "website",
+    },
+  };
 }
 
 export async function generateStaticParams() {

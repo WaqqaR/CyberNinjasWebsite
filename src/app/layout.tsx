@@ -23,6 +23,13 @@ export const metadata: Metadata = {
   title: "Cyber Ninjas | Digital Transformation & AI Consultancy",
   description: "Boutique technology consultancy specializing in digital transformation, AI enablement, and Microsoft solutions. We partner with select clients to deliver exceptional results.",
   keywords: ["digital transformation", "AI consultancy", "Copilot Studio", "Power Platform", "Dynamics CE", "n8n automation"],
+  openGraph: {
+    title: "Cyber Ninjas | Digital Transformation & AI Consultancy",
+    description: "Boutique technology consultancy specializing in digital transformation, AI enablement, and Microsoft solutions.",
+    url: "https://cyberninjascorp.com",
+    siteName: "Cyber Ninjas",
+    type: "website",
+  },
 };
 
 export default function RootLayout({

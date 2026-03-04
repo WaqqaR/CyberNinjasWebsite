@@ -1,7 +1,20 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHero } from "@/components/PageHero";
 import { CTASection } from "@/components/CTASection";
 import { products } from "@/data/products";
+
+export const metadata: Metadata = {
+  title: "Products | Cyber Ninjas",
+  description: "Purpose-built software tools from Cyber Ninjas. Designed to solve real problems for real teams, built with the same precision we bring to every client engagement.",
+  openGraph: {
+    title: "Products | Cyber Ninjas",
+    description: "Purpose-built software tools from Cyber Ninjas. Designed to solve real problems for real teams.",
+    url: "https://cyberninjascorp.com/products",
+    siteName: "Cyber Ninjas",
+    type: "website",
+  },
+};
 
 export default function ProductsPage() {
   return (

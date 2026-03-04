@@ -1,5 +1,18 @@
+import type { Metadata } from "next";
 import { PageHero } from "@/components/PageHero";
 import { CTASection } from "@/components/CTASection";
+
+export const metadata: Metadata = {
+  title: "About Us | Cyber Ninjas",
+  description: "Boutique Microsoft consultancy founded by Waqqar Ahmed. Over a decade delivering Power Platform and Dynamics 365 across public sector, housing, finance, and higher education.",
+  openGraph: {
+    title: "About Us | Cyber Ninjas",
+    description: "Boutique Microsoft consultancy founded by Waqqar Ahmed. Over a decade delivering Power Platform and Dynamics 365 across public sector, housing, finance, and education.",
+    url: "https://cyberninjascorp.com/about",
+    siteName: "Cyber Ninjas",
+    type: "website",
+  },
+};
 
 const team = [
   {
