@@ -1,12 +1,16 @@
 import { createClient } from "@supabase/supabase-js";
 import { Resend } from "resend";
 
-const supabase = createClient(
-  process.env.SUPABASE_URL!,
-  process.env.SUPABASE_ANON_KEY!
-);
+function getSupabase() {
+  return createClient(
+    process.env.SUPABASE_URL!,
+    process.env.SUPABASE_ANON_KEY!
+  );
+}
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+function getResend() {
+  return new Resend(process.env.RESEND_API_KEY);
+}
 
 const FROM = "Cyber Ninjas <dojo@cyberninjascorp.com>";
 const ADMIN_EMAIL = "waqqarahmed4@gmail.com";
@@ -268,7 +272,7 @@ export async function POST(request: Request) {
     }
 
     // Save to Supabase
-    const { error: dbError } = await supabase.from("dojo_applications").insert({
+    const { error: dbError } = await getSupabase().from("dojo_applications").insert({
       first_name: firstName,
       last_name: lastName,
       email,
@@ -301,6 +305,7 @@ export async function POST(request: Request) {
     };
 
     // Fire all emails — immediate + scheduled sequence
+    const resend = getResend();
     await Promise.all([
       // 1. Admin notification (immediate)
       resend.emails.send({
