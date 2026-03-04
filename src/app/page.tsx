@@ -370,10 +370,10 @@ export default function Home() {
                 {[
                   { src: '/capitalogo.jpg',                  alt: 'Capital' },
                   { src: '/university-of-oxford-logo-1.png', alt: 'University of Oxford' },
-                  { src: '/tcdlogo.png',                     alt: 'TCD' },
+                  { src: '/trinity-college-dublin-LOGO.png',  alt: 'TCD' },
                   { src: '/Infinigate_Logo.webp',            alt: 'Infinigate' },
                   { src: '/ans-group.png',                   alt: 'ANS Group' },
-                  { src: '/ergo-logo.jpg',                   alt: 'Ergo' },
+                  { src: '/ergo-logo.svg',                   alt: 'Ergo' },
                   { src: '/Kcl-logo.svg.png',                alt: "King's College London" },
                   { src: '/ceox logo.webp',                  alt: 'CEOX' },
                   { src: '/uob-logo.png',                    alt: 'University of Birmingham' },
