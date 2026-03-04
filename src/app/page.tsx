@@ -315,12 +315,43 @@ export default function Home() {
       </section>
 
       {/* Organisations Section */}
-      <section className="py-20 relative z-10 overflow-hidden" style={{ backgroundColor: 'rgb(225, 209, 195)' }}>
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 mb-10">
-          <p className="text-sm font-medium tracking-[0.3em] uppercase mb-4" style={{ color: 'rgb(120, 100, 85)' }}>
+      <section
+        className="py-16 relative z-10 overflow-hidden"
+        style={{ background: isDark ? 'linear-gradient(180deg, #06000f 0%, #0d0022 50%, #06000f 100%)' : 'rgb(225, 209, 195)' }}
+      >
+        {/* Dark mode only: neon borders, grid, scanlines, glow */}
+        {isDark && <>
+          <div className="absolute top-0 inset-x-0 h-px pointer-events-none" style={{ background: 'linear-gradient(to right, transparent, #bd00ff 30%, #00d4ff 70%, transparent)' }} />
+          <div className="absolute bottom-0 inset-x-0 h-px pointer-events-none" style={{ background: 'linear-gradient(to right, transparent, #bd00ff 30%, #00d4ff 70%, transparent)' }} />
+          <div className="absolute inset-0 pointer-events-none" style={{
+            backgroundImage: 'linear-gradient(rgba(189,0,255,0.07) 1px, transparent 1px), linear-gradient(to right, rgba(0,212,255,0.05) 1px, transparent 1px)',
+            backgroundSize: '80px 60px',
+          }} />
+          <div className="absolute inset-0 pointer-events-none" style={{
+            backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.18) 2px, rgba(0,0,0,0.18) 4px)',
+          }} />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-24 pointer-events-none" style={{
+            background: 'radial-gradient(ellipse, rgba(189,0,255,0.1) 0%, transparent 70%)',
+          }} />
+        </>}
+
+        {/* Light mode only: subtle dividers */}
+        {!isDark && <>
+          <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[var(--border-color)] to-transparent pointer-events-none" />
+          <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[var(--border-color)] to-transparent pointer-events-none" />
+        </>}
+
+        <div className="relative max-w-7xl mx-auto px-6 lg:px-8 mb-10">
+          <p
+            className="text-sm font-medium tracking-[0.3em] uppercase mb-3"
+            style={{ color: isDark ? '#bd00ff' : 'rgb(120, 100, 85)' }}
+          >
             Experience
           </p>
-          <h2 className="text-3xl font-light" style={{ color: 'rgb(28, 25, 23)' }}>
+          <h2
+            className="text-3xl font-light"
+            style={{ color: isDark ? '#e8d5ff' : 'rgb(28, 25, 23)' }}
+          >
             Organisations we have worked with
           </h2>
         </div>
@@ -334,18 +365,27 @@ export default function Home() {
           }}
         >
           <div className="logo-marquee-track">
-            {/* Render twice for seamless loop */}
             {[0, 1].map((copy) => (
               <div key={copy} className="flex items-center gap-16 px-8" aria-hidden={copy === 1}>
-                <img src="/capitalogo.jpg"                  alt="Capital"              className="h-12 w-auto object-contain" />
-                <img src="/university-of-oxford-logo-1.png" alt="University of Oxford" className="h-12 w-auto object-contain" />
-                <img src="/tcdlogo.png"                     alt="TCD"                  className="h-12 w-auto object-contain" />
-                <img src="/Infinigate_Logo.webp"            alt="Infinigate"           className="h-12 w-auto object-contain" />
-                <img src="/ans-group.png"                   alt="ANS Group"            className="h-12 w-auto object-contain" />
-                <img src="/ergo-logo.jpg"                   alt="Ergo"                 className="h-12 w-auto object-contain" />
-                <img src="/Kcl-logo.svg.png"                alt="King's College London" className="h-12 w-auto object-contain" />
-                <img src="/ceox logo.webp"                  alt="CEOX"                 className="h-12 w-auto object-contain" />
-                <img src="/uob-logo.png"                    alt="University of Birmingham" className="h-12 w-auto object-contain" />
+                {[
+                  { src: '/capitalogo.jpg',                  alt: 'Capital' },
+                  { src: '/university-of-oxford-logo-1.png', alt: 'University of Oxford' },
+                  { src: '/tcdlogo.png',                     alt: 'TCD' },
+                  { src: '/Infinigate_Logo.webp',            alt: 'Infinigate' },
+                  { src: '/ans-group.png',                   alt: 'ANS Group' },
+                  { src: '/ergo-logo.jpg',                   alt: 'Ergo' },
+                  { src: '/Kcl-logo.svg.png',                alt: "King's College London" },
+                  { src: '/ceox logo.webp',                  alt: 'CEOX' },
+                  { src: '/uob-logo.png',                    alt: 'University of Birmingham' },
+                ].map(({ src, alt }, i) => (
+                  <img
+                    key={alt}
+                    src={src}
+                    alt={alt}
+                    className={`h-12 w-auto object-contain shrink-0 ${isDark ? 'glitch-logo' : 'opacity-70 hover:opacity-100 transition-opacity duration-300'}`}
+                    style={isDark ? { animationDelay: `${(i * 0.65 + copy * 0.3).toFixed(2)}s` } : undefined}
+                  />
+                ))}
               </div>
             ))}
           </div>
