@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 
-const WHATSAPP_NUMBER = "07930265886";
+const WHATSAPP_NUMBER = "447930265886";
 
 type View = "menu" | "chat" | "contact-form";
 
