@@ -217,7 +217,8 @@ function adminEmail(data: Record<string, string>): string {
   const { firstName, lastName, email, linkedin, jobTitle, location,
     backgroundType, companyName, teamSize, corporateObjectives,
     experienceLevel, devOpsExperience, certifications,
-    whyDojo, successDefinition, cohortAvailability, howHeard } = data;
+    whyDojo, successDefinition, cohortAvailability, howHeard,
+    scholarshipConsideration, scholarshipContext } = data;
 
   const name = escapeHtml(`${firstName} ${lastName}`);
   const safeEmail = escapeHtml(email);
@@ -248,6 +249,7 @@ function adminEmail(data: Record<string, string>): string {
         <p style="margin:0 0 6px;font-size:12px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#78716c">Success definition</p>
         <p style="margin:0;color:#1c1917;font-size:14px;line-height:1.6;white-space:pre-wrap">${escapeHtml(successDefinition)}</p>
         ${corporateObjectives ? `<p style="margin:16px 0 6px;font-size:12px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#78716c">Corporate objectives</p><p style="margin:0;color:#1c1917;font-size:14px;line-height:1.6;white-space:pre-wrap">${escapeHtml(corporateObjectives)}</p>` : ""}
+        ${scholarshipConsideration === "true" ? `<div style="margin-top:16px;padding:12px 16px;background:#fef2f2;border-left:3px solid #ef4444;border-radius:4px"><p style="margin:0 0 4px;font-size:12px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#dc2626">Scholarship requested</p>${scholarshipContext ? `<p style="margin:0;color:#1c1917;font-size:14px;line-height:1.6;white-space:pre-wrap">${escapeHtml(scholarshipContext)}</p>` : ""}</div>` : ""}
       </div>
     </div>
   `);
@@ -264,6 +266,7 @@ export async function POST(request: Request) {
       backgroundType, companyName, teamSize, corporateObjectives,
       experienceLevel, certifications, devOpsExperience,
       whyDojo, successDefinition, howHeard, cohortAvailability,
+      scholarshipConsideration, scholarshipContext,
     } = body;
 
     if (!firstName || !lastName || !email || !jobTitle || !backgroundType ||
@@ -290,6 +293,8 @@ export async function POST(request: Request) {
       success_definition: successDefinition,
       how_heard: howHeard || null,
       cohort_availability: cohortAvailability,
+      scholarship_consideration: scholarshipConsideration ?? false,
+      scholarship_context: scholarshipContext || null,
     });
 
     if (dbError) {
@@ -302,6 +307,7 @@ export async function POST(request: Request) {
       backgroundType, companyName, teamSize, corporateObjectives,
       experienceLevel, certifications, devOpsExperience,
       whyDojo, successDefinition, howHeard, cohortAvailability,
+      scholarshipConsideration, scholarshipContext,
     };
 
     // Fire all emails — immediate + scheduled sequence

@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
 /* ===== BASE LAYER ===== */
 @layer base {
@@ -75,17 +76,17 @@
   }
 
   ::-webkit-scrollbar {
-    width: 8px;
+    width: 6px;
   }
   ::-webkit-scrollbar-track {
-    background: var(--bg-primary);
+    background: transparent;
   }
   ::-webkit-scrollbar-thumb {
-    background: var(--border-color);
+    background: rgba(128, 128, 128, 0.2);
     border-radius: 4px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: var(--accent);
+    background: rgba(128, 128, 128, 0.4);
   }
 
   ::selection {
@@ -525,6 +526,10 @@
 
 }
 
+
+/* Dojo page — override light mode background */
+.dojo-page { --bg-primary: #e1d1c3; --bg-secondary: #e1d1c3; }
+.dark .dojo-page { --bg-primary: rgb(19, 37, 37); --bg-secondary: rgb(21, 39, 40); }
 
 /* Form field focus — unlayered so it beats all @layer utilities */
 .form-field {

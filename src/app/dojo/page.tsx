@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { NeonButton } from "@/components/NeonButton";
 import { CTASection } from "@/components/CTASection";
@@ -146,54 +147,89 @@ function Partial() {
 
 export default function DojoPage() {
   return (
-    <div className="theme-bg-primary">
+    <div className="theme-bg-primary dojo-page">
 
       {/* ─── 1. Hero ──────────────────────────────────────────────────────── */}
-      <section className="py-28 theme-bg-secondary relative">
+      <section className="py-28 theme-bg-secondary relative overflow-hidden">
         <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[var(--border-color)] to-transparent pointer-events-none" />
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="max-w-4xl">
-            <p className="text-sm font-medium tracking-[0.3em] theme-text-subtle dark:text-red-500/80 uppercase mb-4">
-              Training Programme
-            </p>
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-light theme-text-primary leading-tight mb-3">
-              Cyber Ninjas{" "}
-              <GlitchWord text="Dojo" className="font-semibold theme-text-secondary dark:text-red-500" />
-            </h1>
-            <p className="text-xl md:text-2xl font-light theme-text-muted tracking-wide mb-8">
-              Power Platform Consultant Bootcamp
-            </p>
-            <p className="text-lg theme-text-muted leading-relaxed max-w-2xl mb-10">
-              Most Power Platform training stops at the tool. The Dojo goes further. Over 8 to 12
-              weeks, you will work inside a fully simulated consultancy environment — running Agile
-              sprints, managing Azure DevOps boards, deploying solutions across Dev, Test, and
-              Production, and preparing for Microsoft PL-200 certification. This is not a course.
-              It is a professional transition.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 mb-16">
-              <NeonButton href="/dojo/apply">Apply Now</NeonButton>
-              <a
-                href="/dojo/programme"
-                className="px-8 py-3 text-sm font-medium tracking-wide border theme-border theme-text-secondary rounded hover:theme-bg-primary transition-colors duration-300 text-center"
-              >
-                Programme Overview
-              </a>
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+
+            {/* Left — text content */}
+            <div>
+              <p className="text-sm font-medium tracking-[0.3em] theme-text-subtle dark:text-red-500/80 uppercase mb-4">
+                Training Programme
+              </p>
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-light theme-text-primary leading-tight mb-3">
+                Cyber Ninjas{" "}
+                <GlitchWord text="Dojo" className="font-semibold theme-text-secondary dark:text-red-500" />
+              </h1>
+              <p className="text-xl md:text-2xl font-light theme-text-muted tracking-wide mb-8">
+                Power Platform Consultant Bootcamp
+              </p>
+              <p className="text-lg theme-text-muted leading-relaxed mb-10">
+                Most Power Platform training stops at the tool. The Dojo goes further. Over 8 to 12
+                weeks, you will work inside a fully simulated consultancy environment — running Agile
+                sprints, managing Azure DevOps boards, deploying solutions across Dev, Test, and
+                Production, and preparing for Microsoft PL-200 certification. This is not a course.
+                It is a professional transition.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 mb-16">
+                <NeonButton href="/dojo/apply">Apply Now</NeonButton>
+                <a
+                  href="/dojo/programme"
+                  className="px-8 py-3 text-sm font-medium tracking-wide border theme-border theme-text-secondary rounded hover:theme-bg-primary transition-colors duration-300 text-center"
+                >
+                  Programme Overview
+                </a>
+              </div>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-8 border-t theme-border">
+                {[
+                  { value: "8–12 Weeks", label: "Duration" },
+                  { value: "Cohort-Based", label: "Live Delivery" },
+                  { value: "PL-200", label: "Certification Prep" },
+                  { value: "£2,500 + VAT", label: "Programme Fee" },
+                ].map((stat) => (
+                  <div key={stat.label}>
+                    <p className="text-lg font-medium theme-text-primary mb-1">{stat.value}</p>
+                    <p className="text-xs font-medium tracking-[0.2em] theme-text-subtle uppercase">
+                      {stat.label}
+                    </p>
+                  </div>
+                ))}
+              </div>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-8 border-t theme-border">
-              {[
-                { value: "8–12 Weeks", label: "Duration" },
-                { value: "Cohort-Based", label: "Live Delivery" },
-                { value: "PL-200", label: "Certification Prep" },
-                { value: "£2,500 + VAT", label: "Programme Fee" },
-              ].map((stat) => (
-                <div key={stat.label}>
-                  <p className="text-lg font-medium theme-text-primary mb-1">{stat.value}</p>
-                  <p className="text-xs font-medium tracking-[0.2em] theme-text-subtle uppercase">
-                    {stat.label}
-                  </p>
-                </div>
-              ))}
+
+            {/* Right — banner art */}
+            <div
+              className="relative hidden lg:block"
+              style={{
+                maskImage:
+                  "linear-gradient(to right, transparent, black 15%, black 85%, transparent), linear-gradient(to bottom, transparent, black 10%, black 90%, transparent)",
+                maskComposite: "intersect",
+                WebkitMaskImage:
+                  "linear-gradient(to right, transparent, black 15%, black 85%, transparent), linear-gradient(to bottom, transparent, black 10%, black 90%, transparent)",
+                WebkitMaskComposite: "source-in",
+              }}
+            >
+              <Image
+                src="/cyberninjas-bannerart-dark.png"
+                alt=""
+                width={960}
+                height={700}
+                className="w-full h-auto dark:hidden"
+                priority
+              />
+              <Image
+                src="/cyberninjas-bannerart-light.png"
+                alt=""
+                width={960}
+                height={700}
+                className="w-full h-auto hidden dark:block"
+                priority
+              />
             </div>
+
           </div>
         </div>
       </section>
