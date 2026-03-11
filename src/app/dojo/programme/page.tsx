@@ -3,6 +3,7 @@ import Link from "next/link";
 import { NeonButton } from "@/components/NeonButton";
 import { CTASection } from "@/components/CTASection";
 import { FaqAccordion } from "../FaqAccordion";
+import { GlitchWord } from "@/components/GlitchWord";
 
 export const metadata: Metadata = {
   title: "Programme Overview | Cyber Ninjas Dojo",
@@ -178,7 +179,7 @@ export default function DojoProgrammePage() {
             </p>
             <h1 className="text-5xl md:text-6xl font-light theme-text-primary leading-tight mb-6">
               What the{" "}
-              <span className="font-semibold theme-text-secondary dark:text-red-500">Dojo</span>{" "}
+              <GlitchWord text="Dojo" className="font-semibold theme-text-secondary dark:text-red-500" />{" "}
               Covers
             </h1>
             <p className="text-lg theme-text-muted leading-relaxed mb-10">

@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { NeonButton } from "@/components/NeonButton";
+import { GlitchWord } from "@/components/GlitchWord";
 
 type BackgroundType = "career-switcher" | "junior-developer" | "it-professional" | "corporate" | "";
 type ExperienceLevel = "none" | "basic" | "hands-on" | "intermediate" | "";
@@ -27,6 +28,8 @@ interface FormData {
   successDefinition: string;
   howHeard: string;
   cohortAvailability: CohortAvailability;
+  scholarshipConsideration: boolean;
+  scholarshipContext: string;
 }
 
 const INITIAL_DATA: FormData = {
@@ -47,6 +50,8 @@ const INITIAL_DATA: FormData = {
   successDefinition: "",
   howHeard: "",
   cohortAvailability: "",
+  scholarshipConsideration: false,
+  scholarshipContext: "",
 };
 
 const STEPS = ["About You", "Your Background", "Your Experience", "Motivation"];
@@ -73,14 +78,25 @@ function TextInput({
   type?: string;
   required?: boolean;
 }) {
+  const [focused, setFocused] = useState(false);
   return (
     <input
       type={type}
       value={value}
       onChange={(e) => onChange(e.target.value)}
+      onFocus={() => setFocused(true)}
+      onBlur={() => setFocused(false)}
       placeholder={placeholder}
       required={required}
-      className="w-full bg-transparent border theme-border rounded px-4 py-3 text-sm theme-text-primary placeholder:theme-text-subtle focus:outline-none focus:border-[var(--border-hover)] transition-colors duration-200"
+      className="w-full bg-transparent border rounded px-4 py-3 text-sm theme-text-primary placeholder:theme-text-subtle"
+      style={{
+        outline: "none",
+        borderColor: focused ? "rgba(158, 48, 169, 0.7)" : "var(--border-color)",
+        boxShadow: focused
+          ? "0 0 0 1px rgba(158, 48, 169, 0.25), 0 0 12px rgba(64, 144, 181, 0.15)"
+          : "none",
+        transition: "border-color 0.2s ease, box-shadow 0.2s ease",
+      }}
     />
   );
 }
@@ -98,14 +114,25 @@ function TextArea({
   rows?: number;
   required?: boolean;
 }) {
+  const [focused, setFocused] = useState(false);
   return (
     <textarea
       value={value}
       onChange={(e) => onChange(e.target.value)}
+      onFocus={() => setFocused(true)}
+      onBlur={() => setFocused(false)}
       placeholder={placeholder}
       rows={rows}
       required={required}
-      className="w-full bg-transparent border theme-border rounded px-4 py-3 text-sm theme-text-primary placeholder:theme-text-subtle focus:outline-none focus:border-[var(--border-hover)] transition-colors duration-200 resize-none"
+      className="w-full bg-transparent border rounded px-4 py-3 text-sm theme-text-primary placeholder:theme-text-subtle resize-none"
+      style={{
+        outline: "none",
+        borderColor: focused ? "rgba(158, 48, 169, 0.7)" : "var(--border-color)",
+        boxShadow: focused
+          ? "0 0 0 1px rgba(158, 48, 169, 0.25), 0 0 12px rgba(64, 144, 181, 0.15)"
+          : "none",
+        transition: "border-color 0.2s ease, box-shadow 0.2s ease",
+      }}
     />
   );
 }
@@ -127,13 +154,13 @@ function RadioCard({
       onClick={onSelect}
       className={`w-full text-left flex items-start gap-3 p-4 border rounded transition-colors duration-200 ${
         selected
-          ? "border-[var(--border-hover)] theme-bg-card"
-          : "theme-border hover:border-[var(--border-hover)]/50 theme-bg-card/50"
+          ? "theme-border dark:border-red-500/70 theme-bg-card"
+          : "theme-border theme-bg-card/50"
       }`}
     >
       <span
         className={`mt-0.5 w-4 h-4 rounded-full border-2 flex items-center justify-center shrink-0 transition-colors duration-200 ${
-          selected ? "border-[var(--border-hover)]" : "theme-border"
+          selected ? "theme-border dark:border-red-500/70" : "theme-border"
         }`}
       >
         {selected && (
@@ -159,12 +186,23 @@ function SelectInput({
   options: { value: string; label: string }[];
   required?: boolean;
 }) {
+  const [focused, setFocused] = useState(false);
   return (
     <select
       value={value}
       onChange={(e) => onChange(e.target.value)}
+      onFocus={() => setFocused(true)}
+      onBlur={() => setFocused(false)}
       required={required}
-      className="w-full bg-[var(--bg-primary)] border theme-border rounded px-4 py-3 text-sm theme-text-primary focus:outline-none focus:border-[var(--border-hover)] transition-colors duration-200 cursor-pointer"
+      className="w-full bg-[var(--bg-primary)] border rounded px-4 py-3 text-sm theme-text-primary cursor-pointer"
+      style={{
+        outline: "none",
+        borderColor: focused ? "rgba(158, 48, 169, 0.7)" : "var(--border-color)",
+        boxShadow: focused
+          ? "0 0 0 1px rgba(158, 48, 169, 0.25), 0 0 12px rgba(64, 144, 181, 0.15)"
+          : "none",
+        transition: "border-color 0.2s ease, box-shadow 0.2s ease",
+      }}
     >
       <option value="" className="theme-bg-primary">Select one</option>
       {options.map((o) => (
@@ -310,7 +348,7 @@ export default function ApplyForm() {
           </p>
           <h1 className="text-3xl md:text-4xl font-light theme-text-primary mb-2">
             Apply for the{" "}
-            <span className="font-semibold dark:text-red-500">Dojo</span>
+            <GlitchWord text="Dojo" />
           </h1>
           <p className="theme-text-muted text-sm">
             This takes approximately 5 minutes. All fields marked with an asterisk are required.
@@ -330,7 +368,7 @@ export default function ApplyForm() {
                       i < step
                         ? "bg-[var(--accent)] dark:bg-red-500 text-white"
                         : i === step
-                        ? "border-2 border-[var(--border-hover)] theme-text-primary"
+                        ? "border-2 theme-border dark:border-red-500 theme-text-primary"
                         : "border theme-border theme-text-subtle"
                     }`}
                   >
@@ -608,6 +646,50 @@ export default function ApplyForm() {
                     { value: "other", label: "Other" },
                   ]}
                 />
+              </div>
+
+              {/* Scholarship consideration */}
+              <div className="border theme-border rounded-lg p-6 space-y-4">
+                <button
+                  type="button"
+                  onClick={() => update("scholarshipConsideration", !data.scholarshipConsideration)}
+                  className="flex items-start gap-3 w-full text-left"
+                >
+                  <span
+                    className={`mt-0.5 w-5 h-5 rounded border-2 flex items-center justify-center shrink-0 transition-colors duration-200 ${
+                      data.scholarshipConsideration
+                        ? "border-red-500 bg-[var(--accent)] dark:bg-red-500"
+                        : "theme-border"
+                    }`}
+                  >
+                    {data.scholarshipConsideration && (
+                      <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4.5 12.75l6 6 9-13.5" />
+                      </svg>
+                    )}
+                  </span>
+                  <div>
+                    <p className="text-sm font-medium theme-text-primary">
+                      I would like to be considered for the scholarship place
+                    </p>
+                    <p className="text-xs theme-text-muted mt-0.5 leading-relaxed">
+                      One fully-funded place is available per cohort for candidates who cannot meet the programme fee.
+                      Scholarship applicants undergo a short additional interview.
+                    </p>
+                  </div>
+                </button>
+
+                {data.scholarshipConsideration && (
+                  <div>
+                    <FieldLabel>Please briefly explain your situation</FieldLabel>
+                    <TextArea
+                      value={data.scholarshipContext}
+                      onChange={(v) => update("scholarshipContext", v)}
+                      placeholder="Tell us why the programme fee is a barrier for you right now. We treat this information with complete discretion."
+                      rows={4}
+                    />
+                  </div>
+                )}
               </div>
             </div>
           )}

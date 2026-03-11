@@ -18,6 +18,7 @@
 
     --border-color: #c4b5a9;
     --border-hover: #8c7a6a;
+    --border-focus: #8c7a6a;
     --accent: #1c1917;
 
     --btn-primary-bg: #1c1917;
@@ -40,7 +41,8 @@
     --text-on-dark: #a8a29e;
 
     --border-color: rgb(38, 58, 51);
-    --border-hover: #ef4444;
+    --border-hover: rgba(64, 144, 181, 0.65);
+    --border-focus: rgba(64, 144, 181, 0.65);
     --accent: #ef4444;
 
     --btn-primary-bg: #ef4444;
@@ -122,6 +124,7 @@
   /* Borders */
   .theme-border { border-color: var(--border-color); }
   .theme-border-hover:hover { border-color: var(--border-hover); }
+
 
   /* Buttons */
   .theme-btn-primary {
@@ -520,4 +523,22 @@
     }
   }
 
+}
+
+
+/* Form field focus — unlayered so it beats all @layer utilities */
+.form-field {
+  border-color: var(--border-color);
+  outline: none;
+  box-shadow: none;
+}
+.form-field:focus,
+.form-field:focus-visible {
+  outline: none;
+  box-shadow: none;
+  border-color: var(--border-focus);
+}
+.form-field:invalid,
+.form-field:required {
+  box-shadow: none;
 }

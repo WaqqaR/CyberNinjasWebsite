@@ -46,7 +46,7 @@ export function DojoWaitlist() {
         value={firstName}
         onChange={(e) => setFirstName(e.target.value)}
         required
-        className="w-full sm:w-32 bg-transparent border theme-border rounded px-3 py-2 text-sm theme-text-primary placeholder:theme-text-subtle focus:outline-none focus:border-[var(--border-hover)] transition-colors duration-200"
+        className="w-full sm:w-32 bg-transparent border theme-border rounded px-3 py-2 text-sm theme-text-primary placeholder:theme-text-subtle focus:outline-none focus:border-[var(--border-focus)] transition-colors duration-200"
       />
       <input
         type="email"
@@ -54,7 +54,7 @@ export function DojoWaitlist() {
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         required
-        className="w-full sm:w-56 bg-transparent border theme-border rounded px-3 py-2 text-sm theme-text-primary placeholder:theme-text-subtle focus:outline-none focus:border-[var(--border-hover)] transition-colors duration-200"
+        className="w-full sm:w-56 bg-transparent border theme-border rounded px-3 py-2 text-sm theme-text-primary placeholder:theme-text-subtle focus:outline-none focus:border-[var(--border-focus)] transition-colors duration-200"
       />
       <button
         type="submit"

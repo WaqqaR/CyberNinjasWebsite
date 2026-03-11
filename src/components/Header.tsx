@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ThemeToggle } from "./ThemeToggle";
 import { Logo } from "./Logo";
+import { GlitchWord } from "./GlitchWord";
 import { useState, useRef, useEffect } from "react";
 
 const navigation = [
@@ -49,10 +50,10 @@ export function Header() {
               const inner = (
                 <span className="relative block overflow-hidden h-5">
                   <span className="inline-block whitespace-nowrap transition-[translate,opacity] duration-300 ease-in-out group-hover:-translate-y-full group-hover:opacity-0">
-                    {item.name}
+                    {item.name === "Dojo" ? <GlitchWord text="Dojo" /> : item.name}
                   </span>
                   <span className="absolute inset-0 inline-flex items-center whitespace-nowrap translate-y-full opacity-0 transition-[translate,opacity] duration-300 ease-in-out group-hover:translate-y-0 group-hover:opacity-100">
-                    {item.jp}
+                    {item.name === "Dojo" ? <GlitchWord text={item.jp} /> : item.jp}
                   </span>
                 </span>
               );
@@ -75,7 +76,7 @@ export function Header() {
                 </Link>
               );
             })}
-            <div className="ml-4 pl-4 border-l theme-border">
+            <div className="ml-4 pl-4 border-l theme-border flex items-center">
               <ThemeToggle />
             </div>
           </div>

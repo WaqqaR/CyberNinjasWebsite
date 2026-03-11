@@ -12,5 +12,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!pepper-redirect|_next/static|_next/image|api|favicon.ico).*)"],
+  matcher: ["/((?!_next|api|favicon.ico).*)"],
 };
