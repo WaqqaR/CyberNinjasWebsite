@@ -16,6 +16,8 @@ const navigation = [
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [dojoHover, setDojoHover] = useState(false);
+  const [cursorPos, setCursorPos] = useState({ x: -100, y: -100 });
   const scanLineRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   const isFirstRender = useRef(true);
@@ -35,6 +37,12 @@ export function Header() {
     }
     triggerScan();
   }, [pathname]);
+
+  useEffect(() => {
+    const onMove = (e: MouseEvent) => setCursorPos({ x: e.clientX, y: e.clientY });
+    window.addEventListener("mousemove", onMove);
+    return () => window.removeEventListener("mousemove", onMove);
+  }, []);
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 overflow-x-clip backdrop-blur-md border-b theme-border bg-[var(--bg-primary)]/70">
@@ -62,7 +70,7 @@ export function Header() {
                 <button
                   key={item.name}
                   onClick={() => window.dispatchEvent(new CustomEvent("open-chat-widget"))}
-                  className="nav-hover-line text-sm font-medium tracking-wide theme-text-muted hover:theme-text-primary group"
+                  className="nav-hover-line text-sm font-medium tracking-wide theme-text-muted hover:theme-text-primary group cursor-pointer"
                 >
                   {inner}
                 </button>
@@ -71,6 +79,9 @@ export function Header() {
                   key={item.name}
                   href={item.href}
                   className="nav-hover-line text-sm font-medium tracking-wide theme-text-muted hover:theme-text-primary group"
+                  style={item.name === "Dojo" ? { cursor: "none" } : undefined}
+                  onMouseEnter={item.name === "Dojo" ? () => setDojoHover(true) : undefined}
+                  onMouseLeave={item.name === "Dojo" ? () => setDojoHover(false) : undefined}
                 >
                   {inner}
                 </Link>
@@ -142,6 +153,14 @@ export function Header() {
           </div>
         )}
       </nav>
+
+      {/* Glitch cursor — shown when hovering Dojo */}
+      {dojoHover && (
+        <div
+          className="glitch-cursor"
+          style={{ left: cursorPos.x - 12, top: cursorPos.y - 12 }}
+        />
+      )}
 
       {/* Scan line - dark mode only */}
       <div className="absolute bottom-0 left-0 right-0 h-px overflow-hidden hidden dark:block pointer-events-none" aria-hidden="true">
