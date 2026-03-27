@@ -2,9 +2,10 @@
 
 import { useState, useRef, useEffect } from "react";
 
-const WHATSAPP_NUMBER = "447930265886";
+const WHATSAPP_NUMBER = "447435098070";
+const CALENDLY_URL = "https://calendly.com/waqqar-cyberninjascorp";
 
-type View = "menu" | "chat" | "contact-form";
+type View = "menu" | "chat" | "contact-form" | "book";
 
 interface Message {
   role: "user" | "assistant";
@@ -195,7 +196,7 @@ export function ChatWidget() {
 
       {/* Chat panel */}
       {isOpen && (
-        <div className="fixed bottom-24 right-6 z-50 w-[360px] max-h-[500px] flex flex-col rounded-lg shadow-2xl border theme-border overflow-hidden bg-[var(--bg-primary)]">
+        <div className="fixed bottom-24 right-6 z-50 w-[360px] h-[540px] flex flex-col rounded-lg shadow-2xl border theme-border overflow-hidden bg-[var(--bg-primary)]">
           {/* Header */}
           <div className="relative px-4 py-3 border-b theme-border bg-[#1c1917] dark:bg-[#0f1e1e] text-white overflow-hidden">
             <div className="flex items-center gap-3">
@@ -224,19 +225,18 @@ export function ChatWidget() {
                   {view === "menu" && "How can we help?"}
                   {view === "chat" && "Ask us anything"}
                   {view === "contact-form" && "Send us a message"}
+                  {view === "book" && "Book a meeting"}
                 </p>
               </div>
-              <a
-                href="https://calendly.com/your-link"
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
+                onClick={() => setView("book")}
                 className="flex items-center gap-1 px-2 py-1 rounded text-xs bg-white/20 hover:bg-white/30 transition-colors whitespace-nowrap"
               >
                 <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
                 Book
-              </a>
+              </button>
             </div>
 
             {/* Scan line */}
@@ -389,6 +389,19 @@ export function ChatWidget() {
                   </button>
                 </form>
               )}
+            </div>
+          )}
+
+          {/* Book View */}
+          {view === "book" && (
+            <div className="flex-1 overflow-hidden">
+              <iframe
+                src={`${CALENDLY_URL}?embed_type=Inline&hide_event_type_details=1&hide_gdpr_banner=1`}
+                width="100%"
+                height="100%"
+                frameBorder="0"
+                title="Book a meeting"
+              />
             </div>
           )}
 

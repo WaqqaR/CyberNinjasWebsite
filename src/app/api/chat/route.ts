@@ -2,7 +2,7 @@ import Anthropic from "@anthropic-ai/sdk";
 
 const client = new Anthropic();
 
-const CALENDLY_URL = "https://calendly.com/your-link";
+const CALENDLY_URL = "https://calendly.com/waqqar-cyberninjascorp";
 
 const SYSTEM_PROMPT = `You are the Cyber Ninjas assistant — sharp, direct, and knowledgeable. You work for a boutique technology consultancy. Your tone is professional but approachable, like a smart colleague who gets straight to the point.
 
