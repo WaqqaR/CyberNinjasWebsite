@@ -3,16 +3,23 @@ import ApplyForm from "./ApplyForm";
 
 export const metadata: Metadata = {
   title: "Apply | Cyber Ninjas Dojo",
-  description: "Apply to the Cyber Ninjas Dojo — a Power Platform Consultant Bootcamp. Limited places per cohort. Takes approximately 5 minutes.",
+  description: "Apply to a Cyber Ninjas Dojo track — practitioner-led, cohort-based training. Limited places per cohort. Takes approximately 5 minutes.",
   openGraph: {
     title: "Apply | Cyber Ninjas Dojo",
-    description: "Apply to the Cyber Ninjas Dojo — a Power Platform Consultant Bootcamp. Limited places per cohort.",
+    description: "Apply to a Cyber Ninjas Dojo track — practitioner-led, cohort-based training. Limited places per cohort.",
     url: "https://cyberninjascorp.com/dojo/apply",
     siteName: "Cyber Ninjas",
     type: "website",
   },
 };
 
-export default function Page() {
-  return <ApplyForm />;
+export default async function Page({
+  searchParams,
+}: {
+  searchParams: Promise<{ track?: string }>;
+}) {
+  const { track } = await searchParams;
+  const normalized: "power-platform" | "claude-code" =
+    track === "claude-code" ? "claude-code" : "power-platform";
+  return <ApplyForm track={normalized} />;
 }

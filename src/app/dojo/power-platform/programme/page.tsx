@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { NeonButton } from "@/components/NeonButton";
 import { CTASection } from "@/components/CTASection";
-import { FaqAccordion } from "../FaqAccordion";
+import { FaqAccordion } from "../../FaqAccordion";
 import { GlitchWord } from "@/components/GlitchWord";
 
 export const metadata: Metadata = {
-  title: "Programme Overview | Cyber Ninjas Dojo",
+  title: "Programme Overview | Power Platform Consultant Bootcamp | Cyber Ninjas Dojo",
   description:
     "A detailed breakdown of the Cyber Ninjas Dojo Power Platform Consultant Bootcamp — sprint timeline, programme content, outcomes, tools, pricing, and FAQ.",
 };
@@ -156,7 +156,7 @@ const tools = [
   { name: "Power Pages", logo: "/PowerPages.webp", desc: "External-facing portals" },
 ];
 
-export default function DojoProgrammePage() {
+export default function PowerPlatformProgrammePage() {
   return (
     <div className="theme-bg-primary">
 
@@ -165,13 +165,13 @@ export default function DojoProgrammePage() {
         <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[var(--border-color)] to-transparent pointer-events-none" />
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <Link
-            href="/dojo"
+            href="/dojo/power-platform"
             className="inline-flex items-center gap-2 text-sm theme-text-subtle hover:theme-text-primary transition-colors mb-10"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 19l-7-7 7-7" />
             </svg>
-            Back to Dojo
+            Back to track
           </Link>
           <div className="max-w-3xl">
             <p className="text-sm font-medium tracking-[0.3em] theme-text-subtle dark:text-red-500/80 uppercase mb-4">
@@ -179,14 +179,14 @@ export default function DojoProgrammePage() {
             </p>
             <h1 className="text-5xl md:text-6xl font-light theme-text-primary leading-tight mb-6">
               What the{" "}
-              <GlitchWord text="Dojo" className="font-semibold theme-text-secondary dark:text-red-500" />{" "}
+              <GlitchWord text="Bootcamp" className="font-semibold theme-text-secondary dark:text-red-500" />{" "}
               Covers
             </h1>
             <p className="text-lg theme-text-muted leading-relaxed mb-10">
               A complete breakdown of the programme — the sprint structure, what you will build
               and experience, what you leave with, and how the format and pricing work.
             </p>
-            <NeonButton href="/dojo/apply">Apply Now</NeonButton>
+            <NeonButton href="/dojo/apply?track=power-platform">Apply Now</NeonButton>
           </div>
         </div>
       </section>
@@ -417,7 +417,7 @@ export default function DojoProgrammePage() {
                   <p className="text-xs font-medium tracking-[0.2em] theme-text-subtle uppercase mb-2">Corporate and team pricing</p>
                   <p className="text-sm theme-text-muted">
                     Available for organisations upskilling multiple team members.{" "}
-                    <Link href="/dojo/apply" className="theme-text-primary dark:text-red-500 hover:opacity-70 transition-opacity">
+                    <Link href="/dojo/apply?track=power-platform" className="theme-text-primary dark:text-red-500 hover:opacity-70 transition-opacity">
                       Contact us on application.
                     </Link>
                   </p>
@@ -478,7 +478,7 @@ export default function DojoProgrammePage() {
                 through the details before you apply.
               </p>
               <Link
-                href="/dojo/apply"
+                href="/dojo/apply?track=power-platform"
                 className="inline-flex items-center gap-2 text-sm font-medium theme-text-primary dark:text-red-500 hover:opacity-70 transition-opacity"
               >
                 <span>Ask a question</span>
@@ -497,7 +497,7 @@ export default function DojoProgrammePage() {
         heading="Applications Are Now Open"
         description="Cohort places are limited to 12 participants by design. If you are serious about making the transition into Power Platform consultancy, submit your application to begin the process."
         buttonText="Apply Now"
-        href="/dojo/apply"
+        href="/dojo/apply?track=power-platform"
       />
     </div>
   );

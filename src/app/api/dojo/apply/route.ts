@@ -31,6 +31,11 @@ function scheduleDate(daysFromNow: number): string {
   return d.toISOString();
 }
 
+const TRACK_LABELS: Record<string, string> = {
+  "power-platform": "Power Platform Consultant Bootcamp",
+  "claude-code": "Claude Code Intensive",
+};
+
 const BACKGROUND_LABELS: Record<string, string> = {
   "career-switcher": "Career switcher",
   "junior-developer": "Junior developer",
@@ -38,17 +43,42 @@ const BACKGROUND_LABELS: Record<string, string> = {
   "corporate": "Corporate / team training",
 };
 
-const EXPERIENCE_LABELS: Record<string, string> = {
-  "none": "None — not used it yet",
-  "basic": "Basic — tutorials only",
-  "hands-on": "Some hands-on — informal builds",
-  "intermediate": "Intermediate — professional use",
+const EXPERIENCE_LABELS_BY_TRACK: Record<string, Record<string, string>> = {
+  "power-platform": {
+    "none": "None — not used it yet",
+    "basic": "Basic — tutorials only",
+    "hands-on": "Some hands-on — informal builds",
+    "intermediate": "Intermediate — professional use",
+  },
+  "claude-code": {
+    "none": "None — does not code",
+    "basic": "Basic — scripting / tutorials",
+    "hands-on": "Hands-on — builds things",
+    "intermediate": "Professional developer",
+  },
 };
 
-const DEVOPS_LABELS: Record<string, string> = {
-  "yes": "Yes — I have used it",
-  "heard-of-it": "Aware but not used",
-  "no": "No — new to me",
+const SECOND_LABELS_BY_TRACK: Record<string, Record<string, string>> = {
+  "power-platform": {
+    "yes": "Yes — I have used it",
+    "heard-of-it": "Aware but not used",
+    "no": "No — new to me",
+  },
+  "claude-code": {
+    "yes": "Yes — used Claude Code / agents",
+    "heard-of-it": "AI chat only, not agents",
+    "no": "No — new to me",
+  },
+};
+
+const EXPERIENCE_ROW_LABEL: Record<string, string> = {
+  "power-platform": "PP level",
+  "claude-code": "Coding level",
+};
+
+const SECOND_ROW_LABEL: Record<string, string> = {
+  "power-platform": "Azure DevOps",
+  "claude-code": "AI tooling",
 };
 
 const COHORT_LABELS: Record<string, string> = {
@@ -214,7 +244,7 @@ function day5Email(firstName: string): string {
 }
 
 function adminEmail(data: Record<string, string>): string {
-  const { firstName, lastName, email, linkedin, jobTitle, location,
+  const { track, firstName, lastName, email, linkedin, jobTitle, location,
     backgroundType, companyName, teamSize, corporateObjectives,
     experienceLevel, devOpsExperience, certifications,
     whyDojo, successDefinition, cohortAvailability, howHeard,
@@ -222,10 +252,14 @@ function adminEmail(data: Record<string, string>): string {
 
   const name = escapeHtml(`${firstName} ${lastName}`);
   const safeEmail = escapeHtml(email);
+  const trackKey = track || "power-platform";
+  const trackLabel = TRACK_LABELS[trackKey] ?? trackKey;
+  const expLabels = EXPERIENCE_LABELS_BY_TRACK[trackKey] ?? {};
+  const secondLabels = SECOND_LABELS_BY_TRACK[trackKey] ?? {};
 
   return emailWrapper(`
     <div style="padding:24px 32px;background:#1c1917;border-radius:10px 10px 0 0">
-      <p style="margin:0;font-size:12px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:#78716c">New Application</p>
+      <p style="margin:0;font-size:12px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:#78716c">New Application · ${escapeHtml(trackLabel)}</p>
       <h1 style="margin:4px 0 0;font-size:22px;font-weight:400;color:#fff">${name}</h1>
     </div>
     <div style="padding:24px 32px">
@@ -236,8 +270,9 @@ function adminEmail(data: Record<string, string>): string {
         ${linkedin ? `<tr><td style="padding:8px 0;border-bottom:1px solid #f5f0eb;color:#78716c">LinkedIn</td><td style="padding:8px 0;border-bottom:1px solid #f5f0eb;color:#1c1917"><a href="${escapeHtml(linkedin)}" style="color:#1c1917">${escapeHtml(linkedin)}</a></td></tr>` : ""}
         <tr><td style="padding:8px 0;border-bottom:1px solid #f5f0eb;color:#78716c">Background</td><td style="padding:8px 0;border-bottom:1px solid #f5f0eb;color:#1c1917">${escapeHtml(BACKGROUND_LABELS[backgroundType] ?? backgroundType)}</td></tr>
         ${companyName ? `<tr><td style="padding:8px 0;border-bottom:1px solid #f5f0eb;color:#78716c">Company</td><td style="padding:8px 0;border-bottom:1px solid #f5f0eb;color:#1c1917">${escapeHtml(companyName)}${teamSize ? ` (${escapeHtml(teamSize)})` : ""}</td></tr>` : ""}
-        <tr><td style="padding:8px 0;border-bottom:1px solid #f5f0eb;color:#78716c">PP level</td><td style="padding:8px 0;border-bottom:1px solid #f5f0eb;color:#1c1917">${escapeHtml(EXPERIENCE_LABELS[experienceLevel] ?? experienceLevel)}</td></tr>
-        <tr><td style="padding:8px 0;border-bottom:1px solid #f5f0eb;color:#78716c">Azure DevOps</td><td style="padding:8px 0;border-bottom:1px solid #f5f0eb;color:#1c1917">${escapeHtml(DEVOPS_LABELS[devOpsExperience] ?? devOpsExperience)}</td></tr>
+        <tr><td style="padding:8px 0;border-bottom:1px solid #f5f0eb;color:#78716c">Track</td><td style="padding:8px 0;border-bottom:1px solid #f5f0eb;color:#1c1917">${escapeHtml(trackLabel)}</td></tr>
+        <tr><td style="padding:8px 0;border-bottom:1px solid #f5f0eb;color:#78716c">${escapeHtml(EXPERIENCE_ROW_LABEL[trackKey] ?? "Experience")}</td><td style="padding:8px 0;border-bottom:1px solid #f5f0eb;color:#1c1917">${escapeHtml(expLabels[experienceLevel] ?? experienceLevel)}</td></tr>
+        <tr><td style="padding:8px 0;border-bottom:1px solid #f5f0eb;color:#78716c">${escapeHtml(SECOND_ROW_LABEL[trackKey] ?? "Tooling")}</td><td style="padding:8px 0;border-bottom:1px solid #f5f0eb;color:#1c1917">${escapeHtml(secondLabels[devOpsExperience] ?? devOpsExperience)}</td></tr>
         ${certifications ? `<tr><td style="padding:8px 0;border-bottom:1px solid #f5f0eb;color:#78716c">Certs</td><td style="padding:8px 0;border-bottom:1px solid #f5f0eb;color:#1c1917">${escapeHtml(certifications)}</td></tr>` : ""}
         <tr><td style="padding:8px 0;border-bottom:1px solid #f5f0eb;color:#78716c">Availability</td><td style="padding:8px 0;border-bottom:1px solid #f5f0eb;color:#1c1917">${escapeHtml(COHORT_LABELS[cohortAvailability] ?? cohortAvailability)}</td></tr>
         ${howHeard ? `<tr><td style="padding:8px 0;border-bottom:1px solid #f5f0eb;color:#78716c">How heard</td><td style="padding:8px 0;border-bottom:1px solid #f5f0eb;color:#1c1917">${escapeHtml(howHeard)}</td></tr>` : ""}
@@ -262,12 +297,16 @@ export async function POST(request: Request) {
     const body = await request.json();
 
     const {
+      track: rawTrack,
       firstName, lastName, email, linkedin, jobTitle, location,
       backgroundType, companyName, teamSize, corporateObjectives,
       experienceLevel, certifications, devOpsExperience,
       whyDojo, successDefinition, howHeard, cohortAvailability,
       scholarshipConsideration, scholarshipContext,
     } = body;
+
+    const track: string = rawTrack === "claude-code" ? "claude-code" : "power-platform";
+    const trackLabel = TRACK_LABELS[track] ?? track;
 
     if (!firstName || !lastName || !email || !jobTitle || !backgroundType ||
         !experienceLevel || !devOpsExperience || !whyDojo || !successDefinition || !cohortAvailability) {
@@ -303,6 +342,7 @@ export async function POST(request: Request) {
     }
 
     const data = {
+      track,
       firstName, lastName, email, linkedin, jobTitle, location,
       backgroundType, companyName, teamSize, corporateObjectives,
       experienceLevel, certifications, devOpsExperience,
@@ -310,14 +350,16 @@ export async function POST(request: Request) {
       scholarshipConsideration, scholarshipContext,
     };
 
-    // Fire all emails — immediate + scheduled sequence
+    // Fire emails — admin + applicant confirmation always.
+    // The Day 2 / Day 5 nurture sequence is Power Platform-specific, so it
+    // only goes out for that track until a Claude Code sequence exists.
     const resend = getResend();
-    await Promise.all([
+    const emails = [
       // 1. Admin notification (immediate)
       resend.emails.send({
         from: FROM,
         to: ADMIN_EMAIL,
-        subject: `New Dojo Application — ${firstName} ${lastName}`,
+        subject: `New Dojo Application — ${trackLabel} — ${firstName} ${lastName}`,
         replyTo: email,
         html: adminEmail(data),
       }),
@@ -329,25 +371,31 @@ export async function POST(request: Request) {
         subject: "Your Dojo application has been received",
         html: confirmationEmail(firstName),
       }),
+    ];
 
-      // 3. Day 2: what to expect (scheduled)
-      resend.emails.send({
-        from: FROM,
-        to: email,
-        subject: "What the Cyber Ninjas Dojo actually involves",
-        html: day2Email(firstName, cohortAvailability),
-        scheduledAt: scheduleDate(2),
-      }),
+    if (track === "power-platform") {
+      emails.push(
+        // 3. Day 2: what to expect (scheduled)
+        resend.emails.send({
+          from: FROM,
+          to: email,
+          subject: "What the Cyber Ninjas Dojo actually involves",
+          html: day2Email(firstName, cohortAvailability),
+          scheduledAt: scheduleDate(2),
+        }),
 
-      // 4. Day 5: follow-up / any questions (scheduled)
-      resend.emails.send({
-        from: FROM,
-        to: email,
-        subject: `${firstName}, any questions about your Dojo application?`,
-        html: day5Email(firstName),
-        scheduledAt: scheduleDate(5),
-      }),
-    ]);
+        // 4. Day 5: follow-up / any questions (scheduled)
+        resend.emails.send({
+          from: FROM,
+          to: email,
+          subject: `${firstName}, any questions about your Dojo application?`,
+          html: day5Email(firstName),
+          scheduledAt: scheduleDate(5),
+        }),
+      );
+    }
+
+    await Promise.all(emails);
 
     return Response.json({ success: true });
   } catch (err) {

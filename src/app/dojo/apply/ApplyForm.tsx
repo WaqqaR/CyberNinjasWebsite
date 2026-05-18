@@ -5,12 +5,14 @@ import Link from "next/link";
 import { NeonButton } from "@/components/NeonButton";
 import { GlitchWord } from "@/components/GlitchWord";
 
+type Track = "power-platform" | "claude-code";
 type BackgroundType = "career-switcher" | "junior-developer" | "it-professional" | "corporate" | "";
 type ExperienceLevel = "none" | "basic" | "hands-on" | "intermediate" | "";
 type DevOpsExperience = "yes" | "no" | "heard-of-it" | "";
 type CohortAvailability = "yes" | "future" | "unsure" | "";
 
 interface FormData {
+  track: Track;
   firstName: string;
   lastName: string;
   email: string;
@@ -33,6 +35,7 @@ interface FormData {
 }
 
 const INITIAL_DATA: FormData = {
+  track: "power-platform",
   firstName: "",
   lastName: "",
   email: "",
@@ -55,6 +58,68 @@ const INITIAL_DATA: FormData = {
 };
 
 const STEPS = ["About You", "Your Background", "Your Experience", "Motivation"];
+
+interface TrackOption<V> {
+  value: V;
+  label: string;
+  description: string;
+}
+
+const TRACK_CONFIG: Record<
+  Track,
+  {
+    name: string;
+    experienceLabel: string;
+    experienceOptions: TrackOption<Exclude<ExperienceLevel, "">>[];
+    secondLabel: string;
+    secondOptions: TrackOption<Exclude<DevOpsExperience, "">>[];
+    experienceError: string;
+    secondError: string;
+    extraLabel: string;
+    extraPlaceholder: string;
+  }
+> = {
+  "power-platform": {
+    name: "Power Platform Consultant Bootcamp",
+    experienceLabel: "Power Platform experience level",
+    experienceOptions: [
+      { value: "none", label: "None — I have not used it yet", description: "I am aware of Power Platform but have not built anything with it." },
+      { value: "basic", label: "Basic — tutorials and online content only", description: "I have completed Microsoft Learn paths or similar content but have not built real solutions." },
+      { value: "hands-on", label: "Some hands-on — informal or internal builds", description: "I have built solutions informally, for internal use, or as part of personal projects." },
+      { value: "intermediate", label: "Intermediate — professional use", description: "I work with Power Platform in a professional capacity as part of my current role." },
+    ],
+    secondLabel: "Azure DevOps familiarity",
+    secondOptions: [
+      { value: "yes", label: "Yes — I have used it", description: "I have worked with Azure DevOps boards, pipelines, or repos in some capacity." },
+      { value: "heard-of-it", label: "I am aware of it but have not used it", description: "I know what it is but have not had direct experience with it." },
+      { value: "no", label: "No — this will be new to me", description: "I have no prior experience with Azure DevOps." },
+    ],
+    experienceError: "Please select your Power Platform experience level.",
+    secondError: "Please indicate your Azure DevOps familiarity.",
+    extraLabel: "Microsoft certifications held (optional)",
+    extraPlaceholder: "e.g. PL-900, PL-200, AZ-900, none",
+  },
+  "claude-code": {
+    name: "Claude Code Intensive",
+    experienceLabel: "Coding experience",
+    experienceOptions: [
+      { value: "none", label: "None — I do not code", description: "I am a non-technical builder. I have ideas and projects but no formal coding background." },
+      { value: "basic", label: "Basic — some scripting or tutorials", description: "I can read code and have followed tutorials, but I do not build software professionally." },
+      { value: "hands-on", label: "Hands-on — I build things", description: "I write code for personal or internal projects, though it is not my primary role." },
+      { value: "intermediate", label: "Professional developer", description: "Writing and shipping code is a core part of my current role." },
+    ],
+    secondLabel: "AI coding tool familiarity",
+    secondOptions: [
+      { value: "yes", label: "Yes — I have used Claude Code or similar agents", description: "I have used Claude Code, Cursor, Copilot agents, or a comparable agentic tool." },
+      { value: "heard-of-it", label: "I have used AI chat for code, but not agents", description: "I have used Claude or ChatGPT in a browser for code, but not an agentic coding tool." },
+      { value: "no", label: "No — this will be new to me", description: "I have not really used AI tools for building software yet." },
+    ],
+    experienceError: "Please select your coding experience level.",
+    secondError: "Please indicate your AI coding tool familiarity.",
+    extraLabel: "Tools or stack you work with (optional)",
+    extraPlaceholder: "e.g. Python, TypeScript / React, or: none — I am non-technical",
+  },
+};
 
 function FieldLabel({ children, required }: { children: React.ReactNode; required?: boolean }) {
   return (
@@ -214,9 +279,10 @@ function SelectInput({
   );
 }
 
-export default function ApplyForm() {
+export default function ApplyForm({ track }: { track: Track }) {
   const [step, setStep] = useState(0);
-  const [data, setData] = useState<FormData>(INITIAL_DATA);
+  const [data, setData] = useState<FormData>({ ...INITIAL_DATA, track });
+  const cfg = TRACK_CONFIG[track];
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState<string[]>([]);
   const [submitting, setSubmitting] = useState(false);
@@ -240,8 +306,8 @@ export default function ApplyForm() {
         errs.push("Company name is required for corporate applications.");
     }
     if (step === 2) {
-      if (!data.experienceLevel) errs.push("Please select your Power Platform experience level.");
-      if (!data.devOpsExperience) errs.push("Please indicate your Azure DevOps familiarity.");
+      if (!data.experienceLevel) errs.push(cfg.experienceError);
+      if (!data.devOpsExperience) errs.push(cfg.secondError);
     }
     if (step === 3) {
       if (!data.whyDojo.trim() || data.whyDojo.trim().length < 50)
@@ -346,10 +412,14 @@ export default function ApplyForm() {
           <p className="text-sm font-medium tracking-[0.3em] theme-text-subtle dark:text-red-500/80 uppercase mb-4">
             Application Form
           </p>
-          <h1 className="text-3xl md:text-4xl font-light theme-text-primary mb-2">
+          <h1 className="text-3xl md:text-4xl font-light theme-text-primary mb-3">
             Apply for the{" "}
             <GlitchWord text="Dojo" />
           </h1>
+          <div className="inline-flex items-center gap-2 mb-3 border theme-border rounded-full px-3 py-1">
+            <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)] dark:bg-red-500" />
+            <span className="text-xs font-medium theme-text-primary tracking-wide">{cfg.name}</span>
+          </div>
           <p className="theme-text-muted text-sm">
             This takes approximately 5 minutes. All fields marked with an asterisk are required.
           </p>
@@ -450,13 +520,13 @@ export default function ApplyForm() {
                   selected={data.backgroundType === "career-switcher"}
                   onSelect={() => update("backgroundType", "career-switcher")}
                   label="Career switcher"
-                  description="I am transitioning from another field and want to move into Power Platform consultancy."
+                  description="I am transitioning from another field and want this track to be my route in."
                 />
                 <RadioCard
                   selected={data.backgroundType === "junior-developer"}
                   onSelect={() => update("backgroundType", "junior-developer")}
                   label="Junior developer"
-                  description="I have a development background and want to specialise in the Microsoft Power Platform ecosystem."
+                  description="I have a development background and want to specialise and level up through this track."
                 />
                 <RadioCard
                   selected={data.backgroundType === "it-professional"}
@@ -517,63 +587,39 @@ export default function ApplyForm() {
                 </p>
               </div>
               <div>
-                <FieldLabel required>Power Platform experience level</FieldLabel>
+                <FieldLabel required>{cfg.experienceLabel}</FieldLabel>
                 <div className="space-y-3 mt-2">
-                  <RadioCard
-                    selected={data.experienceLevel === "none"}
-                    onSelect={() => update("experienceLevel", "none")}
-                    label="None — I have not used it yet"
-                    description="I am aware of Power Platform but have not built anything with it."
-                  />
-                  <RadioCard
-                    selected={data.experienceLevel === "basic"}
-                    onSelect={() => update("experienceLevel", "basic")}
-                    label="Basic — tutorials and online content only"
-                    description="I have completed Microsoft Learn paths or similar content but have not built real solutions."
-                  />
-                  <RadioCard
-                    selected={data.experienceLevel === "hands-on"}
-                    onSelect={() => update("experienceLevel", "hands-on")}
-                    label="Some hands-on — informal or internal builds"
-                    description="I have built solutions informally, for internal use, or as part of personal projects."
-                  />
-                  <RadioCard
-                    selected={data.experienceLevel === "intermediate"}
-                    onSelect={() => update("experienceLevel", "intermediate")}
-                    label="Intermediate — professional use"
-                    description="I work with Power Platform in a professional capacity as part of my current role."
-                  />
+                  {cfg.experienceOptions.map((opt) => (
+                    <RadioCard
+                      key={opt.value}
+                      selected={data.experienceLevel === opt.value}
+                      onSelect={() => update("experienceLevel", opt.value)}
+                      label={opt.label}
+                      description={opt.description}
+                    />
+                  ))}
                 </div>
               </div>
               <div>
-                <FieldLabel required>Azure DevOps familiarity</FieldLabel>
+                <FieldLabel required>{cfg.secondLabel}</FieldLabel>
                 <div className="space-y-3 mt-2">
-                  <RadioCard
-                    selected={data.devOpsExperience === "yes"}
-                    onSelect={() => update("devOpsExperience", "yes")}
-                    label="Yes — I have used it"
-                    description="I have worked with Azure DevOps boards, pipelines, or repos in some capacity."
-                  />
-                  <RadioCard
-                    selected={data.devOpsExperience === "heard-of-it"}
-                    onSelect={() => update("devOpsExperience", "heard-of-it")}
-                    label="I am aware of it but have not used it"
-                    description="I know what it is but have not had direct experience with it."
-                  />
-                  <RadioCard
-                    selected={data.devOpsExperience === "no"}
-                    onSelect={() => update("devOpsExperience", "no")}
-                    label="No — this will be new to me"
-                    description="I have no prior experience with Azure DevOps."
-                  />
+                  {cfg.secondOptions.map((opt) => (
+                    <RadioCard
+                      key={opt.value}
+                      selected={data.devOpsExperience === opt.value}
+                      onSelect={() => update("devOpsExperience", opt.value)}
+                      label={opt.label}
+                      description={opt.description}
+                    />
+                  ))}
                 </div>
               </div>
               <div>
-                <FieldLabel>Microsoft certifications held (optional)</FieldLabel>
+                <FieldLabel>{cfg.extraLabel}</FieldLabel>
                 <TextInput
                   value={data.certifications}
                   onChange={(v) => update("certifications", v)}
-                  placeholder="e.g. PL-900, PL-200, AZ-900, none"
+                  placeholder={cfg.extraPlaceholder}
                 />
               </div>
             </div>

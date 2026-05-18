@@ -6,87 +6,93 @@ import { CTASection } from "@/components/CTASection";
 import { DojoWaitlist } from "@/components/DojoWaitlist";
 import { GlitchWord } from "@/components/GlitchWord";
 
-
 export const metadata: Metadata = {
-  title: "Cyber Ninjas Dojo | Power Platform Consultant Bootcamp",
+  title: "Cyber Ninjas Dojo | Practitioner-Led Cohort Training",
   description:
-    "A premium, cohort-based programme that trains career switchers and IT professionals to operate as billable Power Platform consultants. Includes PL-200 preparation, Azure DevOps, Agile delivery, and full consultancy simulation. UK-based.",
+    "The Cyber Ninjas Dojo is a training hall, not a course library. Practitioner-led, cohort-based, applied programmes that take you from knowing a tool to delivering real work. Choose your track — Power Platform consultancy or Claude Code.",
   keywords: [
-    "Power Platform training UK",
-    "Power Apps bootcamp",
-    "PL-200 preparation",
-    "Azure DevOps Power Platform",
+    "Cyber Ninjas Dojo",
+    "cohort-based training UK",
     "Power Platform consultant bootcamp",
-    "Power Platform consultant training",
-    "Microsoft Power Platform certification UK",
+    "Claude Code training",
+    "AI coding course UK",
+    "practitioner-led technical training",
   ],
 };
 
 // ── Data ──────────────────────────────────────────────────────────────────────
 
-const differentiators = [
+const principles = [
   {
-    title: "Consultancy Simulation",
+    title: "Taught by practitioners",
     description:
-      "From day one, you operate inside a structured project environment modelled on real consultancy engagements. Timelines, deliverables, and dependencies mirror the conditions of a live project — not a training exercise.",
+      "Every track is led by people who deliver this work for clients — not career educators. You learn how it is actually done, including the parts tutorials leave out.",
     icon: (
       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
       </svg>
     ),
   },
   {
-    title: "Agile Ceremonies",
+    title: "Applied, not passive",
     description:
-      "Every sprint begins with planning and ends with a review. You will run daily standups, manage your backlog, raise blockers, and participate in retrospectives — the same way you would on a live client project.",
+      "You do not watch your way through the Dojo. Every track is built around producing real deliverables under realistic conditions — the work is the curriculum.",
     icon: (
       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 004.486-6.336l-3.276 3.277a3.004 3.004 0 01-2.25-2.25l3.276-3.276a4.5 4.5 0 00-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437l1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008z" />
       </svg>
     ),
   },
   {
-    title: "Azure DevOps",
+    title: "Cohorts, not catalogues",
     description:
-      "Work items, user stories, epics, and sprint boards are managed in Azure DevOps throughout. You will leave the programme knowing how consultancies actually track and communicate project delivery.",
+      "Small live cohorts create accountability, feedback, and pace. You are part of a group moving together — not a username working through videos alone.",
     icon: (
       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 0v10m0 0a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
       </svg>
     ),
   },
   {
-    title: "ALM and Deployments",
+    title: "Reviewed to a real standard",
     description:
-      "You will promote solutions through Development, Test, and Production environments. Understanding application lifecycle management is non-negotiable for a working Power Platform consultant.",
+      "Your work is reviewed the way it would be on a live engagement — against the standard a client or senior would actually hold it to. That is what makes it stick.",
     icon: (
       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
-      </svg>
-    ),
-  },
-  {
-    title: "Governance and Documentation",
-    description:
-      "You will produce solution design documents, write functional specifications, and learn how to communicate technical decisions clearly — to both technical and non-technical stakeholders.",
-    icon: (
-      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-      </svg>
-    ),
-  },
-  {
-    title: "Peer Review",
-    description:
-      "Your work will be reviewed, and you will review others'. Pull requests, delivery standards, and constructive feedback are part of how the Dojo runs — and how professional consultancy teams operate.",
-    icon: (
-      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
       </svg>
     ),
   },
 ];
 
+const tracks = [
+  {
+    tag: "Track 01 — Microsoft",
+    title: "Power Platform Consultant Bootcamp",
+    href: "/dojo/power-platform",
+    description:
+      "The complete transition into billable Power Platform consultancy. A fully simulated consultancy environment — Agile sprints, Azure DevOps, ALM, stakeholder simulation, and PL-200 preparation.",
+    facts: [
+      { label: "Duration", value: "8–12 weeks" },
+      { label: "Format", value: "Live cohort" },
+      { label: "From", value: "£2,500 + VAT" },
+    ],
+    audience: "Career switchers · IT professionals · junior developers",
+  },
+  {
+    tag: "Track 02 — AI Engineering",
+    title: "Claude Code Intensive",
+    href: "/dojo/claude-code",
+    description:
+      "Ship real software with agentic AI. A hands-on cohort where you build and deliver a working project with Claude Code the way a consultancy actually uses it — agents, tools, automation, and guardrails.",
+    facts: [
+      { label: "Duration", value: "3 weeks" },
+      { label: "Format", value: "Live cohort" },
+      { label: "From", value: "£950 + VAT" },
+    ],
+    audience: "Non-technical builders · individual developers",
+  },
+];
 
 type ComparisonValue = boolean | "partial";
 
@@ -96,17 +102,13 @@ const comparisonRows: {
   selfStudy: ComparisonValue;
   dojo: ComparisonValue;
 }[] = [
-  { feature: "Platform knowledge", courses: true, selfStudy: true, dojo: true },
-  { feature: "PL-200 preparation", courses: "partial", selfStudy: true, dojo: true },
-  { feature: "Agile delivery practice", courses: false, selfStudy: false, dojo: true },
-  { feature: "Azure DevOps boards", courses: false, selfStudy: false, dojo: true },
-  { feature: "ALM and environment deployment", courses: false, selfStudy: false, dojo: true },
-  { feature: "Consultancy simulation", courses: false, selfStudy: false, dojo: true },
-  { feature: "Stakeholder engagement practice", courses: false, selfStudy: false, dojo: true },
-  { feature: "Governance and documentation", courses: false, selfStudy: false, dojo: true },
-  { feature: "Peer review and quality standards", courses: false, selfStudy: false, dojo: true },
-  { feature: "Portfolio of project work", courses: false, selfStudy: false, dojo: true },
-  { feature: "Billable consultant readiness", courses: false, selfStudy: false, dojo: true },
+  { feature: "Taught by people doing the work today", courses: false, selfStudy: false, dojo: true },
+  { feature: "Build real deliverables, not toy exercises", courses: false, selfStudy: "partial", dojo: true },
+  { feature: "Live cohort with accountability", courses: false, selfStudy: false, dojo: true },
+  { feature: "Work reviewed to a professional standard", courses: false, selfStudy: false, dojo: true },
+  { feature: "Practise the workflow, not just the tool", courses: false, selfStudy: "partial", dojo: true },
+  { feature: "Finish with a portfolio of real work", courses: false, selfStudy: false, dojo: true },
+  { feature: "Designed around a defined outcome", courses: "partial", selfStudy: false, dojo: true },
 ];
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
@@ -143,13 +145,17 @@ function Partial() {
   return <span className="text-xs theme-text-subtle mx-auto block text-center leading-none">Partial</span>;
 }
 
+function Mark({ value }: { value: ComparisonValue }) {
+  return value === true ? <Check /> : value === "partial" ? <Partial /> : <Cross />;
+}
+
 // ── Page ──────────────────────────────────────────────────────────────────────
 
 export default function DojoPage() {
   return (
     <div className="theme-bg-primary dojo-page">
 
-      {/* ─── 1. Hero ──────────────────────────────────────────────────────── */}
+      {/* ─── Hero ─────────────────────────────────────────────────────────── */}
       <section className="py-28 theme-bg-secondary relative overflow-hidden">
         <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[var(--border-color)] to-transparent pointer-events-none" />
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -158,37 +164,36 @@ export default function DojoPage() {
             {/* Left — text content */}
             <div>
               <p className="text-sm font-medium tracking-[0.3em] theme-text-subtle dark:text-red-500/80 uppercase mb-4">
-                Training Programme
+                The Training Hall
               </p>
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-light theme-text-primary leading-tight mb-3">
                 Cyber Ninjas{" "}
                 <GlitchWord text="Dojo" className="font-semibold theme-text-secondary dark:text-red-500" />
               </h1>
               <p className="text-xl md:text-2xl font-light theme-text-muted tracking-wide mb-8">
-                Power Platform Consultant Bootcamp
+                Practitioner-led cohort training
               </p>
               <p className="text-lg theme-text-muted leading-relaxed mb-10">
-                Most Power Platform training stops at the tool. The Dojo goes further. Over 8 to 12
-                weeks, you will work inside a fully simulated consultancy environment — running Agile
-                sprints, managing Azure DevOps boards, deploying solutions across Dev, Test, and
-                Production, and preparing for Microsoft PL-200 certification. This is not a course.
-                It is a professional transition.
+                A dojo is not a course library — it is where you train. Every track is built
+                the same way: led by people who do the work for clients, delivered as a live
+                cohort, and centred on producing real work reviewed to a professional standard.
+                Knowing the tool is the start. The Dojo is where you become someone who delivers.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 mb-16">
-                <NeonButton href="/dojo/apply">Apply Now</NeonButton>
+                <NeonButton href="#tracks">Explore the Tracks</NeonButton>
                 <a
-                  href="/dojo/programme"
+                  href="/about"
                   className="px-8 py-3 text-sm font-medium tracking-wide border theme-border theme-text-secondary rounded hover:theme-bg-primary transition-colors duration-300 text-center"
                 >
-                  Programme Overview
+                  About Cyber Ninjas
                 </a>
               </div>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-8 border-t theme-border">
                 {[
-                  { value: "8–12 Weeks", label: "Duration" },
+                  { value: "2 Tracks", label: "Disciplines" },
                   { value: "Cohort-Based", label: "Live Delivery" },
-                  { value: "PL-200", label: "Certification Prep" },
-                  { value: "£2,500 + VAT", label: "Programme Fee" },
+                  { value: "Practitioner", label: "Led" },
+                  { value: "UK-Based", label: "Programme" },
                 ].map((stat) => (
                   <div key={stat.label}>
                     <p className="text-lg font-medium theme-text-primary mb-1">{stat.value}</p>
@@ -234,100 +239,107 @@ export default function DojoPage() {
         </div>
       </section>
 
-      {/* ─── Cohort Strip ─────────────────────────────────────────────────── */}
-      <div className="theme-bg-primary border-b theme-border">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-4">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-            <div className="flex flex-wrap items-center gap-x-6 gap-y-1">
-              <span className="flex items-center gap-2 text-sm theme-text-muted">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                Next cohort forming — April 2026
-              </span>
-              <span className="text-sm theme-text-subtle hidden sm:block">|</span>
-              <span className="text-sm theme-text-muted">Limited to 12 participants</span>
-              <span className="text-sm theme-text-subtle hidden sm:block">|</span>
-              <span className="text-sm theme-text-muted">Applications close 14 March 2026</span>
-            </div>
-            <Link
-              href="/dojo/apply"
-              className="text-sm font-medium theme-text-primary dark:text-red-500 hover:opacity-70 transition-opacity whitespace-nowrap flex items-center gap-1"
-            >
-              Apply Now
-              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </Link>
-          </div>
-        </div>
-      </div>
-
-      {/* ─── Waitlist Strip ───────────────────────────────────────────────── */}
-      <div className="theme-bg-secondary border-b theme-border">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-5">
-          <div className="flex flex-col sm:flex-row sm:items-center gap-4">
-            <div className="shrink-0">
-              <p className="text-sm font-medium theme-text-primary">Can&apos;t make this cohort?</p>
-              <p className="text-xs theme-text-muted">Join the waitlist — we notify you before the next cohort opens publicly.</p>
-            </div>
-            <div className="sm:ml-auto">
-              <DojoWaitlist />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* ─── 2. The Problem ───────────────────────────────────────────────── */}
+      {/* ─── How the Dojo Trains ──────────────────────────────────────────── */}
       <section className="py-24 theme-bg-dark relative">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-16 items-start">
-            <div>
-              <p className="text-sm font-medium tracking-[0.3em] text-stone-500 dark:text-red-500/70 uppercase mb-4">
-                The Challenge
-              </p>
-              <h2 className="text-3xl md:text-4xl font-light text-stone-100 leading-snug mb-6">
-                The Gap Between Training and Consultancy Work
-              </h2>
-              <p className="text-stone-400 leading-relaxed mb-4">
-                Thousands of professionals hold Power Platform certifications or have completed
-                online courses. Very few are ready to function effectively inside a consultancy
-                engagement.
-              </p>
-              <p className="text-stone-400 leading-relaxed mb-4">
-                The reason is straightforward: courses teach you to use the platform. They do not
-                teach you how a consultant operates on a real project. There is a significant gap
-                between completing training and being genuinely billable — and most professionals
-                only discover it once they are already on the job.
-              </p>
-              <p className="text-stone-400 leading-relaxed border-l-2 border-red-500/30 pl-4 italic mt-8">
-                The Dojo is designed to close this gap before you start.
-              </p>
-            </div>
-            <div>
-              <p className="text-sm font-medium tracking-[0.2em] text-stone-500 uppercase mb-6">
-                What standard training does not cover
-              </p>
-              <ul className="space-y-4">
-                {[
-                  "No exposure to Azure DevOps, source control, or work item management",
-                  "No experience planning or delivering within Agile sprint cycles",
-                  "No understanding of ALM or how solutions are promoted between environments",
-                  "No practice handling scope change, client expectations, or competing priorities",
-                  "No governance, documentation, or peer review experience",
-                  "No understanding of what delivery quality looks like to a senior consultant or client",
-                ].map((item) => (
-                  <li key={item} className="flex items-start gap-3">
-                    <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-red-500/60 shrink-0" />
-                    <span className="text-stone-400 leading-relaxed text-sm">{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+          <div className="max-w-2xl mb-16">
+            <p className="text-sm font-medium tracking-[0.3em] text-stone-500 dark:text-red-500/70 uppercase mb-4">
+              The Method
+            </p>
+            <h2 className="text-3xl md:text-4xl font-light text-stone-100 leading-snug mb-6">
+              How the Dojo Trains
+            </h2>
+            <p className="text-stone-400 leading-relaxed">
+              The disciplines differ. The method does not. Whatever track you choose, the
+              way you are trained is the same — and it is the reason graduates can actually
+              do the work, not just describe it.
+            </p>
+          </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {principles.map((item) => (
+              <div
+                key={item.title}
+                className="border border-stone-700/50 rounded-lg p-6 bg-stone-900/40 hover:bg-stone-900/60 transition-colors duration-200"
+              >
+                <div className="w-9 h-9 rounded border border-stone-700 flex items-center justify-center text-stone-400 mb-4">
+                  {item.icon}
+                </div>
+                <h3 className="text-base font-medium text-stone-100 mb-2">{item.title}</h3>
+                <p className="text-sm text-stone-400 leading-relaxed">{item.description}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* ─── 3. Comparison Table ──────────────────────────────────────────── */}
-      <section className="py-24 theme-bg-primary relative">
+      {/* ─── Tracks ───────────────────────────────────────────────────────── */}
+      <section id="tracks" className="py-24 theme-bg-primary relative scroll-mt-20">
+        <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[var(--border-color)] to-transparent pointer-events-none" />
+        <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[var(--border-color)] to-transparent pointer-events-none" />
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="max-w-2xl mb-16">
+            <p className="text-sm font-medium tracking-[0.3em] theme-text-subtle dark:text-red-500/80 uppercase mb-4">
+              Choose Your Track
+            </p>
+            <h2 className="text-3xl md:text-4xl font-light theme-text-primary mb-4">
+              Two Disciplines, One Standard
+            </h2>
+            <p className="theme-text-muted leading-relaxed">
+              Each track is a complete programme in its own right. Pick the one that matches
+              where you are going — the rigour behind both is identical.
+            </p>
+          </div>
+          <div className="grid lg:grid-cols-2 gap-6">
+            {tracks.map((track) => (
+              <Link
+                key={track.href}
+                href={track.href}
+                className="group relative rounded-lg p-px block"
+              >
+                {/* Gradient border — fades in on hover */}
+                <span
+                  className="service-card-gradient absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                  aria-hidden="true"
+                />
+                {/* Normal border — fades out on hover */}
+                <span
+                  className="absolute inset-0 rounded-lg border theme-border group-hover:opacity-0 transition-opacity duration-300 pointer-events-none"
+                  aria-hidden="true"
+                />
+                <div className="relative theme-bg-card rounded-[7px] p-8 h-full flex flex-col">
+                  <p className="text-xs font-medium tracking-[0.2em] theme-text-subtle uppercase mb-4">
+                    {track.tag}
+                  </p>
+                  <h3 className="text-2xl font-light theme-text-primary mb-3">{track.title}</h3>
+                  <p className="text-sm theme-text-muted leading-relaxed mb-6 flex-1">
+                    {track.description}
+                  </p>
+                  <div className="grid grid-cols-3 gap-4 py-5 border-y theme-border mb-5">
+                    {track.facts.map((fact) => (
+                      <div key={fact.label}>
+                        <p className="text-xs font-medium tracking-[0.15em] theme-text-subtle uppercase mb-1">
+                          {fact.label}
+                        </p>
+                        <p className="text-sm font-medium theme-text-primary">{fact.value}</p>
+                      </div>
+                    ))}
+                  </div>
+                  <p className="text-xs theme-text-subtle mb-6">{track.audience}</p>
+                  <span className="inline-flex items-center gap-2 text-sm font-medium theme-text-primary dark:text-red-500 group-hover:gap-3 transition-all duration-300">
+                    Explore this track
+                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </span>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─── Comparison ───────────────────────────────────────────────────── */}
+      <section className="py-24 theme-bg-secondary relative">
         <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[var(--border-color)] to-transparent pointer-events-none" />
         <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[var(--border-color)] to-transparent pointer-events-none" />
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -336,11 +348,11 @@ export default function DojoPage() {
               Comparison
             </p>
             <h2 className="text-3xl md:text-4xl font-light theme-text-primary mb-4">
-              How the Dojo Compares
+              How the Dojo Trains vs. Everyone Else
             </h2>
             <p className="theme-text-muted leading-relaxed">
-              Standard training routes prepare you for the exam. The Dojo prepares you for the
-              engagement. The difference is significant.
+              Most training prepares you to talk about the work. The Dojo prepares you to
+              do it. This holds for every track.
             </p>
           </div>
           <div className="overflow-x-auto">
@@ -350,20 +362,20 @@ export default function DojoPage() {
                   <th className="text-left py-4 pr-6 w-1/2" />
                   <th className="py-4 px-4 text-center">
                     <p className="text-xs font-medium tracking-[0.15em] theme-text-subtle uppercase">
-                      Online Courses
+                      Passive Courses
                     </p>
                   </th>
                   <th className="py-4 px-4 text-center">
                     <p className="text-xs font-medium tracking-[0.15em] theme-text-subtle uppercase">
-                      Self-Study + Certs
+                      Self-Study
                     </p>
                   </th>
                   <th className="py-4 px-4 text-center rounded-t-lg border-x border-t theme-border bg-[var(--bg-card)] dark:border-red-500/20">
                     <p className="text-xs font-medium tracking-[0.15em] theme-text-primary uppercase">
-                      Cyber Ninjas Dojo
+                      The Dojo
                     </p>
                     <p className="text-xs theme-text-subtle mt-0.5 dark:text-red-500/70">
-                      This programme
+                      Every track
                     </p>
                   </th>
                 </tr>
@@ -378,35 +390,17 @@ export default function DojoPage() {
                   >
                     <td className="py-3.5 pr-6 text-sm theme-text-muted">{row.feature}</td>
                     <td className="py-3.5 px-4 text-center">
-                      {row.courses === true ? (
-                        <Check />
-                      ) : row.courses === "partial" ? (
-                        <Partial />
-                      ) : (
-                        <Cross />
-                      )}
+                      <Mark value={row.courses} />
                     </td>
                     <td className="py-3.5 px-4 text-center">
-                      {row.selfStudy === true ? (
-                        <Check />
-                      ) : row.selfStudy === "partial" ? (
-                        <Partial />
-                      ) : (
-                        <Cross />
-                      )}
+                      <Mark value={row.selfStudy} />
                     </td>
                     <td
                       className={`py-3.5 px-4 border-x theme-border bg-[var(--bg-card)] dark:border-red-500/20 ${
                         i === comparisonRows.length - 1 ? "rounded-b-lg border-b" : ""
                       }`}
                     >
-                      {row.dojo === true ? (
-                        <Check />
-                      ) : row.dojo === "partial" ? (
-                        <Partial />
-                      ) : (
-                        <Cross />
-                      )}
+                      <Mark value={row.dojo} />
                     </td>
                   </tr>
                 ))}
@@ -416,221 +410,29 @@ export default function DojoPage() {
         </div>
       </section>
 
-      {/* ─── 4. What Makes the Dojo Different ────────────────────────────── */}
-      <section className="py-24 theme-bg-secondary relative">
-        <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[var(--border-color)] to-transparent pointer-events-none" />
-        <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[var(--border-color)] to-transparent pointer-events-none" />
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="max-w-2xl mb-16">
-            <p className="text-sm font-medium tracking-[0.3em] theme-text-subtle dark:text-red-500/80 uppercase mb-4">
-              Differentiation
-            </p>
-            <h2 className="text-3xl md:text-4xl font-light theme-text-primary mb-4">
-              What Makes the Dojo Different
-            </h2>
-            <p className="theme-text-muted leading-relaxed">
-              The Dojo is built around a single question: what would you need to experience to be
-              genuinely ready for a consultancy engagement? Every element of the programme exists
-              to answer that.
-            </p>
-          </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {differentiators.map((item) => (
-              <div key={item.title} className="group relative rounded-lg p-px">
-                {/* Gradient border — fades in on hover */}
-                <span
-                  className="service-card-gradient absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-                  aria-hidden="true"
-                />
-                {/* Normal border — fades out on hover */}
-                <span
-                  className="absolute inset-0 rounded-lg border theme-border group-hover:opacity-0 transition-opacity duration-300 pointer-events-none"
-                  aria-hidden="true"
-                />
-                <div className="relative theme-bg-card rounded-[7px] p-6 h-full">
-                  <div className="w-9 h-9 rounded border theme-border flex items-center justify-center theme-text-muted group-hover:theme-text-primary mb-4 transition-colors duration-300">
-                    {item.icon}
-                  </div>
-                  <h3 className="text-base font-medium theme-text-primary mb-2">{item.title}</h3>
-                  <p className="text-sm theme-text-muted leading-relaxed">{item.description}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ─── Pricing ─────────────────────────────────────────────────────── */}
-      <section className="py-24 theme-bg-primary relative">
-        <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[var(--border-color)] to-transparent pointer-events-none" />
-        <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[var(--border-color)] to-transparent pointer-events-none" />
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="max-w-2xl mb-12">
-            <p className="text-sm font-medium tracking-[0.3em] theme-text-subtle dark:text-red-500/80 uppercase mb-4">
-              Investment
-            </p>
-            <h2 className="text-3xl md:text-4xl font-light theme-text-primary mb-4">
-              Programme Pricing
-            </h2>
-            <p className="theme-text-muted leading-relaxed">
-              One straightforward fee covers everything. No upsells, no hidden costs.
-            </p>
-          </div>
-          <div className="grid md:grid-cols-2 gap-6 max-w-4xl">
-
-            {/* Individual */}
-            <div className="theme-bg-card border theme-border rounded-lg p-8 flex flex-col">
-              <p className="text-xs font-medium tracking-[0.2em] theme-text-subtle uppercase mb-6">
-                Individual Place
-              </p>
-              <div className="mb-2">
-                <span className="text-4xl font-light theme-text-primary">£2,500</span>
-                <span className="text-sm theme-text-muted ml-2">+ VAT</span>
-              </div>
-              <p className="text-xs theme-text-subtle mb-8">£3,000 inc. VAT</p>
-              <ul className="space-y-3 mb-10 flex-1">
-                {[
-                  "Full 8–12 week programme",
-                  "Consultancy simulation environment",
-                  "Azure DevOps access and coaching",
-                  "PL-200 certification preparation",
-                  "Peer review and feedback",
-                  "Programme completion certificate",
-                ].map((item) => (
-                  <li key={item} className="flex items-start gap-3 text-sm theme-text-muted">
-                    <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-[var(--accent)] dark:bg-red-500 shrink-0" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-              <NeonButton href="/dojo/apply">Apply Now</NeonButton>
-            </div>
-
-            {/* Corporate */}
-            <div className="theme-bg-card border theme-border rounded-lg p-8 flex flex-col">
-              <p className="text-xs font-medium tracking-[0.2em] theme-text-subtle uppercase mb-6">
-                Corporate / Team
-              </p>
-              <div className="mb-2">
-                <span className="text-4xl font-light theme-text-primary">Custom</span>
-              </div>
-              <p className="text-xs theme-text-subtle mb-8">Pricing based on team size and requirements</p>
-              <ul className="space-y-3 mb-10 flex-1">
-                {[
-                  "Everything in the individual programme",
-                  "Dedicated cohort for your team",
-                  "Tailored scenarios for your sector",
-                  "Progress reporting for managers",
-                  "Invoiced to your organisation",
-                  "Volume pricing available for 4+ places",
-                ].map((item) => (
-                  <li key={item} className="flex items-start gap-3 text-sm theme-text-muted">
-                    <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-[var(--accent)] dark:bg-red-500 shrink-0" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-              <Link
-                href="/dojo/apply"
-                className="px-8 py-3 text-sm font-medium tracking-wide border theme-border theme-text-secondary rounded hover:theme-bg-secondary transition-colors duration-300 text-center"
-              >
-                Enquire for Teams
-              </Link>
-            </div>
-
-          </div>
-          <p className="text-xs theme-text-subtle mt-8 max-w-lg">
-            Payment is requested on acceptance of your application, not at the point of applying.
-            Individual places can be paid by card. Corporate places are invoiced directly to your organisation.
-          </p>
-        </div>
-      </section>
-
-      {/* ─── Scholarship ──────────────────────────────────────────────────── */}
-      <section className="py-24 theme-bg-dark relative">
-        <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-red-500/20 to-transparent pointer-events-none" />
-        <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-red-500/20 to-transparent pointer-events-none" />
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <div>
-              <p className="text-sm font-medium tracking-[0.3em] text-red-500/70 uppercase mb-4">
-                Scholarship Programme
-              </p>
-              <h2 className="text-3xl md:text-4xl font-light text-stone-100 leading-snug mb-6">
-                One Free Place,{" "}
-                <span className="font-semibold text-red-400">Every Cohort</span>
-              </h2>
-              <p className="text-stone-400 leading-relaxed mb-4">
-                The Dojo is built to be the gold standard in Power Platform consultant training. That
-                standard should not be determined by who can afford it. Each cohort includes one
-                fully-funded scholarship place for a candidate who demonstrates the aptitude, drive,
-                and commitment to succeed — regardless of their financial situation.
-              </p>
-              <p className="text-stone-400 leading-relaxed mb-4">
-                Scholarship candidates go through the same application process as everyone else, plus
-                a short additional interview. We are looking for people who genuinely cannot meet the
-                programme fee, not people who would prefer not to.
-              </p>
-              <p className="text-stone-400 leading-relaxed border-l-2 border-red-500/30 pl-4 italic mt-8">
-                Scholarship graduates join the Cyber Ninjas consultant portfolio — a growing network
-                of Power Platform professionals we actively introduce to clients and opportunities.
+      {/* ─── Waitlist Strip ───────────────────────────────────────────────── */}
+      <div className="theme-bg-primary border-y theme-border">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-6">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+            <div className="shrink-0">
+              <p className="text-sm font-medium theme-text-primary">Not ready to apply yet?</p>
+              <p className="text-xs theme-text-muted">
+                Join the waitlist — we notify you before the next cohort of either track opens publicly.
               </p>
             </div>
-            <div className="space-y-4">
-              {[
-                {
-                  step: "01",
-                  title: "Submit your application",
-                  body: "Apply through the standard application form and tick the scholarship consideration box. Your application is reviewed alongside all other candidates.",
-                },
-                {
-                  step: "02",
-                  title: "Scholarship interview",
-                  body: "If shortlisted, you will be invited to a short interview — typically 20 to 30 minutes. We want to understand your situation, your goals, and your commitment to completing the programme.",
-                },
-                {
-                  step: "03",
-                  title: "Decision communicated with cohort offers",
-                  body: "The scholarship decision is made at the same time as cohort acceptance offers. If awarded, your place is fully funded — no hidden costs, the same programme as every other participant.",
-                },
-                {
-                  step: "04",
-                  title: "Join the consultant portfolio",
-                  body: "Scholarship graduates are included in the Cyber Ninjas consultant network. We introduce strong graduates to clients looking for Power Platform talent.",
-                },
-              ].map((item) => (
-                <div key={item.step} className="flex gap-5">
-                  <div className="shrink-0 w-8 h-8 rounded border border-red-500/20 flex items-center justify-center">
-                    <span className="text-xs font-medium text-red-400/70">{item.step}</span>
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-stone-200 mb-1">{item.title}</p>
-                    <p className="text-sm text-stone-400 leading-relaxed">{item.body}</p>
-                  </div>
-                </div>
-              ))}
-              <div className="pt-4">
-                <Link
-                  href="/dojo/apply"
-                  className="inline-flex items-center gap-2 text-sm font-medium text-red-400 hover:text-red-300 transition-colors"
-                >
-                  Apply and request scholarship consideration
-                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </Link>
-              </div>
+            <div className="sm:ml-auto">
+              <DojoWaitlist />
             </div>
           </div>
         </div>
-      </section>
+      </div>
 
       {/* ─── CTA ──────────────────────────────────────────────────────────── */}
       <CTASection
-        heading="Applications Are Now Open"
-        description="Cohort places are limited to 12 participants by design. If you are serious about making the transition into Power Platform consultancy, submit your application to begin the process."
-        buttonText="Apply Now"
-        href="/dojo/apply"
+        heading="Train Where the Work Is Real"
+        description="Pick a track and apply. Both run as small live cohorts by design — places are limited, and the standard is the same whichever discipline you choose."
+        buttonText="Explore the Tracks"
+        href="#tracks"
       />
     </div>
   );
