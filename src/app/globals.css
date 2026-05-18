@@ -603,3 +603,607 @@
 .form-field:required {
   box-shadow: none;
 }
+
+/* ===== FUTURISTIC LAYER — Claude Code track ===== */
+
+/* Scroll reveal */
+.cn-reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.7s ease-out, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+.cn-reveal-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Cyber grid */
+.cn-grid {
+  background-image:
+    linear-gradient(rgba(64, 144, 181, 0.10) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(64, 144, 181, 0.10) 1px, transparent 1px);
+  background-size: 44px 44px;
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 30%, transparent 75%);
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 30%, transparent 75%);
+}
+.dark .cn-grid {
+  background-image:
+    linear-gradient(rgba(94, 234, 216, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(94, 234, 216, 0.08) 1px, transparent 1px);
+}
+
+/* Terminal — always a dark surface, regardless of site theme */
+.cn-terminal {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  background: linear-gradient(180deg, #0b1c1c 0%, #071414 100%);
+  border: 1px solid rgba(64, 144, 181, 0.30);
+  box-shadow:
+    0 0 0 1px rgba(158, 48, 169, 0.12),
+    0 0 28px rgba(64, 144, 181, 0.18),
+    0 24px 60px rgba(0, 0, 0, 0.55);
+}
+.cn-terminal-bar {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 11px 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid rgba(64, 144, 181, 0.18);
+}
+.cn-terminal-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 9999px;
+  display: inline-block;
+}
+.cn-terminal-title {
+  margin-left: 10px;
+  font-family: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: #6f8a86;
+}
+.cn-terminal-body {
+  height: 360px;
+  overflow: hidden;
+  padding: 18px 20px;
+}
+.cn-terminal-pre {
+  margin: 0;
+  font-family: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  font-size: 13px;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.cn-caret {
+  display: inline-block;
+  width: 8px;
+  height: 1.05em;
+  margin-left: 2px;
+  vertical-align: text-bottom;
+  background: #5eead8;
+  box-shadow: 0 0 8px rgba(94, 234, 216, 0.8);
+  animation: cn-blink 1s steps(1) infinite;
+}
+@keyframes cn-blink {
+  0%, 50% { opacity: 1; }
+  50.01%, 100% { opacity: 0; }
+}
+.cn-terminal-scan {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    rgba(255, 255, 255, 0) 50%,
+    rgba(0, 0, 0, 0.14) 50%
+  );
+  background-size: 100% 4px;
+  opacity: 0.5;
+  mix-blend-mode: overlay;
+}
+
+/* Cinematic section — theme-aware. Dark = deep teal/black; light = warm
+   with a subtle neon wash. Terminals/browser keep their own dark surface. */
+.cn-cinematic {
+  background:
+    radial-gradient(900px 520px at 80% -5%, rgba(64, 144, 181, 0.10), transparent 60%),
+    var(--bg-secondary);
+  color: var(--text-primary);
+}
+.dark .cn-cinematic {
+  background: radial-gradient(1000px 600px at 80% 0%, #0e2a2a 0%, #071414 55%, #050d0d 100%);
+  color: #fafaf9;
+}
+.cn-strip {
+  background: var(--bg-tertiary);
+}
+.dark .cn-strip {
+  background: #0a1a1a;
+}
+
+/* Section divider hairline */
+.cn-hairline {
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(158, 48, 169, 0.35) 30%,
+    rgba(64, 144, 181, 0.5) 60%,
+    transparent
+  );
+}
+
+/* Browser preview — the "running site" screen */
+.cn-browser {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #070f12;
+  border: 1px solid rgba(64, 144, 181, 0.30);
+  box-shadow:
+    0 0 0 1px rgba(158, 48, 169, 0.12),
+    0 0 28px rgba(64, 144, 181, 0.18),
+    0 24px 60px rgba(0, 0, 0, 0.55);
+}
+.cn-browser-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid rgba(64, 144, 181, 0.18);
+}
+.cn-url {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  height: 26px;
+  padding: 0 12px;
+  border-radius: 9999px;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(64, 144, 181, 0.20);
+  font-family: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  font-size: 11.5px;
+  color: #7fb8b0;
+  letter-spacing: 0.02em;
+}
+.cn-url-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background: #28c840;
+  box-shadow: 0 0 6px rgba(40, 200, 64, 0.9);
+}
+.cn-browser-body {
+  position: relative;
+  height: 360px;
+  overflow: hidden;
+}
+
+/* The mini cyber-ninja site that renders inside the browser */
+.cn-mini {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  background:
+    radial-gradient(700px 380px at 78% 0%, #0e2a2a 0%, #071414 55%, #050d0d 100%);
+  color: #e7f2ef;
+}
+.cn-mini-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(94, 234, 216, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(94, 234, 216, 0.08) 1px, transparent 1px);
+  background-size: 30px 30px;
+  -webkit-mask-image: radial-gradient(ellipse 70% 70% at 50% 45%, #000 35%, transparent 78%);
+  mask-image: radial-gradient(ellipse 70% 70% at 50% 45%, #000 35%, transparent 78%);
+}
+.cn-mini-nav {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #6f8a86;
+}
+.cn-mini-brand {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #cfe9e4;
+  font-weight: 600;
+}
+.cn-mini-brand span {
+  color: #5eead8;
+  text-shadow: 0 0 8px rgba(94, 234, 216, 0.7);
+}
+.cn-mini-navlinks {
+  display: flex;
+  gap: 16px;
+}
+.cn-mini-hero {
+  position: relative;
+  z-index: 3;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  text-align: left;
+  padding: 0 28px 16px;
+  max-width: 64%;
+}
+.cn-mini-eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: #5eead8;
+  margin-bottom: 14px;
+}
+.cn-mini-title {
+  position: relative;
+  font-family: var(--font-space-grotesk), system-ui, sans-serif;
+  font-size: 44px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  color: #fafaf9;
+}
+.cn-mini-title::before,
+.cn-mini-title::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.cn-mini-title::before {
+  color: #9e30a9;
+  animation: cn-glitch-a 3.2s infinite steps(2);
+}
+.cn-mini-title::after {
+  color: #4090b5;
+  animation: cn-glitch-b 3.2s infinite steps(2);
+}
+@keyframes cn-glitch-a {
+  0%, 86%, 100% { clip-path: inset(0 0 100% 0); transform: translate(0, 0); }
+  88% { clip-path: inset(8% 0 56% 0); transform: translate(-3px, 0); }
+  92% { clip-path: inset(48% 0 16% 0); transform: translate(3px, 0); }
+  96% { clip-path: inset(26% 0 38% 0); transform: translate(-2px, 0); }
+}
+@keyframes cn-glitch-b {
+  0%, 86%, 100% { clip-path: inset(0 0 100% 0); transform: translate(0, 0); }
+  89% { clip-path: inset(40% 0 30% 0); transform: translate(3px, 0); }
+  93% { clip-path: inset(14% 0 60% 0); transform: translate(-3px, 0); }
+  97% { clip-path: inset(60% 0 8% 0); transform: translate(2px, 0); }
+}
+.cn-mini-tag {
+  margin-top: 14px;
+  font-size: 13px;
+  color: #9fb8b3;
+  max-width: 280px;
+}
+.cn-mini-cta {
+  margin-top: 22px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 20px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: #fff;
+  border: 1px solid rgba(94, 234, 216, 0.5);
+  border-radius: 6px;
+  background: rgba(94, 234, 216, 0.08);
+  box-shadow: 0 0 16px rgba(94, 234, 216, 0.25), inset 0 0 12px rgba(94, 234, 216, 0.08);
+  text-shadow: 0 0 10px rgba(94, 234, 216, 0.7);
+}
+.cn-mini-foot {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #5f7a76;
+  border-top: 1px solid rgba(64, 144, 181, 0.14);
+}
+.cn-mini-foot::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background: #28c840;
+  box-shadow: 0 0 6px rgba(40, 200, 64, 0.9);
+}
+
+/* Hero artwork layer (ninja on the right, text in the left negative space) */
+.cn-mini-art {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+}
+.cn-mini-art-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 80% center;
+}
+.cn-mini-art-ph {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+.cn-mini-ninja {
+  width: 210px;
+  height: auto;
+  margin-right: 26px;
+  fill: rgba(94, 234, 216, 0.16);
+  filter: drop-shadow(0 0 14px rgba(94, 234, 216, 0.28));
+}
+.cn-mini-ninja-orb {
+  fill: rgba(94, 234, 216, 0.55);
+  filter: drop-shadow(0 0 10px rgba(94, 234, 216, 0.9));
+}
+.cn-mini-ph-tag {
+  position: absolute;
+  bottom: 12px;
+  right: 16px;
+  font-family: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.06em;
+  color: rgba(127, 184, 176, 0.5);
+}
+.cn-mini-art-fade {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(
+    90deg,
+    #071414 16%,
+    rgba(7, 20, 20, 0.72) 46%,
+    rgba(7, 20, 20, 0.12) 100%
+  );
+}
+/* Claude logo composited where the ninja's raised hand/orb sits.
+   Tune top/right once the real Midjourney art is in. */
+.cn-mini-logo {
+  position: absolute;
+  top: 24%;
+  right: 21%;
+  z-index: 4;
+  width: 52px;
+  height: 52px;
+  filter: drop-shadow(0 0 14px rgba(233, 140, 106, 0.65));
+  animation: cn-logo-float 5s ease-in-out infinite;
+}
+.cn-mini-logo-svg {
+  width: 100%;
+  height: 100%;
+}
+@keyframes cn-logo-float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-6px) rotate(8deg); }
+}
+
+/* Scroll-scrub video site (screen 3) */
+.cn-scrub-body {
+  position: relative;
+  height: 360px;
+  overflow: hidden;
+  background: #050d0d;
+}
+.cn-scrub-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.cn-scrub-tint {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(5, 13, 13, 0.35) 0%,
+    rgba(5, 13, 13, 0.10) 38%,
+    rgba(5, 13, 13, 0.78) 100%
+  );
+}
+.cn-scrub-layer {
+  position: absolute;
+  left: 28px;
+  right: 28px;
+  will-change: transform, opacity;
+}
+.cn-scrub-layer-1 {
+  top: 56px;
+}
+.cn-scrub-layer-2 {
+  bottom: 64px;
+}
+.cn-scrub-eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: #5eead8;
+  text-shadow: 0 0 10px rgba(94, 234, 216, 0.55);
+  margin-bottom: 12px;
+}
+.cn-scrub-title {
+  font-family: var(--font-space-grotesk), system-ui, sans-serif;
+  font-size: 52px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  color: #fafaf9;
+  text-shadow: 0 0 24px rgba(0, 0, 0, 0.6);
+}
+.cn-scrub-sub {
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: #cfe9e4;
+  text-shadow: 0 0 14px rgba(0, 0, 0, 0.7);
+}
+.cn-scrub-rail {
+  position: absolute;
+  top: 20px;
+  bottom: 20px;
+  right: 14px;
+  width: 2px;
+  border-radius: 9999px;
+  background: rgba(94, 234, 216, 0.14);
+  overflow: hidden;
+}
+.cn-scrub-rail-fill {
+  width: 100%;
+  height: 0%;
+  background: #5eead8;
+  box-shadow: 0 0 10px rgba(94, 234, 216, 0.8);
+}
+.cn-scrub-hint {
+  position: absolute;
+  left: 50%;
+  bottom: 16px;
+  transform: translateX(-50%);
+  font-family: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(94, 234, 216, 0.8);
+  animation: cn-hint-bob 1.6s ease-in-out infinite;
+}
+@keyframes cn-hint-bob {
+  0%, 100% { transform: translate(-50%, 0); }
+  50% { transform: translate(-50%, 5px); }
+}
+/* Minimal futuristic site header — static, so it reads as a real site */
+.cn-scrub-nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 20px;
+  font-size: 10.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(207, 233, 228, 0.72);
+  border-bottom: 1px solid rgba(94, 234, 216, 0.10);
+  background: linear-gradient(180deg, rgba(5, 13, 13, 0.6), rgba(5, 13, 13, 0));
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+.cn-scrub-brand {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-weight: 600;
+  color: #eaf5f1;
+}
+.cn-scrub-brand span {
+  color: #5eead8;
+  text-shadow: 0 0 8px rgba(94, 234, 216, 0.7);
+}
+.cn-scrub-links {
+  display: flex;
+  gap: 18px;
+}
+.cn-scrub-links span:last-child {
+  color: #5eead8;
+}
+
+/* Boot overlay — plays once, reveals the site */
+.cn-boot {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  background: #050d0d;
+  font-family: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  font-size: 12px;
+  color: #5eead8;
+  animation: cn-boot-out 0.5s ease forwards;
+  animation-delay: 1.5s;
+}
+.cn-boot-bar {
+  width: 180px;
+  height: 3px;
+  border-radius: 9999px;
+  background: rgba(94, 234, 216, 0.15);
+  overflow: hidden;
+}
+.cn-boot-bar::after {
+  content: "";
+  display: block;
+  height: 100%;
+  width: 0;
+  background: #5eead8;
+  box-shadow: 0 0 10px rgba(94, 234, 216, 0.8);
+  animation: cn-boot-fill 1.4s ease-out forwards;
+}
+@keyframes cn-boot-fill {
+  from { width: 0; }
+  to { width: 100%; }
+}
+@keyframes cn-boot-out {
+  to { opacity: 0; visibility: hidden; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cn-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .cn-caret {
+    animation: none;
+  }
+  .cn-mini-title::before,
+  .cn-mini-title::after {
+    animation: none;
+    clip-path: inset(0 0 100% 0);
+  }
+  .cn-boot {
+    animation: none;
+    opacity: 0;
+    visibility: hidden;
+  }
+  .cn-boot-bar::after {
+    animation: none;
+    width: 100%;
+  }
+  .cn-mini-logo {
+    animation: none;
+  }
+  .cn-scrub-hint {
+    animation: none;
+    opacity: 0;
+  }
+}
