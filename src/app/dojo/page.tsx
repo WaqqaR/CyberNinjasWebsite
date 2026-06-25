@@ -9,11 +9,10 @@ import { GlitchWord } from "@/components/GlitchWord";
 export const metadata: Metadata = {
   title: "Cyber Ninjas Dojo | Practitioner-Led Cohort Training",
   description:
-    "The Cyber Ninjas Dojo is a training hall, not a course library. Practitioner-led, cohort-based, applied programmes that take you from knowing a tool to delivering real work. Choose your track — Power Platform consultancy or Claude Code.",
+    "The Cyber Ninjas Dojo is a training hall, not a course library. Practitioner-led, cohort-based, applied programmes that take you from knowing a tool to delivering real work — starting with the Claude Code Intensive.",
   keywords: [
     "Cyber Ninjas Dojo",
     "cohort-based training UK",
-    "Power Platform consultant bootcamp",
     "Claude Code training",
     "AI coding course UK",
     "practitioner-led technical training",
@@ -67,6 +66,8 @@ const principles = [
 
 const tracks = [
   {
+    // Hidden for now — flip `hidden` to false to bring the bootcamp back into the listing.
+    hidden: true,
     tag: "Track 01 — Microsoft",
     title: "Power Platform Consultant Bootcamp",
     href: "/dojo/power-platform",
@@ -80,7 +81,8 @@ const tracks = [
     audience: "Career switchers · IT professionals · junior developers",
   },
   {
-    tag: "Track 02 — AI Engineering",
+    hidden: false,
+    tag: "Track 01 — AI Engineering",
     title: "Claude Code Intensive",
     href: "/dojo/claude-code",
     description:
@@ -93,6 +95,8 @@ const tracks = [
     audience: "Non-technical builders · individual developers",
   },
 ];
+
+const visibleTracks = tracks.filter((track) => !track.hidden);
 
 type ComparisonValue = boolean | "partial";
 
@@ -174,13 +178,13 @@ export default function DojoPage() {
                 Practitioner-led cohort training
               </p>
               <p className="text-lg theme-text-muted leading-relaxed mb-10">
-                A dojo is not a course library — it is where you train. Every track is built
+                A dojo is not a course library — it is where you train. Every programme is built
                 the same way: led by people who do the work for clients, delivered as a live
                 cohort, and centred on producing real work reviewed to a professional standard.
                 Knowing the tool is the start. The Dojo is where you become someone who delivers.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 mb-16">
-                <NeonButton href="#tracks">Explore the Tracks</NeonButton>
+                <NeonButton href="#tracks">Explore the Programme</NeonButton>
                 <a
                   href="/about"
                   className="px-8 py-3 text-sm font-medium tracking-wide border theme-border theme-text-secondary rounded hover:theme-bg-primary transition-colors duration-300 text-center"
@@ -190,7 +194,7 @@ export default function DojoPage() {
               </div>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-8 border-t theme-border">
                 {[
-                  { value: "2 Tracks", label: "Disciplines" },
+                  { value: "Applied", label: "Curriculum" },
                   { value: "Cohort-Based", label: "Live Delivery" },
                   { value: "Practitioner", label: "Led" },
                   { value: "UK-Based", label: "Programme" },
@@ -250,9 +254,9 @@ export default function DojoPage() {
               How the Dojo Trains
             </h2>
             <p className="text-stone-400 leading-relaxed">
-              The disciplines differ. The method does not. Whatever track you choose, the
-              way you are trained is the same — and it is the reason graduates can actually
-              do the work, not just describe it.
+              The discipline may change as the Dojo grows, but the method does not. However
+              you train here, the approach is the same — and it is the reason graduates can
+              actually do the work, not just describe it.
             </p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -279,18 +283,19 @@ export default function DojoPage() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="max-w-2xl mb-16">
             <p className="text-sm font-medium tracking-[0.3em] theme-text-subtle dark:text-red-500/80 uppercase mb-4">
-              Choose Your Track
+              The Current Track
             </p>
             <h2 className="text-3xl md:text-4xl font-light theme-text-primary mb-4">
-              Two Disciplines, One Standard
+              One Discipline, One Standard
             </h2>
             <p className="theme-text-muted leading-relaxed">
-              Each track is a complete programme in its own right. Pick the one that matches
-              where you are going — the rigour behind both is identical.
+              This is a complete programme in its own right — built around producing real
+              work reviewed to a professional standard. More tracks join the Dojo as they
+              are ready.
             </p>
           </div>
-          <div className="grid lg:grid-cols-2 gap-6">
-            {tracks.map((track) => (
+          <div className={visibleTracks.length === 1 ? "grid gap-6 max-w-2xl" : "grid lg:grid-cols-2 gap-6"}>
+            {visibleTracks.map((track) => (
               <Link
                 key={track.href}
                 href={track.href}
@@ -417,7 +422,7 @@ export default function DojoPage() {
             <div className="shrink-0">
               <p className="text-sm font-medium theme-text-primary">Not ready to apply yet?</p>
               <p className="text-xs theme-text-muted">
-                Join the waitlist — we notify you before the next cohort of either track opens publicly.
+                Join the waitlist — we notify you before the next cohort opens publicly.
               </p>
             </div>
             <div className="sm:ml-auto">
@@ -430,8 +435,8 @@ export default function DojoPage() {
       {/* ─── CTA ──────────────────────────────────────────────────────────── */}
       <CTASection
         heading="Train Where the Work Is Real"
-        description="Pick a track and apply. Both run as small live cohorts by design — places are limited, and the standard is the same whichever discipline you choose."
-        buttonText="Explore the Tracks"
+        description="Apply for the current track. It runs as a small live cohort by design — places are limited, and the standard is the one a client would actually hold you to."
+        buttonText="Explore the Programme"
         href="#tracks"
       />
     </div>
