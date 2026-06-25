@@ -19,7 +19,9 @@ export default async function Page({
   searchParams: Promise<{ track?: string }>;
 }) {
   const { track } = await searchParams;
+  // Power Platform bootcamp is hidden for now, so a bare /dojo/apply defaults to
+  // the Claude Code track. The PP page still links here with ?track=power-platform.
   const normalized: "power-platform" | "claude-code" =
-    track === "claude-code" ? "claude-code" : "power-platform";
+    track === "power-platform" ? "power-platform" : "claude-code";
   return <ApplyForm track={normalized} />;
 }

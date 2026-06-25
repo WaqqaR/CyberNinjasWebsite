@@ -14,8 +14,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/products`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
     { url: `${BASE}/products/work-loom`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 },
     { url: `${BASE}/dojo`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.9 },
-    { url: `${BASE}/dojo/power-platform`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.9 },
-    { url: `${BASE}/dojo/power-platform/programme`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
+    // Power Platform bootcamp hidden for now — re-add /dojo/power-platform and
+    // /dojo/power-platform/programme here when the track is brought back.
     { url: `${BASE}/dojo/claude-code`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.9 },
     { url: `${BASE}/dojo/apply`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
   ];
